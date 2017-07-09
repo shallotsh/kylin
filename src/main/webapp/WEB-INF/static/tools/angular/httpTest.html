@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>http测试</title>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtr">
+    {{content}}
+</div>
+
+<script type="application/javascript">
+
+    app = angular.module('myApp', []);
+    app.controller('myCtr', function ($scope, $http) {
+        $scope.content = 'hello world';
+//        $http({
+//            method: 'GET',
+//            url:'/example/codes'
+//        }).then(function successCallback(response) {
+//            // 执行成功
+//            console.log('执行成功');
+//            $scope.content = response.data;
+//        }, function errorCallback(response){
+//            // 执行失败
+//            console.log('执行失败');
+//        });
+
+        $http.get('/example/codes').then(function(response){
+           console.log('请求成功') ;
+           $scope.content = response.data;
+        });
+
+    })
+
+</script>
+
+</body>
+</html>

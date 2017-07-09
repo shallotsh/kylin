@@ -1,0 +1,25 @@
+body{
+  /*background: url("./images/bg.jpg");  */
+	background-color: #eef2f5;
+  font-size:16px;
+}
+
+hr {
+	margin-top:8px;
+	margin-bottom:8px;
+}
+
+.btn {
+	margin-right:10px;
+	margin-left:10px;
+	margin-bottom:10px;
+}
+
+
+.form-control {
+	padding: 6px 6px;
+}
+
+.control-label {
+	vertical-align:middle;display:inline-block;
+}

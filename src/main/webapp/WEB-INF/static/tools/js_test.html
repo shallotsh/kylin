@@ -1,0 +1,65 @@
+<html> 
+<head> 
+<meta http-equiv=Content-Type content="text/html;charset=utf-8"> 
+<title>Build Document by Script</TITLE> 
+<SCRIPT LANGUAGE="text/javascript"> 
+function word_onclick() 
+{ 
+var myDocApp=null; 
+myDocApp =new ActiveXObject("word.Application"); 
+myDocApp.Application.Visible = true; 
+var myDoc = myDocApp.Documents.Add(); 
+
+myDocApp.Selection.ParagraphFormat.Alignment=1 
+myDocApp.Selection.Range.Bold=true; 
+myDocApp.Selection.Font.Size=22; 
+myDocApp.Selection.Text="请假申请单" 
+myDocApp.Selection.insertAfter("\n"); 
+myDocApp.Selection.MoveRight(2,10);　　　　 
+myDocApp.Selection.TypeParagraph(); 
+myDocApp.Selection.Font.Bold=false; 
+myDocApp.Selection.Font.Size=12; 
+
+var myTable0=myDoc.Tables.Add(myDocApp.Selection.Range,3,4); 
+myTable0.cell(1,1).Range.Text="请假人"; 
+myTable0.cell(1,2).Range.Text="张三"; 
+myTable0.cell(1,3).Range.Text="请假时间"; 
+myTable0.cell(1,4).Range.Text="2006-2-10"; 
+
+myTable0.cell(2,1).Range.Text="工号"; 
+myTable0.cell(2,2).Range.Text="32412"; 
+myTable0.cell(2,3).Range.Text="填表时间"; 
+myTable0.cell(2,4).Range.Text="2006-2-9"; 
+
+myTable0.cell(3,1).Range.Text="请假原因"; 
+myTable0.cell(3,2).Range.Text="感冒"; 
+myTable0.cell(3,3).Range.Text="处理方式"; 
+myTable0.cell(3,4).Range.Text="病假"; 
+
+var range=myDocApp.ActiveDocument.Content; 
+range.Collapse(0); 
+range.insertAfter("\n"); 
+range=myDocApp.ActiveDocument.Content; 
+range.Collapse(0); 
+
+var myTable2=myDoc.Tables.Add(range,1,2); 
+myTable2.Columns(1).SetWidth(320,2); 
+myTable2.cell(1,1).Range.Text="申请人签名" //空格勿删 
+myTable2.cell(1,2).Range.Text="申请人的签名"; 
+
+try{ 
+myDocApp.ActiveDocument.SaveAs("e:\\JaveToWord.doc"); 
+}catch(exception){ 
+alert("浏览器安全设置过高,保存文件到本地失败"); 
+myDocApp.Documents.close(); 
+myDocApp.Application.quit(); 
+myDocApp=null; 
+window.close(); 
+} 
+} 
+</SCRIPT> 
+</HEAD> 
+<BODY> 
+<p><a href="javascript:word_onclick()">生成WORD</a></p> 
+</BODY> 
+</HTML>

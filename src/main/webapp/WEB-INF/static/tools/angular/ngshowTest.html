@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="myCtr">
+
+    <p ng-show="true">我是可见的。</p>
+
+    <p ng-show="false">我是不可见的。</p>
+    <input ng-show="false" type="checkbox" ng-model="mySwitch">按钮
+
+
+</div>
+
+<script type="script/javascript">
+	app = angular.module('myApp', []);
+	app.controller('myCtr', function($scope, $timeout){
+		$scope.mySwitch = false;
+		$timeout(function(){
+			$scope.mySwitch = true;
+		},3000);
+	});
+</script>
+
+</body>
+</html>

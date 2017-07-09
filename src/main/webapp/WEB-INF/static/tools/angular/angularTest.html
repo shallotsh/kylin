@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angular test</title>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+    <p>应用范围测试：<span>{{global | uppercase}}</span></p>
+
+    <div  ng-controller="myCtr" ng-init="person={firstName:'Jim',lastName:'Gree'}">
+        <p>名：<input type="text" ng-model="firstName"/>
+        </p>
+        <p>姓：<input type="text" ng-model="lastName"/></p>
+
+        <p>姓名：<span> {{ firstName + " " + lastName}}</span></p>
+
+        <p>测试: <span> {{ person.firstName + " " + person.lastName}}</span></p>
+    </div>
+
+    <div ng-controller="testCtr" >
+        Hi, {{ firstName }}!北京时间：{{theTime}}
+    </div>
+
+    <script type="application/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('myCtr', function ($scope, $rootScope, $location) {
+            $scope.lastName = "John";
+
+            //$scope.firstName = "Tom";
+
+            $rootScope.firstName = "Eric";
+            $rootScope.global = "Yes";
+
+            console.log("page url:" + $location.absUrl());
+
+            console.log("page path:" + $location.path());
+            console.log("window.location.path:" + window.location.path)
+        });
+
+        app.controller('testCtr', function($scope, $interval){
+            $scope.theTime = new Date().toLocaleTimeString();
+            $interval(function(){
+                $scope.theTime = new Date().toLocaleTimeString();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

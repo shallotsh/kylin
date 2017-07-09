@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>angular validator</title>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body>
+
+<form ng-app="" name="myForm">
+    Email:
+    <input type="email" name="myAddress" ng-model="text"/>
+    <span ng-show="myForm.myAddress.$error.email">这不是一个合法的邮箱</span>
+</form>
+
+<script type="application/javascript">
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>customCmd 自定义angular指令</title>
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+
+<wyf-tips></wyf-tips>
+
+<div wyf-tips></div>
+
+<script type="application/javascript">
+    var app = angular.module('myApp', []);
+    app.directive('wyfTips', function(){
+       return {
+           template: "<h2>提示测试</h2>"
+       }
+    });
+</script>
+
+</body>
+</html>
