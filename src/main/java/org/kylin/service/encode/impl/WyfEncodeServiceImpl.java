@@ -51,20 +51,8 @@ public class WyfEncodeServiceImpl implements WyfEncodeService{
         LOGGER.info("direct-select-encode riddles={} ", riddles);
 
         WelfareCode welfareCode = predict3DCodes(riddles);
-        if(welfareCode != null) {
-            Collections.sort(welfareCode.getW3DCodes(), new Comparator<W3DCode>() {
-                @Override
-                public int compare(W3DCode o1, W3DCode o2) {
-                    if(o1.getH() != null && o2.getH() != null && o1.getH() != o2.getH()){
-                        return o1.getH().compareTo(o2.getH());
-                    }else if (o1.getD() != o2.getD()){
-                        return o1.getD().compareTo(o2.getD());
-                    }else{
-                        return o1.getU().compareTo(o2.getU());
-                    }
-                }
-            });
-            welfareCode.distinct().generate();
+        if(welfareCode != null && !CollectionUtils.isEmpty(welfareCode.getW3DCodes())) {
+            welfareCode.distinct().generate().getW3DCodes().sort(WelfareCode::bitSort);
         }
 
         LOGGER.info("direct-select-codes={}", JSON.toJSONString(welfareCode));

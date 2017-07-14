@@ -97,4 +97,31 @@ public class WelfareCode implements Serializable{
 
         return this;
     }
+
+    public static int bitSort(W3DCode o1, W3DCode o2){
+        if(o1.getH() != null && o2.getH() != null && !o1.getH().equals(o2.getH())){
+            return o1.getH().compareTo(o2.getH());
+        }else if (!o1.getD().equals(o2.getD())){
+            return o1.getD().compareTo(o2.getD());
+        }else{
+            return o1.getU().compareTo(o2.getU());
+        }
+    }
+
+
+    public static int freqSort(W3DCode o1, W3DCode o2){
+        if(o1 == null || o2 == null || o1.getFreq() == null || o2.getFreq() == null){
+            return 0;
+        }
+
+        return o1.getFreq().compareTo(o2.getFreq());
+    }
+
+    public static int tailSort(W3DCode o1, W3DCode o2){
+        if(o1 == null || o2 == null || o1.getSumTail() == null || o2.getSumTail() == null){
+            return 0;
+        }
+
+        return o1.getSumTail().compareTo(o2.getSumTail());
+    }
 }
