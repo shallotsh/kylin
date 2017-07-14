@@ -1,13 +1,13 @@
 package org.kylin.web;
 
-import org.kylin.bean.WelfareCode;
-import org.kylin.bean.WyfDataResponse;
-import org.kylin.bean.WyfParam;
-import org.kylin.bean.WyfResponse;
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.collections4.CollectionUtils;
+import org.kylin.bean.*;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.service.WelfareCodePredictor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author huangyawu
@@ -32,17 +30,18 @@ public class ApiCodePredictor {
 
     @ResponseBody
     @RequestMapping(value = "/predictor/codes",  method = {RequestMethod.POST, RequestMethod.GET})
-    public WyfResponse predict(String seq1, String seq2, String seq3, String seq4, Integer type){
-//        LOGGER.info("api-code-predictor-predict param={}", JSON.toJSONString(wyfParam));
+    public WyfResponse predict(@RequestBody WyfParam wyfParam){
+        LOGGER.info("api-code-predictor-predict param={}", JSON.toJSONString(wyfParam));
 
-        LOGGER.info("api-code-predictor seq1={}, seq2={}, seq3={}, seq4={}", seq1, seq2, seq3, seq4);
-        List<String> seqs = new ArrayList<>();
-        seqs.add(seq1);
-        seqs.add(seq2);
-        seqs.add(seq3);
-        seqs.add(seq4);
+        if(wyfParam == null || CollectionUtils.isEmpty(wyfParam.getRiddles())
+                || wyfParam.getTargetCodeType() == null){
+            LOGGER.warn("api-code-predictor-predict-bad-quest");
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "param invalid.");
+        }
 
-        WelfareCode welfareCode = welfareCodePredictor.encode(seqs, CodeTypeEnum.getById(type));
+        WelfareCode welfareCode = welfareCodePredictor.encode(wyfParam.getRiddles(), CodeTypeEnum.getById(wyfParam.getTargetCodeType()));
+
+        LOGGER.debug("codes:{}", JSON.toJSONString(welfareCode));
 
         return new WyfDataResponse<>(welfareCode);
     }

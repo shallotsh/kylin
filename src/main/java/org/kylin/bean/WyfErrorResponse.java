@@ -4,7 +4,7 @@ package org.kylin.bean;
  * @author huangyawu
  * @date 2017/6/25 下午3:24.
  */
-public class WyfErrorResponse {
+public class WyfErrorResponse extends WyfResponse{
     private Error error;
 
     public WyfErrorResponse(Integer code, String message) {
