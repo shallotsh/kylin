@@ -5,10 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.constant.CodeTypeEnum;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author huangyawu
@@ -94,6 +91,16 @@ public class WelfareCode implements Serializable{
         }
 
         this.setCodes(w3DStrings);
+
+        return this;
+    }
+
+    public WelfareCode sort(Comparator<? super W3DCode> c){
+        if(CollectionUtils.isEmpty(this.getW3DCodes())){
+            return this;
+        }
+
+        this.getW3DCodes().sort(c);
 
         return this;
     }

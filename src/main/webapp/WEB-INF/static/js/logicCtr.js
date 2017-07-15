@@ -5,11 +5,11 @@
 
 
 app.controller('logicCtr', function ($scope, $rootScope, $http) {
+
+    // 其他操作
+    $rootScope.wyfMessage=JSON.stringify({"key":"HelloWorld"}, null, 2)
+
     $scope.predict = function () {
-        // console.log('input_1: ' + $scope.input_1 + ', type:' + typeof $scope.input_1);
-        // console.log('input_2: ' + $scope.input_2);
-        // console.log('input_3: ' + $scope.input_3);
-        // console.log('input_4: ' + $scope.input_4);
         var paramArray = [];
         paramArray.push($scope.input_1);
         paramArray.push($scope.input_2);
@@ -31,9 +31,14 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
                 "Content-Type": "application/json; charset=UTF-8"
             }
         }).then(function success(response) {
-            console.log("resp:" + response.data);
+            $rootScope.wyfCode=response.data;
+            $rootScope.isPredict = true;
+            $rootScope.wyfMessage = JSON.stringify($rootScope.wyfCode, null, 2);
+            console.log("resp:" + JSON.stringify($rootScope.wyfCode, null, 2));
         }, function fail(response) {
-            console.log("resp:" + response.data);
+            $rootScope.wyfCode=response.data;
+            console.log("resp:" + JSON.stringify($rootScope.wyfCode, null, 2));
+            $rootScope.wyfMessage=JSON.stringify($rootScope.wyfCode, null, 2);
         });
     };
 });

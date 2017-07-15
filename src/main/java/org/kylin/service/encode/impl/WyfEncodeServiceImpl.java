@@ -52,7 +52,7 @@ public class WyfEncodeServiceImpl implements WyfEncodeService{
 
         WelfareCode welfareCode = predict3DCodes(riddles);
         if(welfareCode != null && !CollectionUtils.isEmpty(welfareCode.getW3DCodes())) {
-            welfareCode.distinct().generate().getW3DCodes().sort(WelfareCode::bitSort);
+            welfareCode.distinct().sort(WelfareCode::freqSort).generate();
         }
 
         LOGGER.info("direct-select-codes={}", JSON.toJSONString(welfareCode));
