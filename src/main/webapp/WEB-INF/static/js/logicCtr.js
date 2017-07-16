@@ -7,7 +7,7 @@
 app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     // 其他操作
-    var codes = getData();
+    // var codes = getData();
     $rootScope.wyfMessage = "欢迎使用我要发预测系统！！";
     $rootScope.codesCount = 0;
     // $rootScope.wyfMessage=JSON.stringify(codes.data.codes, null, 2);
