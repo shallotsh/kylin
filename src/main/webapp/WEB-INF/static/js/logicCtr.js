@@ -50,5 +50,3 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
 });
 
-
-app.factory('')

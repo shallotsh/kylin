@@ -31,7 +31,7 @@
             <hr/>
             <div class="row">
               <div class="col-sm-2 col-md-2" style="text-align: center;vertical-align: middle; padding-right: 0px; padding-left: 0px;">
-                <label for="firstname" class="col-md-12 control-label" style="vertical-align: middle;"tools
+                <label class="col-md-12 control-label" style="vertical-align: middle;"tools
                   >预测序列</label>
               </div>
               <div class="col-sm-2 col-md-2" style="margin-right: 0px; padding-right: 0px;" >
@@ -51,18 +51,18 @@
             <div class="row">
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-md-4 control-label">和值尾</label>
+                    <label for="wyf_sum_tail" class="col-md-4 control-label">和值尾</label>
                     <div class="col-md-8">
-                      <input type="number" class="form-control" id="firstname" 
+                      <input type="number" class="form-control" ng-model="wyf_sum_tail" id="wyf_sum_tail"
                            placeholder="请输入和值尾">
                     </div>
                   </div>
               </div>
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-sm-4 control-label">胆码</label>
+                    <label for="wyf_bold" class="col-sm-4 control-label">胆码</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" id="firstname" 
+                      <input type="number" class="form-control" ng-model="wyf_bold" id="wyf_bold"
                            placeholder="请输入胆码">
                     </div>
                   </div>
@@ -74,18 +74,18 @@
             <div class="row">
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-md-4 control-label">二码</label>
+                    <label for="wyf_gossip" class="col-md-4 control-label">二码</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control" id="firstname" 
+                      <input type="text" class="form-control" ng-model="wyf_gossip" id="wyf_gossip"
                            placeholder="请输入二码">
                     </div>
                   </div>
               </div>
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-sm-4 control-label">跨度</label>
+                    <label for="wyf_range" class="col-sm-4 control-label">跨度</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="firstname" 
+                      <input type="text" class="form-control" ng-model="wyf_range" id="wyf_range"
                            placeholder="请输入跨度">
                     </div>
                   </div>
@@ -97,18 +97,18 @@
             <div class="row">
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-md-4 control-label">定三码</label>
+                    <label for="wyf_locate_three" class="col-md-4 control-label">定三码</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control" id="firstname" 
+                      <input type="text" class="form-control" ng-model="wyf_locate_three" id="wyf_locate_three"
                            placeholder="请输入定三码">
                     </div>
                   </div>
               </div>
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-sm-4 control-label">钓叟</label>
+                    <label for="wyf_fish_man" class="col-sm-4 control-label">钓叟</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="firstname" 
+                      <input type="text" class="form-control" ng-model="wyf_fish_man" id="wyf_fish_man"
                            placeholder="请输入钓叟">
                     </div>
                   </div>
@@ -120,18 +120,18 @@
             <div class="row">
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-md-4 control-label">百十位</label>
+                    <label for="wyf_bit_hd" class="col-md-4 control-label">百十位</label>
                     <div class="col-md-8">
-                      <input type="number" class="form-control" id="firstname" 
+                      <input type="number" class="form-control" ng-model="wyf_bit_hd" id="wyf_bit_hd"
                            placeholder="请输入百十位">
                     </div>
                   </div>
               </div>
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="firstname" class="col-sm-4 control-label">十个位</label>
+                    <label for="wyf_bit_du" class="col-sm-4 control-label">十个位</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" id="firstname" 
+                      <input type="number" class="form-control" ng-model="wyf_bit_du" id="wyf_bit_du"
                            placeholder="请输入十个位">
                     </div>
                   </div>
@@ -142,27 +142,27 @@
             <div class="row">
               <div class="col-sm-4 col-md-4">
                   <div class="form-group">
-                    <label for="firstname" class="col-md-4 control-label">百位</label>
+                    <label for="wyf_bit_h" class="col-md-4 control-label">百位</label>
                     <div class="col-md-8">
-                      <input type="number" class="form-control" id="firstname" 
+                      <input type="number" class="form-control" ng-model="wyf_bit_h" id="wyf_bit_h"
                            placeholder="百位">
                     </div>
                   </div>
               </div>
               <div class="col-sm-4 col-md-4">
                   <div class="form-group">
-                    <label for="firstname" class="col-sm-4 control-label">十位</label>
+                    <label for="wyf_bit_d" class="col-sm-4 control-label">十位</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" id="firstname" 
+                      <input type="number" class="form-control" ng-model="wyf_bit_d" id="wyf_bit_d"
                            placeholder="十位">
                     </div>
                   </div>
               </div>
               <div class="col-sm-4 col-md-4">
                   <div class="form-group">
-                    <label for="firstname" class="col-sm-4 control-label">个位</label>
+                    <label for="wyf_bit_u" class="col-sm-4 control-label">个位</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" id="firstname" 
+                      <input type="number" class="form-control" ng-model="wyf_bit_u" id="wyf_bit_u"
                            placeholder="个位">
                     </div>
                   </div>
@@ -172,7 +172,7 @@
 
             
             <hr/>
-            <label for="name">杀码选项</label>
+            <label>杀码选项</label>
             <div>
               <label class="checkbox-inline">
                 <input type="checkbox" id="inlineCheckbox1" value="option1"> 杀两头
@@ -184,7 +184,7 @@
                 <input type="checkbox" id="inlineCheckbox3" value="option3"> 杀大和
               </label>
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox3" value="option4"> 杀全奇全偶
+                <input type="checkbox" id="inlineCheckbox4" value="option4"> 杀全奇全偶
               </label>
             </div>
             <hr/>
@@ -201,7 +201,7 @@
                 <input type="radio"  value="option2" name="sex">先二码
               </label> 
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox3" value="option3"> 分类导出
+                <input type="checkbox" id="inlineCheckbox5" value="option3"> 分类导出
               </label>
             </div>
             <hr/>
