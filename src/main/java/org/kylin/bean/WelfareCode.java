@@ -190,4 +190,5 @@ public class WelfareCode implements Serializable{
 
         return o1.getSumTail().compareTo(o2.getSumTail());
     }
+
 }

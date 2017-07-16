@@ -33,6 +33,7 @@ public class W3DCode {
             sum += this.u;
         }
         this.sumTail = sum % 10;
+        this.freq = 1;
     }
 
     public W3DCode(Integer d, Integer u) {

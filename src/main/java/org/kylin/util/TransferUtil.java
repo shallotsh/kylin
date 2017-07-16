@@ -81,4 +81,44 @@ public class TransferUtil {
 
         return Math.min(Math.min(w3DCode.getH(), w3DCode.getD()), w3DCode.getU());
     }
+
+    public static boolean isPairCode(W3DCode w3DCode){
+        if(w3DCode == null){
+            return false;
+        }
+
+        return w3DCode.getH() == w3DCode.getD()
+                || w3DCode.getH() == w3DCode.getD()
+                || w3DCode.getD() == w3DCode.getU();
+    }
+
+    public static List<W3DCode> getPairCodes(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> ret = new ArrayList<>();
+        w3DCodes.forEach(w3DCode -> {
+            if(isPairCode(w3DCode)){
+                ret.add(w3DCode);
+            }
+        });
+
+        return ret;
+    }
+
+    public static List<W3DCode> getNonPairCodes(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> ret = new ArrayList<>();
+        w3DCodes.forEach(w3DCode -> {
+            if(!isPairCode(w3DCode)){
+                ret.add(w3DCode);
+            }
+        });
+
+        return ret;
+    }
 }
