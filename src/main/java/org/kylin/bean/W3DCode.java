@@ -93,6 +93,14 @@ public class W3DCode {
         this.sumTail = sumTail;
     }
 
+    public void addFreq(int count){
+        if(this.freq == null){
+            this.freq = count;
+        }else{
+            this.freq += count;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

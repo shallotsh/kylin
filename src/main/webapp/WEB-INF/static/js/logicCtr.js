@@ -7,7 +7,12 @@
 app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     // 其他操作
-    $rootScope.wyfMessage=JSON.stringify({"key":"HelloWorld"}, null, 2)
+    var codes = getData();
+    $rootScope.wyfMessage = "欢迎使用我要发预测系统！！";
+    $rootScope.codesCount = 0;
+    // $rootScope.wyfMessage=JSON.stringify(codes.data.codes, null, 2);
+    // $rootScope.wyfCodes = codes.data.codes;
+    // $rootScope.codesCount = codes.data.codes.length;
 
     $scope.predict = function () {
         var paramArray = [];
@@ -31,16 +36,18 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
                 "Content-Type": "application/json; charset=UTF-8"
             }
         }).then(function success(response) {
-            $rootScope.wyfCode=response.data;
+            $rootScope.welfareCode=response.data.data;
+            console.log("resp:" + JSON.stringify($rootScope.welfareCode, null, 2));
+            $rootScope.wyfCodes = $rootScope.welfareCode.codes;
+            console.log("wyfCodes:" + JSON.stringify($rootScope.wyfCodes, null, 2));
+            $rootScope.codesCount = $rootScope.wyfCodes.length;
+            $rootScope.wyfMessage = "预测请求返回成功";
             $rootScope.isPredict = true;
-            $rootScope.wyfMessage = JSON.stringify($rootScope.wyfCode, null, 2);
-            console.log("resp:" + JSON.stringify($rootScope.wyfCode, null, 2));
         }, function fail(response) {
-            $rootScope.wyfCode=response.data;
-            console.log("resp:" + JSON.stringify($rootScope.wyfCode, null, 2));
-            $rootScope.wyfMessage=JSON.stringify($rootScope.wyfCode, null, 2);
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
         });
     };
+
 });
 
 

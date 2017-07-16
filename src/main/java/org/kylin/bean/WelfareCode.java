@@ -3,6 +3,7 @@ package org.kylin.bean;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.constant.CodeTypeEnum;
+import org.kylin.util.TransferUtil;
 
 import java.io.Serializable;
 import java.util.*;
@@ -94,6 +95,64 @@ public class WelfareCode implements Serializable{
 
         return this;
     }
+
+    public WelfareCode toGroup(){
+        if(!CodeTypeEnum.DIRECT.equals(codeTypeEnum)
+                || CollectionUtils.size(this.getW3DCodes()) <= 1){
+            return this;
+        }
+        // todo
+        List<W3DCode> w3DCodes = new ArrayList<>();
+        this.getW3DCodes().forEach(w3DCode -> {
+            int index = TransferUtil.findInGroupW3DCodes(w3DCodes, w3DCode);
+
+            if(index >= 0){
+                w3DCodes.get(index).addFreq(w3DCode.getFreq());
+            }else{
+                w3DCodes.add(w3DCode);
+            }
+        });
+
+        this.setW3DCodes(w3DCodes);
+
+        this.distinct().sort(WelfareCode::bitSort);
+        this.codeTypeEnum = CodeTypeEnum.GROUP;
+        return this;
+    }
+
+
+    public WelfareCode toDirect(){
+        if(!CodeTypeEnum.GROUP.equals(codeTypeEnum)
+                || CollectionUtils.size(this.getW3DCodes()) <= 1) {
+            return this;
+        }
+        // todo
+        List<W3DCode> w3DCodes = new ArrayList<>();
+        this.getW3DCodes().forEach(w3DCode -> {
+            int index = TransferUtil.findInDirectW3DCodes(w3DCodes, w3DCode);
+
+            if(index >= 0){
+                w3DCodes.get(index).addFreq(w3DCode.getFreq());
+            }else{
+                w3DCodes.add(w3DCode);
+            }
+        });
+
+        this.setW3DCodes(w3DCodes);
+        this.distinct().sort(WelfareCode::bitSort);
+        this.codeTypeEnum = CodeTypeEnum.DIRECT;
+        return this;
+    }
+
+    public WelfareCode cleanFreq(){
+        if(CollectionUtils.isEmpty(this.getW3DCodes())){
+            return this;
+        }
+
+        this.getW3DCodes().forEach(w3DCode -> w3DCode.setFreq(1));
+        return this;
+    }
+
 
     public WelfareCode sort(Comparator<? super W3DCode> c){
         if(CollectionUtils.isEmpty(this.getW3DCodes())){

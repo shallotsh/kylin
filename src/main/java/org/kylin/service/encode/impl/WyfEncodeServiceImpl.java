@@ -30,25 +30,27 @@ public class WyfEncodeServiceImpl implements WyfEncodeService{
 
     @Override
     public WelfareCode groupSelectEncoder(List<Set<Integer>> riddles) {
+        LOGGER.info("group-select-encode riddles={} ", riddles);
+
         if(CollectionUtils.size(riddles) < 3){
             LOGGER.warn("group-select-exception riddles={}", riddles);
             throw new IllegalArgumentException("参数错误");
         }
 
+        WelfareCode welfareCode = directSelectEncoder(riddles);
 
-
-        return null;
+        return direct2GroupSelectEncoder(welfareCode);
     }
 
     @Override
     public WelfareCode directSelectEncoder(List<Set<Integer>> riddles) {
 
+        LOGGER.info("direct-select-encode riddles={} ", riddles);
+
         if(CollectionUtils.size(riddles) < 3){
             LOGGER.warn("group-select-exception riddles={}", riddles);
             throw new IllegalArgumentException("参数错误");
         }
-
-        LOGGER.info("direct-select-encode riddles={} ", riddles);
 
         WelfareCode welfareCode = predict3DCodes(riddles);
         if(welfareCode != null && !CollectionUtils.isEmpty(welfareCode.getW3DCodes())) {
@@ -61,15 +63,27 @@ public class WyfEncodeServiceImpl implements WyfEncodeService{
 
     @Override
     public WelfareCode group2directSelectEncoder(WelfareCode groupWelfareCode) {
-        return null;
+        if(groupWelfareCode == null){
+            return groupWelfareCode;
+        }
+
+        return groupWelfareCode.toDirect();
     }
 
     @Override
     public WelfareCode direct2GroupSelectEncoder(WelfareCode directWelfareCode) {
-        return null;
+        if(directWelfareCode == null){
+            return directWelfareCode;
+        }
+
+        return directWelfareCode.toGroup();
     }
 
-
+    /**
+     * 直选编码
+     * @param riddles
+     * @return
+     */
     private WelfareCode predict3DCodes(List<Set<Integer>> riddles){
         if(CollectionUtils.size(riddles) < 3){
             return null;

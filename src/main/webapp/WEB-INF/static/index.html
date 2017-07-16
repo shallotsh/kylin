@@ -35,16 +35,16 @@
                   >预测序列</label>
               </div>
               <div class="col-sm-2 col-md-2" style="margin-right: 0px; padding-right: 0px;" >
-                <input type="text" class="form-control" placeholder="序列1" ng-model="input_1" />
+                <input type="text" class="form-control" placeholder="序列1" ng-model="input_1" value="12"/>
               </div>
               <div class="col-sm-2 col-md-2" style="margin-right: 0px; padding-right: 0px;">
-                <input type="text" class="form-control" placeholder="序列2" ng-model="input_2" />
+                <input type="text" class="form-control" placeholder="序列2" ng-model="input_2" value="32"/>
               </div>
               <div class="col-sm-2 col-md-2" style="margin-right: 0px; padding-right: 0px;">
-                <input type="text" class="form-control" placeholder="序列3" ng-model="input_3"/>
+                <input type="text" class="form-control" placeholder="序列3" ng-model="input_3" value="983"/>
               </div>
               <div class="col-sm-2 col-md-2"  style="margin-right: 0px; padding-right: 0px;">
-                <input type="text" class="form-control" placeholder="序列4" ng-model="input_4"/>
+                <input type="text" class="form-control" placeholder="序列4" ng-model="input_4" value="32"/>
               </div>
             </div>
             <hr/>
@@ -217,29 +217,15 @@
               <textarea class="form-control" rows="3" ng-model="wyfMessage" readonly="true"></textarea>
             </div>
             <hr/>
-            <div class="table-responsive">
-              <table class="table" >
-                <caption>本次预测输出的3D码</caption>
 
-                <tbody>
-                  <tr>
-                    <td>产品1</td>
-                    <td>23/11/2013</td>
-                    <td>待发货</td></tr>
-                  <tr>
-                    <td>产品2</td>
-                    <td>10/11/2013</td>
-                    <td>发货中</td></tr>
-                  <tr>
-                    <td>产品3</td>
-                    <td>20/10/2013</td>
-                    <td>待确认</td></tr>
-                  <tr>
-                    <td>产品4</td>
-                    <td>20/10/2013</td>
-                    <td>已退货</td></tr>
-                </tbody>
-              </table>
+             <div class="wyf-output-title">
+                 <h3>预测3D码序列: {{codesCount}} 注</h3>
+             </div>
+             <hr/>
+            <div class="wyf-codes">
+              <ul>
+                  <li ng-repeat="item in wyfCodes"><span style="display: inline-block;">{{item}}</span></li>
+              </ul>
             </div>
 
          </div>

@@ -23,3 +23,17 @@ hr {
 .control-label {
 	vertical-align:middle;display:inline-block;
 }
+
+
+.wyf-codes ul{
+	align-items: center;
+	list-style:none;
+	margin:0px;
+	padding: 0px 10px;
+}
+
+.wyf-codes ul li {
+	display: inline;
+	margin: 10px 10px;
+	line-height: 40px;
+}
