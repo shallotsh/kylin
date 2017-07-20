@@ -190,19 +190,23 @@
             <hr/>
             
             <button type="button" class="btn btn-success" ng-click="predict()" >预测</button>
-            <button type="button" class="btn btn-primary" >杀码</button>
+            <button type="button" class="btn btn-success" ng-click="transfer2Direct()" ng-model="direct" ng-disabled="direct" >转直选</button>
+            <button type="button" class="btn btn-success" ng-click="transfer2Group()" ng-model="group" ng-disabled="group">转组选</button>
+            <button type="button" class="btn btn-primary" ng-click="killCode()">杀码</button>
             <button type="button" class="btn btn-primary" >综合选码</button>
-            <button type="button" class="btn btn-primary" >导出</button>
-            <button type="button" class="btn btn-danger" >重置</button>
+            <button type="button" class="btn btn-primary" ng-click="export()">导出</button>
+            <button type="button" class="btn btn-danger" ng-click="reset()">重置</button>
             <div>
-              <input type="radio"  value="option1" name="sex">先三码  
-              </label> 
-              <label class="radio-inline"> 
-                <input type="radio"  value="option2" name="sex">先二码
-              </label> 
-              <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox5" value="option3"> 分类导出
-              </label>
+                <label class="radio-inline">
+                    <input type="radio"  ng-value="3" name="encode" ng-model="quibinary_first">先二码
+                </label>
+                <label class="radio-inline">
+                    <input type="radio"  ng-value="1" name="encode" ng-model="quibinary_first">先三码
+                </label>
+                <!--<label class="checkbox-inline">-->
+                    <!--<input type="checkbox" id="inlineCheckbox5" value="option3"> 分类导出-->
+                <!--</label>-->
+
             </div>
             <hr/>
          </div>

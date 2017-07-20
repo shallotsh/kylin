@@ -10,7 +10,7 @@ public class WyfParam {
     private List<String> riddles;
     private Integer srcCodeType;
     private Integer targetCodeType;
-    private List<String> codes;
+    private List<W3DCode> w3DCodes;
     private FilterParam filterParam;
 
     public List<String> getRiddles() {
@@ -37,12 +37,12 @@ public class WyfParam {
         this.targetCodeType = targetCodeType;
     }
 
-    public List<String> getCodes() {
-        return codes;
+    public List<W3DCode> getW3DCodes() {
+        return w3DCodes;
     }
 
-    public void setCodes(List<String> codes) {
-        this.codes = codes;
+    public void setW3DCodes(List<W3DCode> w3DCodes) {
+        this.w3DCodes = w3DCodes;
     }
 
     public FilterParam getFilterParam() {

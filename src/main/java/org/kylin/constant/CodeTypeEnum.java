@@ -7,7 +7,7 @@ package org.kylin.constant;
 public enum CodeTypeEnum {
     GROUP(1, "组选"),
     DIRECT(2, "直选"),
-    BINARY_CODE(3, "二码");
+    QUIBINARY(3, "二码法");
     private Integer id;
     private String desc;
 

@@ -48,9 +48,19 @@ public class ApiCodePredictor {
 
     @ResponseBody
     @RequestMapping(value = "/transfer/codes",  method = RequestMethod.POST)
-    public WyfResponse transfer(WyfParam wyfParam){
+    public WyfResponse transfer(@RequestBody WelfareCode welfareCode){
+        LOGGER.info("transfer-codes welfareCode={}", JSON.toJSONString(welfareCode));
+        if(welfareCode == null || welfareCode.getW3DCodes() == null){
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数为空");
+        }
 
-        return new WyfDataResponse<>(null);
+        if(CodeTypeEnum.DIRECT == welfareCode.getCodeTypeEnum()){
+            return new WyfDataResponse<>(welfareCode.toGroup().sort(WelfareCode::bitSort).generate());
+        }else if (CodeTypeEnum.GROUP == welfareCode.getCodeTypeEnum()){
+            return new WyfDataResponse<>(welfareCode.toDirect().sort(WelfareCode::bitSort).generate());
+        }else{
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "编码类型错误");
+        }
     }
 
     @ResponseBody

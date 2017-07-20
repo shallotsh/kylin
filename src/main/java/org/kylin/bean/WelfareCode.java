@@ -3,6 +3,7 @@ package org.kylin.bean;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.constant.CodeTypeEnum;
+import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
 
 import java.io.Serializable;
@@ -114,8 +115,7 @@ public class WelfareCode implements Serializable{
         });
 
         this.setW3DCodes(w3DCodes);
-
-        this.distinct().sort(WelfareCode::bitSort);
+        this.asc().distinct().cleanFreq().sort(WelfareCode::bitSort);
         this.codeTypeEnum = CodeTypeEnum.GROUP;
         return this;
     }
@@ -131,15 +131,13 @@ public class WelfareCode implements Serializable{
         this.getW3DCodes().forEach(w3DCode -> {
             int index = TransferUtil.findInDirectW3DCodes(w3DCodes, w3DCode);
 
-            if(index >= 0){
-                w3DCodes.get(index).addFreq(w3DCode.getFreq());
-            }else{
-                w3DCodes.add(w3DCode);
+            if(index < 0){
+                w3DCodes.addAll(Encoders.permutation(w3DCode));
             }
         });
 
         this.setW3DCodes(w3DCodes);
-        this.distinct().sort(WelfareCode::bitSort);
+        this.distinct().cleanFreq().sort(WelfareCode::bitSort);
         this.codeTypeEnum = CodeTypeEnum.DIRECT;
         return this;
     }
@@ -153,7 +151,18 @@ public class WelfareCode implements Serializable{
         return this;
     }
 
+    public WelfareCode asc(){
+        if(CollectionUtils.isEmpty(this.getW3DCodes())){
+            return this;
+        }
 
+//        this.getW3DCodes().forEach(w3DCode -> w3DCode.asc());
+        for(W3DCode w3DCode : this.getW3DCodes()){
+            w3DCode.asc();
+        }
+        return this;
+    }
+    
     public WelfareCode sort(Comparator<? super W3DCode> c){
         if(CollectionUtils.isEmpty(this.getW3DCodes())){
             return this;
@@ -165,12 +174,12 @@ public class WelfareCode implements Serializable{
     }
 
     public static int bitSort(W3DCode o1, W3DCode o2){
-        if(o1.getH() != null && o2.getH() != null && !o1.getH().equals(o2.getH())){
-            return o1.getH().compareTo(o2.getH());
-        }else if (!o1.getD().equals(o2.getD())){
-            return o1.getD().compareTo(o2.getD());
+        if(o1.getCodes()[2] != null && o2.getCodes()[2] != null && !o1.getCodes()[2].equals(o2.getCodes()[2])){
+            return o1.getCodes()[2].compareTo(o2.getCodes()[2]);
+        }else if (!o1.getCodes()[1].equals(o2.getCodes()[1])){
+            return o1.getCodes()[1].compareTo(o2.getCodes()[1]);
         }else{
-            return o1.getU().compareTo(o2.getU());
+            return o1.getCodes()[0].compareTo(o2.getCodes()[0]);
         }
     }
 

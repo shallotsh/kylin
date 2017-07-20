@@ -66,20 +66,20 @@ public class TransferUtil {
     }
 
     public static Integer max(W3DCode w3DCode){
-        if(w3DCode == null || w3DCode.getH() == null){
+        if(w3DCode == null || w3DCode.getCodes()[2] == null){
             return null;
         }
 
-        return Math.max(Math.max(w3DCode.getH(), w3DCode.getD()), w3DCode.getU());
+        return Math.max(Math.max(w3DCode.getCodes()[2], w3DCode.getCodes()[1]), w3DCode.getCodes()[0]);
     }
 
 
     public static Integer min(W3DCode w3DCode){
-        if(w3DCode == null || w3DCode.getH() == null){
+        if(w3DCode == null || w3DCode.getCodes()[2] == null){
             return null;
         }
 
-        return Math.min(Math.min(w3DCode.getH(), w3DCode.getD()), w3DCode.getU());
+        return Math.min(Math.min(w3DCode.getCodes()[2], w3DCode.getCodes()[1]), w3DCode.getCodes()[0]);
     }
 
     public static boolean isPairCode(W3DCode w3DCode){
@@ -87,9 +87,9 @@ public class TransferUtil {
             return false;
         }
 
-        return w3DCode.getH() == w3DCode.getD()
-                || w3DCode.getH() == w3DCode.getD()
-                || w3DCode.getD() == w3DCode.getU();
+        return w3DCode.getCodes()[0] == w3DCode.getCodes()[1]
+                || w3DCode.getCodes()[2] == w3DCode.getCodes()[1]
+                || w3DCode.getCodes()[1] == w3DCode.getCodes()[0];
     }
 
     public static List<W3DCode> getPairCodes(List<W3DCode> w3DCodes){

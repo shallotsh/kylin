@@ -41,14 +41,14 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
 
         try {
             switch (codeTypeEnum){
-                case BINARY_CODE:
-                    welfareCode = wyfEncodeService.gossipEncoder(sets);
+                case QUIBINARY:
+                    welfareCode = wyfEncodeService.quibinaryEncode(sets);
                     break;
                 case DIRECT:
-                    welfareCode = wyfEncodeService.directSelectEncoder(sets);
+                    welfareCode = wyfEncodeService.directSelectEncode(sets);
                     break;
                 case GROUP:
-                    welfareCode = wyfEncodeService.groupSelectEncoder(sets);
+                    welfareCode = wyfEncodeService.groupSelectEncode(sets);
                     break;
             }
         } catch (Exception e) {

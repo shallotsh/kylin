@@ -10,39 +10,25 @@ import java.util.Set;
  * @date 2017/6/29 下午11:26.
  */
 public interface WyfEncodeService {
+
     /**
-     * 二码编码器
+     * 二码法编码
      * @param riddles
      * @return
      */
-    WelfareCode gossipEncoder(List<Set<Integer>> riddles);
+    WelfareCode quibinaryEncode(List<Set<Integer>> riddles);
 
     /**
      * 组选编码器
      * @param riddles
      * @return
      */
-    WelfareCode groupSelectEncoder(List<Set<Integer>> riddles);
+    WelfareCode groupSelectEncode(List<Set<Integer>> riddles);
 
     /**
      * 直选编码器
      * @param riddles
      * @return
      */
-    WelfareCode directSelectEncoder(List<Set<Integer>> riddles);
-
-
-    /**
-     * 组选转直选编码
-     * @param groupWelfareCode
-     * @return
-     */
-    WelfareCode group2directSelectEncoder(WelfareCode groupWelfareCode);
-
-    /**
-     * 直选转组选
-     * @param directWelfareCode
-     * @return
-     */
-    WelfareCode direct2GroupSelectEncoder(WelfareCode directWelfareCode);
+    WelfareCode directSelectEncode(List<Set<Integer>> riddles);
 }
