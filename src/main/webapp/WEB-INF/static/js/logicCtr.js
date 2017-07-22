@@ -94,6 +94,44 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     };
 
+    $scope.exportCode = function () {
+        if(!$rootScope.isPredict){
+            handleException("请先完成预测");
+            return;
+        }
+
+        $http({
+            method:"POST",
+            url:"/api/welfare/export/codes",
+            data: JSON.stringify($rootScope.welfareCode),
+            headers:{
+                "Content-Type": "application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleDownloadResp(response);
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("导出请求失败!")
+        });
+    }
+
+    function handleDownloadResp(response) {
+        if(response == null){
+            console.log("request error.");
+            return;
+        }
+
+        if(response.data != null && response.data.data.error == undefined){
+            console.log("success:" + JSON.stringify(response.data, null, 2));
+            window.open("/api/welfare/download?fileName="+response.data.data)
+        }else{
+            console.log("failed:" + JSON.stringify(response.data, null, 2));
+
+            alert(response.data.message)
+        }
+    }
+
+
     function handleResponse (response){
         $rootScope.welfareCode=response.data.data;
         // console.log("resp:" + JSON.stringify($rootScope.welfareCode, null, 2));

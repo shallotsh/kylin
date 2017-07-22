@@ -5,6 +5,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.*;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.service.WelfareCodePredictor;
+import org.kylin.util.CommonUtils;
+import org.kylin.util.DocUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -79,9 +81,26 @@ public class ApiCodePredictor {
 
     @ResponseBody
     @RequestMapping(value = "/export/codes",  method = RequestMethod.POST)
-    public WyfResponse exportCodes(@RequestBody WyfParam wyfParam){
+    public WyfResponse exportCodes(@RequestBody WelfareCode welfareCode,
+                              HttpServletResponse response) throws IOException{
+        if(welfareCode == null){
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数错误");
+        }
 
-        return new WyfDataResponse<>(null);
+//        String filename = "welfare_" +  CommonUtils.getCurrentTimeString() + ".docx;";
+//        response.setContentType("application/vnd.ms-works");
+//        response.setHeader("Content-Disposition", "attachment;fileName=" + filename);
+//        response.setHeader("Content-Transfer-Encoding", "binary");
+//        DocUtils.saveW3DCodes(welfareCode, response.getOutputStream());
+
+
+        try {
+            String fileName = DocUtils.saveW3DCodes(welfareCode);
+            return  new WyfDataResponse<>(fileName);
+        } catch (IOException e) {
+            LOGGER.error("export-codes-error welfareCode={}", JSON.toJSONString(welfareCode));
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误");
+        }
     }
 
 
@@ -97,9 +116,14 @@ public class ApiCodePredictor {
     public String downloadFile(@RequestParam("fileName") String fileName,
                                HttpServletRequest request, HttpServletResponse response) {
         if (fileName != null) {
-            String realPath = request.getServletContext().getRealPath(
-                    "WEB-INF/File/");
-            File file = new File(realPath, fileName);
+            StringBuilder sb = new StringBuilder();
+            sb.append("/var/attachment/");
+
+            sb.append(CommonUtils.getCurrentTimeString().substring(0,6));
+            sb.append(File.separator);
+
+            File file = new File(sb.toString(), fileName);
+
             if (file.exists()) {
                 response.setContentType("application/force-download");// 设置强制下载不打开
                 response.addHeader("Content-Disposition",

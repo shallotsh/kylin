@@ -4,6 +4,7 @@ package org.kylin.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,45 @@ public class DocUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocUtils.class);
 
     private static final String BASE_PATH = "/var/attachment/";
+
+
+    public static void saveW3DCodes(WelfareCode welfareCode, OutputStream outputStream) throws IOException{
+        if(welfareCode == null || CollectionUtils.isEmpty(welfareCode.getW3DCodes())){
+            throw new IllegalArgumentException("参数错误");
+        }
+
+        XWPFDocument doc = new XWPFDocument();
+
+        XWPFParagraph header = doc.createParagraph();
+        header.setVerticalAlignment(TextAlignment.TOP);
+        header.setWordWrap(true);
+        header.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun hr1 = header.createRun();
+        hr1.setText("《我要发·518》福彩3D预测报表");
+        hr1.setBold(true);
+        hr1.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
+        hr1.setTextPosition(20);
+        hr1.setFontSize(28);
+        hr1.addBreak();
+
+        XWPFRun hr2 = header.createRun();
+
+        hr2.setText("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间：" + CommonUtils.getCurrentDateString());
+        hr2.setTextPosition(10);
+        hr2.setFontSize(18);
+
+
+        List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
+        String title = String.format("对子共计 %d 注", pairCodes.size());
+        writeCodes(doc.createParagraph(), pairCodes, title);
+
+        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
+        title = String.format("对子共计 %d 注", nonPairCodes.size());
+        writeCodes(doc.createParagraph(), nonPairCodes, title);
+
+        doc.write(outputStream);
+
+    }
 
     public static String saveW3DCodes(WelfareCode welfareCode) throws IOException{
         if(welfareCode == null || CollectionUtils.isEmpty(welfareCode.getW3DCodes())){
@@ -91,8 +131,11 @@ public class DocUtils {
         doc.write(out);
         out.close();
 
-        return sb.toString();
+        return fileName + ".docx";
     }
+
+
+
 
     public static void writeCodes(XWPFParagraph paragraph, List<W3DCode> w3DCodes, String titleString){
         if(paragraph == null || CollectionUtils.isEmpty(w3DCodes)){
