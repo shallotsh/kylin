@@ -7,6 +7,7 @@ import org.kylin.bean.FilterParam;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
 import org.kylin.util.TransferUtil;
+import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Set;
  * @author huangyawu
  * @date 2017/7/23 下午10:58.
  */
+@Service
 public class HUBitFilter implements CodeFilter<WelfareCode>{
 
     @Override

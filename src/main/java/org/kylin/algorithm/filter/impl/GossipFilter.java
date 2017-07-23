@@ -7,7 +7,9 @@ import org.kylin.bean.FilterParam;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
 import org.kylin.util.TransferUtil;
+import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +19,7 @@ import java.util.Set;
  * @author huangyawu
  * @date 2017/7/23 下午3:13.
  */
+@Service
 public class GossipFilter implements CodeFilter<WelfareCode>{
 
     @Override
@@ -46,16 +49,21 @@ public class GossipFilter implements CodeFilter<WelfareCode>{
                     continue;
                 }
 
+                Set<Integer> tmp = new HashSet<>();
+
                 int count = 0;
-                if(gossip.contains(w3DCode.getCodes()[0])){
+                if(gossip.contains(w3DCode.getCodes()[0]) && !tmp.contains(w3DCode.getCodes()[0])){
+                    tmp.add(w3DCode.getCodes()[0]);
                     count++;
                 }
 
-                if(gossip.contains(w3DCode.getCodes()[1])){
+                if(gossip.contains(w3DCode.getCodes()[1]) && !tmp.contains(w3DCode.getCodes()[1])){
+                    tmp.add(w3DCode.getCodes()[1]);
                     count++;
                 }
 
-                if(gossip.contains(w3DCode.getCodes()[2])){
+                if(gossip.contains(w3DCode.getCodes()[2]) && !tmp.contains(w3DCode.getCodes()[2])){
+                    tmp.add(w3DCode.getCodes()[2]);
                     count++;
                 }
 

@@ -77,7 +77,7 @@
                     <label for="wyf_gossip" class="col-md-4 control-label">二码</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" ng-model="wyf_gossip" id="wyf_gossip"
-                           placeholder="请输入二码">
+                           placeholder="35#25#68">
                     </div>
                   </div>
               </div>
@@ -100,7 +100,7 @@
                     <label for="wyf_locate_three" class="col-md-4 control-label">定三码</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" ng-model="wyf_locate_three" id="wyf_locate_three"
-                           placeholder="请输入定三码">
+                           placeholder="2345#1268#234">
                     </div>
                   </div>
               </div>
@@ -109,7 +109,7 @@
                     <label for="wyf_fish_man" class="col-sm-4 control-label">钓叟</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" ng-model="wyf_fish_man" id="wyf_fish_man"
-                           placeholder="请输入钓叟">
+                           placeholder="3495#237">
                     </div>
                   </div>
               </div>
@@ -120,22 +120,22 @@
             <div class="row">
               <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label for="wyf_bit_hd" class="col-md-4 control-label">百十位</label>
+                    <label for="wyf_bit_hu" class="col-md-4 control-label">百个位</label>
                     <div class="col-md-8">
-                      <input type="number" class="form-control" ng-model="wyf_bit_hd" id="wyf_bit_hd"
-                           placeholder="请输入百十位">
+                      <input type="number" class="form-control" ng-model="wyf_bit_hu" id="wyf_bit_hu"
+                           placeholder="请输入百个位">
                     </div>
                   </div>
               </div>
-              <div class="col-sm-6 col-md-6">
-                  <div class="form-group">
-                    <label for="wyf_bit_du" class="col-sm-4 control-label">十个位</label>
-                    <div class="col-sm-8">
-                      <input type="number" class="form-control" ng-model="wyf_bit_du" id="wyf_bit_du"
-                           placeholder="请输入十个位">
-                    </div>
-                  </div>
-              </div>
+              <!--<div class="col-sm-6 col-md-6">-->
+                  <!--<div class="form-group">-->
+                    <!--<label for="wyf_bit_du" class="col-sm-4 control-label">十个位</label>-->
+                    <!--<div class="col-sm-8">-->
+                      <!--<input type="number" class="form-control" ng-model="wyf_bit_du" id="wyf_bit_du"-->
+                           <!--placeholder="请输入十个位">-->
+                    <!--</div>-->
+                  <!--</div>-->
+              <!--</div>-->
 
             </div>
             <hr/>
@@ -175,16 +175,16 @@
             <label>杀码选项</label>
             <div>
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox1" value="option1"> 杀两头
+                <input type="checkbox" id="inlineCheckbox1" value="option1" ng-model="wyf_dipolar"> 杀两头
               </label>
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox2" value="option2"> 杀全大全小
+                <input type="checkbox" id="inlineCheckbox2" value="option2" ng-model="wyf_one_end"> 杀全大全小
               </label>
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox3" value="option3"> 杀大和
+                <input type="checkbox" id="inlineCheckbox3" value="option3" ng-model="wyf_big_sum"> 杀大和
               </label>
               <label class="checkbox-inline">
-                <input type="checkbox" id="inlineCheckbox4" value="option4"> 杀全奇全偶
+                <input type="checkbox" id="inlineCheckbox4" value="option4" ng-model="wyf_all_odd_even"> 杀全奇全偶
               </label>
             </div>
             <hr/>
@@ -192,10 +192,10 @@
             <button type="button" class="btn btn-success" ng-click="predict()" >预测</button>
             <button type="button" class="btn btn-success" ng-click="transfer2Direct()" ng-model="direct" ng-disabled="direct" >转直选</button>
             <button type="button" class="btn btn-success" ng-click="transfer2Group()" ng-model="group" ng-disabled="group">转组选</button>
-            <button type="button" class="btn btn-primary" ng-click="killCode()">杀码</button>
-            <button type="button" class="btn btn-primary" >综合选码</button>
-            <button type="button" class="btn btn-primary" ng-click="exportCode()">导出</button>
-            <button type="button" class="btn btn-danger" ng-click="reset()">重置</button>
+            <button type="button" class="btn btn-primary" ng-click="killCode()" ng-model="do_kill">杀码</button>
+            <button type="button" class="btn btn-primary" ng-click="comSelect()" ng-model="com_select">综合选码</button>
+            <button type="button" class="btn btn-primary" ng-click="exportCode()" ng-model="do_export">导出</button>
+            <button type="button" class="btn btn-danger" ng-click="reset()" ng-model="do_reset">重置</button>
             <div>
                 <label class="radio-inline">
                     <input type="radio"  ng-value="3" name="encode" ng-model="quibinary_first">先二码

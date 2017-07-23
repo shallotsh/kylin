@@ -18,9 +18,15 @@ public class FilterParam {
     private String uBits;
 
     private Boolean isKillDipolar;
+    private Integer dipolar;
     private Boolean isKillOneEnd;
+    private Integer oneEnd;
     private Boolean isKillBigSum;
+    private Integer bigSum;
     private Boolean isKillAllOddEven;
+    private Integer oddEven;
+
+    private WelfareCode welfareCode;
 
     public String getSumValue() {
         return sumValue;
@@ -103,19 +109,41 @@ public class FilterParam {
     }
 
     public Boolean getKillDipolar() {
-        return isKillDipolar;
+        return isKillDipolar ;
     }
 
     public void setKillDipolar(Boolean killDipolar) {
         isKillDipolar = killDipolar;
     }
 
+    public Integer getDipolar() {
+        return dipolar;
+    }
+
+    public void setDipolar(Integer dipolar) {
+        this.dipolar = dipolar;
+        if(dipolar != null && dipolar == 1){
+            isKillDipolar = true;
+        }
+    }
+
     public Boolean getKillOneEnd() {
-        return isKillOneEnd;
+        return isKillOneEnd ;
     }
 
     public void setKillOneEnd(Boolean killOneEnd) {
         isKillOneEnd = killOneEnd;
+    }
+
+    public Integer getOneEnd() {
+        return oneEnd;
+    }
+
+    public void setOneEnd(Integer oneEnd) {
+        this.oneEnd = oneEnd;
+        if(oneEnd != null && oneEnd == 1){
+            isKillAllOddEven = true;
+        }
     }
 
     public Boolean getKillBigSum() {
@@ -126,11 +154,41 @@ public class FilterParam {
         isKillBigSum = killBigSum;
     }
 
+    public Integer getBigSum() {
+        return bigSum;
+    }
+
+    public void setBigSum(Integer bigSum) {
+        this.bigSum = bigSum;
+        if (bigSum != null && bigSum == 1){
+            isKillBigSum = true;
+        }
+    }
+
     public Boolean getKillAllOddEven() {
-        return isKillAllOddEven;
+        return isKillAllOddEven ;
     }
 
     public void setKillAllOddEven(Boolean killAllOddEven) {
         isKillAllOddEven = killAllOddEven;
+    }
+
+    public Integer getOddEven() {
+        return oddEven;
+    }
+
+    public void setOddEven(Integer oddEven) {
+        this.oddEven = oddEven;
+        if (oddEven != null && oddEven == 1){
+            isKillAllOddEven = true;
+        }
+    }
+
+    public WelfareCode getWelfareCode() {
+        return welfareCode;
+    }
+
+    public void setWelfareCode(WelfareCode welfareCode) {
+        this.welfareCode = welfareCode;
     }
 }

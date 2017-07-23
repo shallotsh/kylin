@@ -67,9 +67,22 @@ public class ApiCodePredictor {
 
     @ResponseBody
     @RequestMapping(value = "/filter/codes", method = RequestMethod.POST)
-    public WyfResponse doFilter(@RequestBody WyfParam wyfParam){
+    public WyfResponse doFilter(@RequestBody FilterParam filterParam){
 
-        return new WyfDataResponse<>(null);
+        LOGGER.info("api-code-predictor-filter param={}", JSON.toJSONString(filterParam));
+
+        if(filterParam == null || filterParam.getWelfareCode() == null){
+            LOGGER.warn("api-code-predictor-filter-bad-quest");
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "param invalid.");
+        }
+
+        WelfareCode welfareCode = welfareCodePredictor.filter(filterParam);
+
+        if(welfareCode == null){
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "杀码错误");
+        }
+
+        return new WyfDataResponse<>(welfareCode);
     }
 
     @ResponseBody

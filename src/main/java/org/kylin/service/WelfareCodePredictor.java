@@ -1,5 +1,6 @@
 package org.kylin.service;
 
+import org.kylin.bean.FilterParam;
 import org.kylin.bean.WelfareCode;
 import org.kylin.constant.CodeTypeEnum;
 
@@ -11,4 +12,6 @@ import java.util.List;
  */
 public interface WelfareCodePredictor {
     WelfareCode encode(List<String> riddles, CodeTypeEnum codeTypeEnum);
+
+    WelfareCode filter(FilterParam filterParam);
 }

@@ -1,17 +1,21 @@
 package org.kylin.service.impl;
 
+import org.kylin.algorithm.filter.CodeFilter;
+import org.kylin.bean.FilterParam;
 import org.kylin.bean.WelfareCode;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.service.WelfareCodePredictor;
 import org.kylin.util.TransferUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.kylin.service.encode.WyfEncodeService;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -22,6 +26,9 @@ import java.util.Set;
 public class WelfareCodePredictorImpl implements WelfareCodePredictor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WelfareCodePredictorImpl.class);
+
+    @Resource
+    private ApplicationContext applicationContext;
 
     @Resource
     private WyfEncodeService wyfEncodeService;
@@ -59,6 +66,26 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
 
     }
 
+
+    public WelfareCode filter(FilterParam filterParam){
+        if(filterParam == null || filterParam.getWelfareCode() == null){
+            return null;
+        }
+
+        WelfareCode welfareCode = filterParam.getWelfareCode();
+        filterParam.setWelfareCode(null);
+
+        Map<String, CodeFilter> codeFilterMap = applicationContext.getBeansOfType(CodeFilter.class);
+        if(!CollectionUtils.isEmpty(codeFilterMap)){
+            codeFilterMap.forEach((k, filter) -> welfareCode.filter(filter, filterParam));
+        }
+
+        welfareCode.distinct().sort(WelfareCode::bitSort).generate();
+
+        LOGGER.info("filter-end codes={}", welfareCode.getCodes());
+
+        return welfareCode;
+    }
 
 
 }
