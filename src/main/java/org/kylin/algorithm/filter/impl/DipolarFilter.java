@@ -31,7 +31,7 @@ public class DipolarFilter implements CodeFilter<WelfareCode> {
         Iterator<W3DCode> iterator = w3DCodes.iterator();
         while(iterator.hasNext()){
             W3DCode w3DCode = iterator.next();
-            if(w3DCode.sum() > 20 && w3DCode.sum() < 10) {
+            if(w3DCode.sum() > 20 || w3DCode.sum() < 10) {
                 iterator.remove();
             }
         }

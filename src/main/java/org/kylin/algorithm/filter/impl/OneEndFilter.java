@@ -53,7 +53,7 @@ public class OneEndFilter implements CodeFilter<WelfareCode> {
                 low++;
             }
         }
-        if ((high == 3 || low == 3) && (w3DCode.getCodes()[2] == null && (high == 2 || low == 2))) {
+        if ((high == 3 || low == 3) || (w3DCode.getCodes()[2] == null && (high == 2 || low == 2))) {
             return true;
         } else {
             return false;

@@ -19,7 +19,7 @@ public class TransferUtil {
         }
 
         List<Set<Integer>> gossips = new ArrayList<>();
-        String[] gosArr = seq.split("#|$|@| ");
+        String[] gosArr = seq.split("#|$|@|,|/| ");
         for(String gos : gosArr){
             Set<Integer> set = toIntegerSet(gos);
 

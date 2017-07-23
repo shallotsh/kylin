@@ -39,10 +39,15 @@ public class TernaryLocationFilter implements CodeFilter<WelfareCode>{
         Iterator<W3DCode> iterator = w3DCodes.iterator();
         while(iterator.hasNext()){
             W3DCode w3DCode = iterator.next();
+            boolean flag = false;
             for(Set<Integer> set : ternaries){
-                if(!w3DCode.isInSeq(set)){
-                    iterator.remove();
+                if(w3DCode.isInSeq(set)){
+                    flag = true;
+                    break;
                 }
+            }
+            if( !flag ) {
+                iterator.remove();
             }
         }
 

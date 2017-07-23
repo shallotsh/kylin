@@ -28,7 +28,7 @@ public class UBitFilter implements CodeFilter<WelfareCode> {
             return;
         }
 
-        Set<Integer> uBits = TransferUtil.toIntegerSet(filterParam.getdBits());
+        Set<Integer> uBits = TransferUtil.toIntegerSet(filterParam.getuBits());
 
         if(CollectionUtils.isEmpty(uBits)){
             return;

@@ -24,7 +24,7 @@ public class BoldFilter implements CodeFilter<WelfareCode>{
         if(code == null ||
                 CollectionUtils.isEmpty(code.getW3DCodes()) ||
                 filterParam == null ||
-                StringUtils.isBlank(filterParam.getSumValue())){
+                StringUtils.isBlank(filterParam.getBoldCode())){
             return;
         }
 
