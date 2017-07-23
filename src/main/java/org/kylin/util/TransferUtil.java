@@ -1,5 +1,7 @@
 package org.kylin.util;
 
+import javafx.util.Pair;
+import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.W3DCode;
 import org.springframework.util.CollectionUtils;
 
@@ -10,7 +12,42 @@ import java.util.*;
  * @date 2017/7/2 下午4:18.
  */
 public class TransferUtil {
-    public static List<Set<Integer>> toIntegerSet(List<String> seqs){
+
+    public static List<Set<Integer>> parse(String seq){
+        if(StringUtils.isBlank(seq) || seq.length() < 2){
+            return Collections.emptyList();
+        }
+
+        List<Set<Integer>> gossips = new ArrayList<>();
+        String[] gosArr = seq.split("#|$|@| ");
+        for(String gos : gosArr){
+            Set<Integer> set = toIntegerSet(gos);
+
+            if(!CollectionUtils.isEmpty(set)){
+                gossips.add(set);
+            }
+        }
+
+        return gossips;
+    }
+
+    public static Set<Integer> toIntegerSet(String seq){
+        if(StringUtils.isBlank(seq)){
+            return Collections.emptySet();
+        }
+
+        Set<Integer> set = new HashSet<>();
+
+        for(char ch: seq.toCharArray()){
+            if(ch >= '0' && ch <= '9'){
+                set.add(ch - '0');
+            }
+        }
+
+        return set;
+    }
+
+    public static List<Set<Integer>> toIntegerSets(List<String> seqs){
         if(CollectionUtils.isEmpty(seqs)){
             return Collections.emptyList();
         }
@@ -20,12 +57,7 @@ public class TransferUtil {
             if(seq == null){
                 return;
             }
-            Set<Integer> set = new HashSet<>();
-            for(char ch: seq.toCharArray()){
-                if(ch >= '0' && ch <= '9'){
-                    set.add(ch - '0');
-                }
-            }
+            Set<Integer> set = toIntegerSet(seq);
             if(!CollectionUtils.isEmpty(set)){
                 seqInts.add(set);
             }

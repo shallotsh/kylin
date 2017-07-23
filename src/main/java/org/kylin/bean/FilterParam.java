@@ -9,8 +9,8 @@ public class FilterParam {
     private String sumValue;
     private String boldCode;
     private String gossip;
-    private String span;
-    private String ensureTreeCode;
+    private String range;
+    private String ternaryLocation;
     private String fishMan;
     private String hdBits;
     private String duBits;
@@ -18,7 +18,7 @@ public class FilterParam {
     private String dBits;
     private String uBits;
 
-    private Boolean isKillBothEnds;
+    private Boolean isKillDipolar;
     private Boolean isKillOneEnd;
     private Boolean isKillBigSum;
     private Boolean isKillAllOddEven;
@@ -47,20 +47,20 @@ public class FilterParam {
         this.gossip = gossip;
     }
 
-    public String getSpan() {
-        return span;
+    public String getRange() {
+        return range;
     }
 
-    public void setSpan(String span) {
-        this.span = span;
+    public void setRange(String range) {
+        this.range = range;
     }
 
-    public String getEnsureTreeCode() {
-        return ensureTreeCode;
+    public String getTernaryLocation() {
+        return ternaryLocation;
     }
 
-    public void setEnsureTreeCode(String ensureTreeCode) {
-        this.ensureTreeCode = ensureTreeCode;
+    public void setTernaryLocation(String ternaryLocation) {
+        this.ternaryLocation = ternaryLocation;
     }
 
     public String getFishMan() {
@@ -111,12 +111,12 @@ public class FilterParam {
         this.uBits = uBits;
     }
 
-    public Boolean getKillBothEnds() {
-        return isKillBothEnds;
+    public Boolean getKillDipolar() {
+        return isKillDipolar;
     }
 
-    public void setKillBothEnds(Boolean killBothEnds) {
-        isKillBothEnds = killBothEnds;
+    public void setKillDipolar(Boolean killDipolar) {
+        isKillDipolar = killDipolar;
     }
 
     public Boolean getKillOneEnd() {

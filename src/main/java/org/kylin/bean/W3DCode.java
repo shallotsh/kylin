@@ -1,8 +1,11 @@
 package org.kylin.bean;
 
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author huangyawu
@@ -137,5 +140,53 @@ public class W3DCode {
         return this;
     }
 
+    public int sum(){
+        int sum = 0;
+        if(this.codes[2] != null){
+            sum += this.codes[2];
+        }
+
+        if(this.codes[1] != null){
+            sum += this.codes[1];
+        }
+
+        if(this.codes[0] != null){
+            sum += this.codes[0];
+        }
+
+        return sum;
+    }
+
+    public int getMax(){
+        int max = Math.max(this.codes[0], this.codes[1]);
+        if(this.codes[2] != null){
+            max = Math.max(this.codes[2], max);
+        }
+        return max;
+    }
+
+    public int getMin(){
+        int min = Math.min(this.codes[0], this.codes[1]);
+        if(this.codes[2] != null){
+            min = Math.min(this.codes[2], min);
+        }
+
+        return min;
+    }
+
+
+    public boolean isInSeq(Set<Integer> seq){
+        if(CollectionUtils.isEmpty(seq)){
+            return false;
+        }
+
+        boolean flag = seq.contains(this.getCodes()[0]) && seq.contains(this.getCodes()[1]);
+
+        if(this.getCodes()[2] != null){
+            return flag && seq.contains(this.getCodes()[2]);
+        }else{
+            return flag;
+        }
+    }
 
 }

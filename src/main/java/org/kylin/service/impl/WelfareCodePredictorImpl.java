@@ -35,7 +35,7 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
 
         LOGGER.info("wyf-encode-service-start riddles={}, codeTypeEnum={}", riddles, codeTypeEnum);
 
-        List<Set<Integer>> sets = TransferUtil.toIntegerSet(riddles);
+        List<Set<Integer>> sets = TransferUtil.toIntegerSets(riddles);
 
         WelfareCode welfareCode = null;
 

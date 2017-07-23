@@ -2,6 +2,7 @@ package org.kylin.bean;
 
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.kylin.algorithm.filter.CodeFilter;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
@@ -160,6 +161,11 @@ public class WelfareCode implements Serializable{
         for(W3DCode w3DCode : this.getW3DCodes()){
             w3DCode.asc();
         }
+        return this;
+    }
+
+    public WelfareCode filter(CodeFilter<? super WelfareCode> codeFilter, FilterParam filterParam){
+        codeFilter.filter(this, filterParam);
         return this;
     }
     
