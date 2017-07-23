@@ -316,4 +316,29 @@ public class FitlerTest {
         Assert.check(!welfareCode.getW3DCodes().contains(new W3DCode(9,9,6)));
     }
 
+    @Test
+    public void testHUBitFitler(){
+        List<W3DCode> w3DCodes = new ArrayList<>();
+        w3DCodes.add(new W3DCode(3,1,2));   // 6
+        w3DCodes.add(new W3DCode(3,5,7));   // 5
+        w3DCodes.add(new W3DCode(4,5,7));   // 6
+        w3DCodes.add(new W3DCode(3,8,7));   // 8
+        w3DCodes.add(new W3DCode(9,9,6));   // 4
+
+        FilterParam filterParam = new FilterParam();
+        filterParam.setHuBits("37");
+
+        WelfareCode welfareCode = new WelfareCode();
+        welfareCode.setW3DCodes(w3DCodes);
+        welfareCode.filter(new HUBitFilter(), filterParam);
+
+        LOGGER.info(JSON.toJSONString(welfareCode.getW3DCodes()));
+
+        Assert.check(welfareCode.getW3DCodes().contains(new W3DCode(4,5,7)));
+        Assert.check(!welfareCode.getW3DCodes().contains(new W3DCode(3,5,7)));
+        Assert.check(welfareCode.getW3DCodes().contains(new W3DCode(3,1,2)));
+        Assert.check(!welfareCode.getW3DCodes().contains(new W3DCode(3,8,7)));
+        Assert.check(!welfareCode.getW3DCodes().contains(new W3DCode(9,9,6)));
+    }
+
 }

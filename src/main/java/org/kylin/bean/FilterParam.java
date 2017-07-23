@@ -12,8 +12,7 @@ public class FilterParam {
     private String range;
     private String ternaryLocation;
     private String fishMan;
-    private String hdBits;
-    private String duBits;
+    private String huBits;
     private String hBits;
     private String dBits;
     private String uBits;
@@ -71,20 +70,12 @@ public class FilterParam {
         this.fishMan = fishMan;
     }
 
-    public String getHdBits() {
-        return hdBits;
+    public String getHuBits() {
+        return huBits;
     }
 
-    public void setHdBits(String hdBits) {
-        this.hdBits = hdBits;
-    }
-
-    public String getDuBits() {
-        return duBits;
-    }
-
-    public void setDuBits(String duBits) {
-        this.duBits = duBits;
+    public void setHuBits(String huBits) {
+        this.huBits = huBits;
     }
 
     public String gethBits() {
