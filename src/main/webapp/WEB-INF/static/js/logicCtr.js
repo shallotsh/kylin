@@ -122,7 +122,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             handleResponse(response);
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
-            alert("杀码请求失败!")
+            alert("杀码请求失败!");
         });
 
     };
@@ -144,7 +144,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             handleDownloadResp(response);
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
-            alert("导出请求失败!")
+            alert("导出请求失败!");
         });
     }
 
@@ -164,6 +164,16 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $scope.wyf_bit_d = undefined;
         $scope.wyf_bit_u = undefined;
         init();
+    }
+
+    $scope.selectQueue = function (index) {
+        console.log("被选中:" + index);
+        console.log(this);
+    }
+
+    $scope.delQueue = function (index) {
+        console.log("删除队列:" + index);
+        console.log(this);
     }
 
     function handleDownloadResp(response) {
@@ -218,6 +228,14 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.com_select = false;
     }
 
+    function deepCopy(source) {
+        var result = {};
+        for (var key in source){
+            result[key] = typeof source[key] === 'object' ? deepCopy(source[key]) : source[key];
+        }
+
+        return result;
+    }
 
 });
 

@@ -21,13 +21,13 @@
       <!--<![endif]&ndash;&gt;-->
    </head>
    <body style="background: url(images/bg.jpg);" >
-      <div class="container" ng-app="wyf">
+      <div class="container" ng-app="wyf" ng-controller="logicCtr">
          <h1>我要发·3D码预测</h1>
 
          <div class="col-sm-7 col-md-7" 
             style="background-color: #F5F5F5;
-            box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;" ng-controller="logicCtr">
-            <h2>操作</h2>
+            box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;" >
+            <h2>预测操作</h2>
             <hr/>
             <div class="row">
               <div class="col-sm-2 col-md-2" style="text-align: center;vertical-align: middle; padding-right: 0px; padding-left: 0px;">
@@ -214,16 +214,30 @@
          
          <div class="col-sm-4 col-md-4" 
             style="background-color: #F5F5F5;
-            box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; margin-left:10px;" ng-controller="dataCtr">
-            <h2>预测码</h2>
+            box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; margin-left:10px;" >
+            <h2>预测状态</h2>
             <hr/>
             <div class="form-group">
               <textarea class="form-control" rows="3" ng-model="wyfMessage" readonly="true"></textarea>
             </div>
             <hr/>
+             <div class="wyf-output-title">
+                 <nobr><h3 style="display: inline-block; margin-right: 8px">预测队列</h3>(双击删除)</nobr>
 
+             </div>
+             <div class="wyf-predict-queue">
+                 <button class="button white medium" ng-model="queue_a" ng-click="selectQueue(1)" ng-dblclick="delQueue(1)">队列A</button>
+             </div>
+
+             <hr/>
              <div class="wyf-output-title">
                  <h3>预测3D码序列: {{codesCount}} 注</h3>
+             </div>
+             <hr/>
+             <div class="wyf-queue-handle">
+                 <span>已暂存</span>
+                 <button type="button" class="btn btn-primary" ng-click="cacheQueue()" ng-model="do_cache">暂存</button>
+                 <button type="button" class="btn btn-primary" ng-click="add2Queue()" ng-model="do_add">添加到队列</button>
              </div>
              <hr/>
             <div class="wyf-codes">
