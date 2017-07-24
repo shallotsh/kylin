@@ -206,4 +206,18 @@ public class WelfareCode implements Serializable{
         return o1.getSumTail().compareTo(o2.getSumTail());
     }
 
+    public WelfareCode merge(WelfareCode welfareCode){
+        if(welfareCode == null || welfareCode.getW3DCodes() == null){
+            return this;
+        } else if (welfareCode.getCodeTypeEnum() != this.getCodeTypeEnum()){
+            throw new IllegalArgumentException("预测码类型不匹配");
+        }
+
+        List<W3DCode> w3DCodes = Encoders.merge(this.getW3DCodes(), welfareCode.getW3DCodes(), this.getCodeTypeEnum());
+        if(!CollectionUtils.isEmpty(w3DCodes)){
+            this.setW3DCodes(w3DCodes);
+        }
+        return this;
+    }
+
 }

@@ -4,6 +4,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
 import org.kylin.constant.CodeTypeEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -12,6 +14,8 @@ import java.util.*;
  * @date 2017/7/20 下午11:48.
  */
 public class Encoders {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Encoders.class);
+
     /**
      * 直选编码
      * @param riddles
@@ -111,6 +115,43 @@ public class Encoders {
         w3DCodes.add(new W3DCode(w3DCode.getCodes()[1], w3DCode.getCodes()[0], w3DCode.getCodes()[2]));
 
         return w3DCodes;
+    }
+
+    public static List<W3DCode> merge(List<W3DCode> w3DCodes, List<W3DCode> w3DCodeList, CodeTypeEnum type){
+        if(CollectionUtils.isEmpty(w3DCodeList)){
+            return w3DCodes;
+        }
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return w3DCodeList;
+        }
+
+        // 合并
+        List<W3DCode> mergeCodes = new ArrayList<>(w3DCodes);
+
+        if(CodeTypeEnum.GROUP == type) {
+            w3DCodeList.forEach(w3DCode -> {
+                int index = TransferUtil.findInGroupW3DCodes(mergeCodes, w3DCode);
+                LOGGER.info("index:{}, w3DCode:{}", index, w3DCode);
+                if( index >= 0){
+                    W3DCode tmp  = mergeCodes.get(index);
+                    tmp.setFreq(tmp.getFreq() + w3DCode.getFreq());
+                }else{
+                    mergeCodes.add(w3DCode);
+                }
+            });
+        }else{
+            w3DCodeList.forEach(w3DCode -> {
+                int index = TransferUtil.findInDirectW3DCodes(mergeCodes, w3DCode);
+                if( index >= 0){
+                    W3DCode tmp  = mergeCodes.get(index);
+                    tmp.setFreq(tmp.getFreq() + w3DCode.getFreq());
+                }else{
+                    mergeCodes.add(w3DCode);
+                }
+            });
+        }
+
+        return mergeCodes;
     }
 
 
