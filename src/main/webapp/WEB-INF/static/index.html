@@ -8,6 +8,7 @@
 
        <script src="https://cdn.staticfile.org/angular.js/1.5.0/angular.js"></script>
        <script src="https://cdn.staticfile.org/angular.js/1.5.0/angular-route.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
       <!-- 引入 Bootstrap -->
       <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -225,8 +226,8 @@
                  <nobr><h3 style="display: inline-block; margin-right: 8px">预测队列</h3>(双击删除)</nobr>
 
              </div>
-             <div class="wyf-predict-queue">
-                 <button class="button white medium" ng-model="queue_a" ng-click="selectQueue(1)" ng-dblclick="delQueue(1)">队列A</button>
+             <div class="wyf-predict-queue" >
+                 <button ng-repeat="item in cacheQueue" class="button white medium"  ng-click="selectQueue($index)" ng-dblclick="delQueue($index)">队列{{$index}}</button>
              </div>
 
              <hr/>
@@ -235,8 +236,8 @@
              </div>
              <hr/>
              <div class="wyf-queue-handle">
-                 <span>已暂存</span>
-                 <button type="button" class="btn btn-primary" ng-click="cacheQueue()" ng-model="do_cache">暂存</button>
+                 <span ng-show="query_cache" ng-model="query_cache" style="color:red;">已暂存</span>
+                 <button type="button" class="btn btn-primary" ng-click="doCache()" ng-model="do_cache">{{do_cache}}</button>
                  <button type="button" class="btn btn-primary" ng-click="add2Queue()" ng-model="do_add">添加到队列</button>
              </div>
              <hr/>

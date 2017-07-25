@@ -133,6 +133,9 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             return;
         }
 
+        var data = deepCopy($rootScope.welfareCode);
+        data.$$hashKey = undefined;
+
         $http({
             method:"POST",
             url:"/api/welfare/export/codes",
@@ -168,12 +171,51 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     $scope.selectQueue = function (index) {
         console.log("被选中:" + index);
-        console.log(this);
+        console.log("选中:" + JSON.stringify($rootScope.cacheQueue[index], null, 2));
+        console.log("队列:" + JSON.stringify($rootScope.cacheQueue, null, 2));
+
+        $rootScope.welfareCode = $rootScope.cacheQueue[index];
+        $rootScope.wyfCodes =  $rootScope.cacheQueue[index].codes;
     }
 
     $scope.delQueue = function (index) {
         console.log("删除队列:" + index);
         console.log(this);
+
+        $rootScope.cacheQueue.splice(index, 1);
+    }
+
+    $scope.doCache = function () {
+        if(!$rootScope.isPredict){
+            handleException("请先完成预测");
+            return;
+        }
+        if($rootScope.cache.isCache) {
+            console.log("已取消");
+            $scope.do_cache = "暂存";
+            $rootScope.query_cache = false;
+            $rootScope.cache.isCache = false;
+            $rootScope.cache.welfareCode = undefined;
+        }else{
+            console.log("已暂存");
+            $rootScope.query_cache = true;
+            $scope.do_cache = "取消";
+            $rootScope.cache.isCache = true;
+            $rootScope.cache.welfareCode = deepCopy($rootScope.welfareCode);
+        }
+
+    }
+
+    $scope.add2Queue = function () {
+        if(!$rootScope.isPredict){
+            handleException("请先完成预测");
+            return;
+        }
+
+        var obj =  deepCopy($rootScope.welfareCode);
+
+        $rootScope.cacheQueue.push(obj);
+        console.log("push:" + JSON.stringify($rootScope.cacheQueue, null, 2));
     }
 
     function handleDownloadResp(response) {
@@ -218,6 +260,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     function init(){
         $rootScope.welfareCode = undefined;
+        $rootScope.isPredict = false;
         $rootScope.wyfMessage = "欢迎使用我要发预测系统！！";
         $rootScope.codesCount = 0;
         $rootScope.quibinary_first = 3;
@@ -226,6 +269,15 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.do_export = false;
         $rootScope.do_kill = false;
         $rootScope.com_select = false;
+        $rootScope.queue_cache = false;
+        $scope.do_cache = "暂存";
+
+        $rootScope.cache = {};
+        $rootScope.cache.isCache = false;
+        $rootScope.cache.welfareCode = {};
+
+        $rootScope.cacheQueue = new Array();
+
     }
 
     function deepCopy(source) {
@@ -235,6 +287,17 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         }
 
         return result;
+    }
+
+    function getQueueElem(index) {
+        return "<span class=\"button white medium\"  ng-click=\"selectQueue("+index + ")\" ng-dblclick=\"delQueue("+ index+ ")\">队列{{"+ index +" }}</span>";
+    }
+
+    function test() {
+        $rootScope.isPredict = true;
+        // var obj =  {"key":"value"};
+        // $rootScope.cacheQueue.push(obj);
+        // console.log(JSON.stringify(obj, null, 2));
     }
 
 });
