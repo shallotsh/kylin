@@ -7,6 +7,7 @@
 app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     init();
+    $rootScope.cacheQueue = new Array();
 
     $scope.predict = function () {
         var paramArray = [];
@@ -26,7 +27,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $http({
             method:"POST",
-            url:"/api/welfare/predictor/codes",
+            url:"/api/welfare/codes/predict",
             data: JSON.stringify(args),
             headers:{
                 "Content-Type": "application/json; charset=UTF-8"
@@ -47,7 +48,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $http({
             method:"POST",
-            url:"/api/welfare/transfer/codes",
+            url:"/api/welfare/codes/transfer",
             data: JSON.stringify($rootScope.welfareCode),
             headers:{
                 "Content-Type": "application/json; charset=UTF-8"
@@ -69,7 +70,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $http({
             method:"POST",
-            url:"/api/welfare/transfer/codes",
+            url:"/api/welfare/codes/transfer",
             data: JSON.stringify($rootScope.welfareCode),
             headers:{
                 "Content-Type": "application/json; charset=UTF-8"
@@ -113,7 +114,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $http({
             method:"POST",
-            url:"/api/welfare/filter/codes",
+            url:"/api/welfare/codes/filter",
             data: JSON.stringify(args),
             headers:{
                 "Content-Type": "application/json; charset=UTF-8"
@@ -138,7 +139,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $http({
             method:"POST",
-            url:"/api/welfare/export/codes",
+            url:"/api/welfare/codes/export",
             data: JSON.stringify($rootScope.welfareCode),
             headers:{
                 "Content-Type": "application/json; charset=UTF-8"
@@ -219,9 +220,54 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
     }
 
     $scope.compSelect = function () {
-        var tmp = deepCopy($rootScope.welfareCode);
+        if($rootScope.cacheQueue.length == 0){
+            handleException("预测队列为空，无法执行综合选码");
+        }
 
-        console.log("deepCopy:" + JSON.stringify(tmp, null, 2));
+        var args = {
+            "welfareCodes": $rootScope.cacheQueue
+        }
+
+        $http({
+            method:"POST",
+            url:"/api/welfare/codes/select",
+            data:JSON.stringify(args),
+            headers:{
+                "Content-Type":"application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleResponse(response);
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("综合选码执行失败!");
+        });
+    }
+
+    $scope.minus = function () {
+        if(!$rootScope.cache.isCache){
+            handleException("请先暂存一组预测码");
+            return;
+        }
+
+        var args = {
+            "subtractor": deepCopy($rootScope.welfareCode),
+            "minuend": deepCopy($rootScope.cache.welfareCode)
+        }
+
+        $http({
+            method:"POST",
+            url:"/api/welfare/codes/minus",
+            data:JSON.stringify(args),
+            headers:{
+                "Content-Type":"application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleResponse(response);
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("取余失败!");
+        });
+
     }
 
     function handleDownloadResp(response) {
@@ -276,17 +322,12 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.do_export = false;
         $rootScope.do_kill = false;
         $rootScope.com_select = false;
-        $rootScope.queue_cache = false;
+        $rootScope.query_cache = false;
         $scope.do_cache = "暂存";
 
         $rootScope.cache = {};
         $rootScope.cache.isCache = false;
         $rootScope.cache.welfareCode = {};
-
-        $rootScope.cacheQueue = new Array();
-
-        test();
-
     }
 
     function deepCopy(source) {
@@ -302,10 +343,6 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         }
 
         return result;
-    }
-
-    function getQueueElem(index) {
-        return "<span class=\"button white medium\"  ng-click=\"selectQueue("+index + ")\" ng-dblclick=\"delQueue("+ index+ ")\">队列{{"+ index +" }}</span>";
     }
 
     function test() {

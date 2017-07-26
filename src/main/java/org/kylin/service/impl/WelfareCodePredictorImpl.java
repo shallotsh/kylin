@@ -1,7 +1,9 @@
 package org.kylin.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import org.kylin.algorithm.filter.CodeFilter;
 import org.kylin.bean.FilterParam;
+import org.kylin.bean.PolyParam;
 import org.kylin.bean.WelfareCode;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.service.WelfareCodePredictor;
@@ -87,5 +89,35 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
         return welfareCode;
     }
 
+    @Override
+    public WelfareCode minus(PolyParam polyParam) {
+        if(polyParam == null || polyParam.getMinuend() == null || polyParam.getSubtractor() == null){
+            throw new IllegalArgumentException("参数错误");
+        }
 
+        WelfareCode minuend = polyParam.getMinuend();
+        WelfareCode ret = minuend.minus(polyParam.getSubtractor());
+
+        LOGGER.info("minus-set ret={}", JSON.toJSONString(ret));
+
+        return ret;
+    }
+
+
+    @Override
+    public WelfareCode compSelect(List<WelfareCode> welfareCodes) {
+        if(CollectionUtils.isEmpty(welfareCodes)){
+            return null;
+        }
+
+        WelfareCode ret = welfareCodes.get(0);
+
+        for(int i = 1; i< welfareCodes.size(); i++){
+            ret.merge(welfareCodes.get(i));
+        }
+
+        ret.sort(WelfareCode::freqSort);
+
+        return ret;
+    }
 }

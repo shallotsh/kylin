@@ -1,6 +1,5 @@
 package org.kylin.bean;
 
-import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.util.TransferUtil;

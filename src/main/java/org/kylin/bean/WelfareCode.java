@@ -195,7 +195,11 @@ public class WelfareCode implements Serializable{
             return 0;
         }
 
-        return o1.getFreq().compareTo(o2.getFreq());
+        if(o1.getFreq() == o2.getFreq()){
+            return bitSort(o1, o2);
+        }else {
+            return o1.getFreq().compareTo(o2.getFreq());
+        }
     }
 
     public static int tailSort(W3DCode o1, W3DCode o2){
@@ -203,7 +207,11 @@ public class WelfareCode implements Serializable{
             return 0;
         }
 
-        return o1.getSumTail().compareTo(o2.getSumTail());
+        if(o1.getSumTail() == o2.getSumTail()){
+            return bitSort(o1, o2);
+        } else {
+            return o1.getSumTail().compareTo(o2.getSumTail());
+        }
     }
 
     public WelfareCode merge(WelfareCode welfareCode){
@@ -217,6 +225,9 @@ public class WelfareCode implements Serializable{
         if(!CollectionUtils.isEmpty(w3DCodes)){
             this.setW3DCodes(w3DCodes);
         }
+
+        this.sort(WelfareCode::bitSort).generate();
+
         return this;
     }
 
@@ -230,6 +241,7 @@ public class WelfareCode implements Serializable{
         List<W3DCode> w3DCodes = Encoders.minus(this.getW3DCodes(), welfareCode.getW3DCodes(), this.codeTypeEnum);
 
         this.setW3DCodes(w3DCodes);
+        this.sort(WelfareCode::bitSort).generate();
 
         return this;
     }

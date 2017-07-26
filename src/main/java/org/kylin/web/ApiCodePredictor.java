@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Collections;
 
 /**
  * @author huangyawu
@@ -31,7 +32,7 @@ public class ApiCodePredictor {
     private WelfareCodePredictor welfareCodePredictor;
 
     @ResponseBody
-    @RequestMapping(value = "/predictor/codes",  method = {RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/codes/predict",  method = {RequestMethod.POST, RequestMethod.GET})
     public WyfResponse predict(@RequestBody WyfParam wyfParam){
         LOGGER.info("api-code-predictor-predict param={}", JSON.toJSONString(wyfParam));
 
@@ -49,7 +50,7 @@ public class ApiCodePredictor {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/transfer/codes",  method = RequestMethod.POST)
+    @RequestMapping(value = "/codes/transfer",  method = RequestMethod.POST)
     public WyfResponse transfer(@RequestBody WelfareCode welfareCode){
         LOGGER.info("transfer-codes welfareCode={}", JSON.toJSONString(welfareCode));
         if(welfareCode == null || welfareCode.getW3DCodes() == null){
@@ -66,7 +67,7 @@ public class ApiCodePredictor {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/filter/codes", method = RequestMethod.POST)
+    @RequestMapping(value = "/codes/filter", method = RequestMethod.POST)
     public WyfResponse doFilter(@RequestBody FilterParam filterParam){
 
         LOGGER.info("api-code-predictor-filter param={}", JSON.toJSONString(filterParam));
@@ -86,14 +87,43 @@ public class ApiCodePredictor {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/select/codes",  method = RequestMethod.POST)
-    public WyfResponse select(@RequestBody WyfParam wyfParam){
+    @RequestMapping(value = "/codes/minus",  method = RequestMethod.POST)
+    public WyfResponse minus(@RequestBody PolyParam polyParam){
 
-        return new WyfDataResponse<>(null);
+        LOGGER.info("api-code-predictor-minus param={}", JSON.toJSONString(polyParam));
+
+        if(polyParam == null || polyParam.getMinuend() == null || polyParam.getSubtractor() == null){
+            LOGGER.warn("api-code-predictor-minus-bad-quest");
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "param invalid.");
+        }
+
+        WelfareCode ret = welfareCodePredictor.minus(polyParam);
+
+        LOGGER.info("minus-set code={}", ret.getW3DCodes());
+
+        return new WyfDataResponse<>(ret);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/export/codes",  method = RequestMethod.POST)
+    @RequestMapping(value = "/codes/select",  method = RequestMethod.POST)
+    public WyfResponse select(@RequestBody PolyParam polyParam){
+
+        LOGGER.info("api-code-predictor-comp-select param:{}", JSON.toJSONString(polyParam));
+
+        if(polyParam == null || CollectionUtils.isEmpty(polyParam.getWelfareCodes())){
+            LOGGER.warn("api-code-predictor-comp-select-bad-quest");
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "param invalid.");
+        }
+
+        WelfareCode welfareCode = welfareCodePredictor.compSelect(polyParam.getWelfareCodes());
+
+        LOGGER.info("comp-select code={}", welfareCode.getW3DCodes());
+
+        return new WyfDataResponse<>(welfareCode);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/codes/export",  method = RequestMethod.POST)
     public WyfResponse exportCodes(@RequestBody WelfareCode welfareCode,
                               HttpServletResponse response) throws IOException{
         if(welfareCode == null){
