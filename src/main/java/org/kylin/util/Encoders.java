@@ -101,6 +101,21 @@ public class Encoders {
         return welfareCode;
     }
 
+    public static boolean equals(W3DCode a, W3DCode b, CodeTypeEnum codeTypeEnum){
+        if(a == null || b == null || codeTypeEnum == null){
+            return false;
+        }
+
+        if(codeTypeEnum == CodeTypeEnum.DIRECT){
+            return a.equals(b);
+        } else {
+            return a.getMax() == b.getMax() &&
+                    a.getMin() == b.getMin() &&
+                    a.getSumTail() == b.getSumTail();
+        }
+    }
+
+
     public static List<W3DCode> permutation(W3DCode w3DCode){
         if(w3DCode == null){
             return Collections.emptyList();
@@ -155,4 +170,32 @@ public class Encoders {
     }
 
 
+    public static List<W3DCode> minus(List<W3DCode> w3DCodes, List<W3DCode> w3DCodeList, CodeTypeEnum type){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }else if(CollectionUtils.isEmpty(w3DCodeList)){
+            return w3DCodes;
+        }
+
+        List<W3DCode> ret = new ArrayList<>();
+
+        Iterator<W3DCode> iterator = w3DCodes.iterator();
+        while(iterator.hasNext()){
+            W3DCode w3DCode = iterator.next();
+            boolean flag = false;
+            for(W3DCode code: w3DCodeList){
+                if(equals(w3DCode, code, type)){
+                    flag = true;
+                    System.out.println("code:" + code);
+                    break;
+                }
+            }
+
+            if(!flag){
+                ret.add(w3DCode);
+            }
+        }
+
+        return ret;
+    }
 }
