@@ -218,6 +218,12 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         console.log("push:" + JSON.stringify($rootScope.cacheQueue, null, 2));
     }
 
+    $scope.compSelect = function () {
+        var tmp = deepCopy($rootScope.welfareCode);
+
+        console.log("deepCopy:" + JSON.stringify(tmp, null, 2));
+    }
+
     function handleDownloadResp(response) {
         if(response == null){
             console.log("request error.");
@@ -260,6 +266,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     function init(){
         $rootScope.welfareCode = undefined;
+        $rootScope.wyfCodes = undefined;
         $rootScope.isPredict = false;
         $rootScope.wyfMessage = "欢迎使用我要发预测系统！！";
         $rootScope.codesCount = 0;
@@ -278,11 +285,19 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $rootScope.cacheQueue = new Array();
 
+        test();
+
     }
 
     function deepCopy(source) {
         var result = {};
         for (var key in source){
+
+            if(source[key] instanceof Array){
+                result[key] = source[key].slice(0);
+                continue;
+            }
+
             result[key] = typeof source[key] === 'object' ? deepCopy(source[key]) : source[key];
         }
 
@@ -295,8 +310,22 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     function test() {
         $rootScope.isPredict = true;
-        // var obj =  {"key":"value"};
-        // $rootScope.cacheQueue.push(obj);
+        var obj =  {
+            "type":"code",
+            "data":[
+                {
+                    "id":6,
+                    "name":"gary"
+                },
+                {
+                    "id":7,
+                    "name":"tom"
+                }
+            ]
+        };
+
+
+        $rootScope.welfareCode = obj;
         // console.log(JSON.stringify(obj, null, 2));
     }
 

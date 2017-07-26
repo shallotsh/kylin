@@ -194,7 +194,7 @@
             <button type="button" class="btn btn-success" ng-click="transfer2Direct()" ng-model="direct" ng-disabled="direct" >转直选</button>
             <button type="button" class="btn btn-success" ng-click="transfer2Group()" ng-model="group" ng-disabled="group">转组选</button>
             <button type="button" class="btn btn-primary" ng-click="killCode()" ng-model="do_kill">杀码</button>
-            <button type="button" class="btn btn-primary" ng-click="comSelect()" ng-model="com_select">综合选码</button>
+            <button type="button" class="btn btn-primary" ng-click="compSelect()" ng-model="com_select">综合选码</button>
             <button type="button" class="btn btn-primary" ng-click="exportCode()" ng-model="do_export">导出</button>
             <button type="button" class="btn btn-danger" ng-click="reset()" ng-model="do_reset">重置</button>
             <div>
@@ -237,8 +237,9 @@
              <hr/>
              <div class="wyf-queue-handle">
                  <span ng-show="query_cache" ng-model="query_cache" style="color:red;">已暂存</span>
-                 <button type="button" class="btn btn-primary" ng-click="doCache()" ng-model="do_cache">{{do_cache}}</button>
-                 <button type="button" class="btn btn-primary" ng-click="add2Queue()" ng-model="do_add">添加到队列</button>
+                 <button type="button"  class="button orange medium" ng-click="doCache()" ng-model="do_cache">{{do_cache}}</button>
+                 <button type="button"  class="button orange medium" ng-click="minus()" ng-model="do_minus">取余</button>
+                 <button type="button" class="button white medium" ng-click="add2Queue()" ng-model="do_add">添加到队列</button>
              </div>
              <hr/>
             <div class="wyf-codes">
