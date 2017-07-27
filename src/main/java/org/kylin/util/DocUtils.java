@@ -118,7 +118,7 @@ public class DocUtils {
         writeCodes(doc.createParagraph(), pairCodes, title);
 
         List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
-        title = String.format("对子共计 %d 注", nonPairCodes.size());
+        title = String.format("非对子共计 %d 注", nonPairCodes.size());
         writeCodes(doc.createParagraph(), nonPairCodes, title);
 
         // 保存

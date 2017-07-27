@@ -34,6 +34,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
+            $rootScope.wyfMessage = predictFormat($rootScope.wyfCodes.length);
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("预测请求失败!")
@@ -111,6 +112,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
         console.log(JSON.stringify(args, null ,2));
+        var count = $rootScope.wyfCodes.length;
 
         $http({
             method:"POST",
@@ -121,6 +123,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
+            $rootScope.wyfMessage = filterFormat(count, $rootScope.wyfCodes.length);
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("杀码请求失败!");
@@ -135,12 +138,13 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         }
 
         var data = deepCopy($rootScope.welfareCode);
-        data.$$hashKey = undefined;
+
+        console.log("exportData:" + JSON.stringify(data, null, 2));
 
         $http({
             method:"POST",
             url:"/api/welfare/codes/export",
-            data: JSON.stringify($rootScope.welfareCode),
+            data: JSON.stringify(data),
             headers:{
                 "Content-Type": "application/json; charset=UTF-8"
             }
@@ -228,6 +232,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             "welfareCodes": $rootScope.cacheQueue
         }
 
+        var queueCount = $rootScope.cacheQueue.length;
         $http({
             method:"POST",
             url:"/api/welfare/codes/select",
@@ -237,6 +242,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
+            $rootScope.wyfMessage = compFormat(queueCount, $rootScope.wyfCodes.length);
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("综合选码执行失败!");
@@ -364,6 +370,18 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $rootScope.welfareCode = obj;
         // console.log(JSON.stringify(obj, null, 2));
+    }
+
+    function filterFormat(total, remainder) {
+        return "总计 " + total + " 注, 杀码 " + (total - remainder) + " 注, 余 " + remainder + " 注.";
+    }
+
+    function predictFormat(total){
+        return "本次预测共计 " + total + " 注3D码!"
+    }
+
+    function compFormat(queueCount, total){
+        return "参与综合选码队列：" + queueCount + ", 共选出 " + total + " 注3D码.";
     }
 
 });

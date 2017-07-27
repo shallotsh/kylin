@@ -20,6 +20,7 @@ public class WelfareCode implements Serializable{
 
     private List<W3DCode> w3DCodes;
     private List<String> codes;
+    private Integer pairCount;
 
     public CodeTypeEnum getCodeTypeEnum() {
         return codeTypeEnum;
@@ -51,6 +52,14 @@ public class WelfareCode implements Serializable{
 
     public void setW3DCodes(List<W3DCode> w3DCodes) {
         this.w3DCodes = w3DCodes;
+    }
+
+    public Integer getPairCount() {
+        return CollectionUtils.size(TransferUtil.getPairCodes(this.getW3DCodes()));
+    }
+
+    public void setPairCount(Integer pairCount) {
+        this.pairCount = pairCount;
     }
 
     public WelfareCode distinct(){
@@ -94,6 +103,7 @@ public class WelfareCode implements Serializable{
         }
 
         this.setCodes(w3DStrings);
+        this.setPairCount(CollectionUtils.size(TransferUtil.getPairCodes(this.getW3DCodes())));
 
         return this;
     }
