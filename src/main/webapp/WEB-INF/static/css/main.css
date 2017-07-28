@@ -18,12 +18,8 @@ hr {
 
 .form-control {
 	padding: 6px 6px;
+	margin: 3px 3px;
 }
-
-.control-label {
-	vertical-align:middle;display:inline-block;
-}
-
 
 .wyf-codes ul{
 	align-items: center;
