@@ -56,6 +56,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
+            $rootScope.wyfMessage = "转码成功, 共计 " + $rootScope.codesCount + " 注.";
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("转换请求失败!")
@@ -78,9 +79,10 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
+            $rootScope.wyfMessage = "转码成功, 共计 " + $rootScope.codesCount + " 注.";
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
-            alert("转换请求失败!")
+            alert("转换请求失败!");
         });
 
     }
@@ -181,6 +183,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $rootScope.welfareCode = $rootScope.cacheQueue[index];
         $rootScope.wyfCodes =  $rootScope.cacheQueue[index].codes;
+        $rootScope.codesCount = $rootScope.wyfCodes.length;
     }
 
     $scope.delQueue = function (index) {
@@ -242,7 +245,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
-            $rootScope.wyfMessage = compFormat(queueCount, $rootScope.wyfCodes.length);
+            $rootScope.wyfMessage = compFormat(queueCount, $rootScope.codesCount);
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("综合选码执行失败!");
