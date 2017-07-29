@@ -6,6 +6,7 @@ import org.kylin.bean.*;
 import org.kylin.service.strategy.StrategyProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,8 +32,12 @@ public class ApiStrategyProvider {
     @RequestMapping(value = "/key",  method = {RequestMethod.POST, RequestMethod.GET})
     public WyfResponse oneKeyPredict(@RequestBody WyfParam wyfParam){
         LOGGER.info("one-key-predict wyfParam={}", JSON.toJSONString(wyfParam));
-        WelfareCode welfareCode = strategyProvider.encode(wyfParam, new IterationStrategy());
-        LOGGER.info("one-key-result ret = {}", JSON.toJSONString(welfareCode));
-        return new WyfDataResponse<>(welfareCode);
+        try {
+            WelfareCode welfareCode = strategyProvider.encode(wyfParam, new IterationStrategy());
+            LOGGER.info("one-key-result ret = {}", welfareCode.getCodes());
+            return new WyfDataResponse<>(welfareCode);
+        } catch (Exception e) {
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "一键执行失败");
+        }
     }
 }

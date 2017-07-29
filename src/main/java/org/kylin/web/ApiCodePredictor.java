@@ -97,11 +97,15 @@ public class ApiCodePredictor {
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "param invalid.");
         }
 
-        WelfareCode ret = welfareCodePredictor.minus(polyParam);
+        try {
+            WelfareCode ret = welfareCodePredictor.minus(polyParam);
 
-        LOGGER.info("minus-set code={}", ret.getW3DCodes());
+            LOGGER.info("minus-set code={}", ret.getW3DCodes());
 
-        return new WyfDataResponse<>(ret);
+            return new WyfDataResponse<>(ret);
+        } catch (Exception e) {
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "取余失败");
+        }
     }
 
     @ResponseBody
@@ -115,11 +119,15 @@ public class ApiCodePredictor {
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "param invalid.");
         }
 
-        WelfareCode welfareCode = welfareCodePredictor.compSelect(polyParam.getWelfareCodes());
+        try {
+            WelfareCode welfareCode = welfareCodePredictor.compSelect(polyParam.getWelfareCodes());
 
-        LOGGER.info("comp-select code={}", welfareCode.getW3DCodes());
+            LOGGER.info("comp-select code={}", welfareCode.getW3DCodes());
 
-        return new WyfDataResponse<>(welfareCode);
+            return new WyfDataResponse<>(welfareCode);
+        } catch (Exception e) {
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "综合选码失败");
+        }
     }
 
     @ResponseBody
