@@ -7,6 +7,7 @@ import org.kylin.bean.PolyParam;
 import org.kylin.bean.WelfareCode;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.service.WelfareCodePredictor;
+import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,14 +111,6 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
             return null;
         }
 
-        WelfareCode ret = welfareCodes.get(0);
-
-        for(int i = 1; i< welfareCodes.size(); i++){
-            ret.merge(welfareCodes.get(i));
-        }
-
-        ret.sort(WelfareCode::freqSort);
-
-        return ret;
+        return Encoders.mergeWelfareCodes(welfareCodes);
     }
 }

@@ -62,6 +62,20 @@ public class WelfareCode implements Serializable{
         this.pairCount = pairCount;
     }
 
+    public WelfareCode() {
+    }
+
+    public WelfareCode(WelfareCode code) {
+        if(code == null){
+            return;
+        }
+        this.setCodeTypeEnum(code.getCodeTypeEnum());
+        this.setCodeTypeId(code.getCodeTypeId());
+        this.setPairCount(code.getPairCount());
+        this.setW3DCodes(new ArrayList<>(code.getW3DCodes()));
+    }
+
+
     public WelfareCode distinct(){
         if( CollectionUtils.size(this.getW3DCodes()) <= 1){
             return this;
@@ -208,7 +222,7 @@ public class WelfareCode implements Serializable{
         if(o1.getFreq() == o2.getFreq()){
             return bitSort(o1, o2);
         }else {
-            return o1.getFreq().compareTo(o2.getFreq());
+            return o2.getFreq().compareTo(o1.getFreq());
         }
     }
 

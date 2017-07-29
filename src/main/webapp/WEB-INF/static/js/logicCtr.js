@@ -279,6 +279,56 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     }
 
+    $scope.oneKey = function () {
+        var paramArray = [];
+        paramArray.push($scope.input_1);
+        paramArray.push($scope.input_2);
+        paramArray.push($scope.input_3);
+        paramArray.push($scope.input_4);
+
+        var filter = {
+            "welfareCode": $rootScope.welfareCode,
+            "sumValue": $scope.wyf_sum_tail,
+            "boldCode": $scope.wyf_bold,
+            "gossip": $scope.wyf_gossip,
+            "range": $scope.wyf_range,
+            "ternaryLocation": $scope.wyf_locate_three,
+            "fishMan":$scope.wyf_fish_man,
+            "huBits":$scope.wyf_bit_hu,
+            "hBits":$scope.wyf_bit_h,
+            "dBits":$scope.wyf_bit_d,
+            "uBits":$scope.wyf_bit_u,
+            "dipolar": $scope.wyf_dipolar ? 1 : 0,
+            "oneEnd": $scope.wyf_one_end ? 1 : 0,
+            "bigSum": $scope.wyf_big_sum ? 1 : 0,
+            "oddEven": $scope.wyf_all_odd_even ? 1 : 0
+        };
+
+        var args = {
+            "riddles": paramArray,
+            "targetCodeType": $rootScope.quibinary_first,
+            "filterParam":filter
+        };
+
+        console.log(JSON.stringify(args));
+
+        $http({
+            method:"POST",
+            url:"/api/strategy/key",
+            data: JSON.stringify(args),
+            headers:{
+                "Content-Type": "application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleResponse(response);
+            $rootScope.wyfMessage = oneKeyFormat($rootScope.wyfCodes.length);
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("一键预测失败!")
+        });
+
+    }
+
     function handleDownloadResp(response) {
         if(response == null){
             console.log("request error.");
@@ -377,6 +427,10 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     function filterFormat(total, remainder) {
         return "总计 " + total + " 注, 杀码 " + (total - remainder) + " 注, 余 " + remainder + " 注.";
+    }
+
+    function oneKeyFormat(total){
+        return "一键执行预测，共计 " + total + " 注3D码!"
     }
 
     function predictFormat(total){

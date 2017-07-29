@@ -132,6 +132,23 @@ public class Encoders {
         return w3DCodes;
     }
 
+    public static WelfareCode mergeWelfareCodes(List<WelfareCode> welfareCodes){
+        if(CollectionUtils.isEmpty(welfareCodes)){
+            return null;
+        }
+
+        WelfareCode ret = new WelfareCode(welfareCodes.get(0));
+
+        for(int i = 1; i< welfareCodes.size(); i++){
+            ret.merge(welfareCodes.get(i));
+        }
+
+        ret.sort(WelfareCode::freqSort).generate();
+
+        return ret;
+    }
+
+
     public static List<W3DCode> merge(List<W3DCode> w3DCodes, List<W3DCode> w3DCodeList, CodeTypeEnum type){
         if(CollectionUtils.isEmpty(w3DCodeList)){
             return w3DCodes;
