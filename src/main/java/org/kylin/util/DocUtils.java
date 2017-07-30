@@ -193,7 +193,9 @@ public class DocUtils {
         }
 
         try {
-            return new String(str.getBytes(), "UTF-8");
+            String target = new String(str.getBytes(), "UTF-8");
+            LOGGER.info("target:{}", target);
+            return target;
         } catch (UnsupportedEncodingException e) {
             return str;
         }
