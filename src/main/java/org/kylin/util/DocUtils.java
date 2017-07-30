@@ -1,15 +1,14 @@
 package org.kylin.util;
 
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
 
 import freemarker.template.utility.StringUtil;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.BreakClear;
 import org.apache.poi.xwpf.usermodel.BreakType;
@@ -52,7 +51,7 @@ public class DocUtils {
         header.setWordWrap(true);
         header.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun hr1 = header.createRun();
-        hr1.setText("《我要发·518》福彩3D预测报表");
+        hr1.setText(toUTF8("《我要发·518》福彩3D预测报表"));
         hr1.setBold(true);
         hr1.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
         hr1.setTextPosition(20);
@@ -61,18 +60,18 @@ public class DocUtils {
 
         XWPFRun hr2 = header.createRun();
 
-        hr2.setText("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间：" + CommonUtils.getCurrentDateString());
+        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间：" + CommonUtils.getCurrentDateString()));
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
 
         List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
         String title = String.format("对子共计 %d 注", pairCodes.size());
-        writeCodes(doc.createParagraph(), pairCodes, title);
+        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
 
         List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
         title = String.format("对子共计 %d 注", nonPairCodes.size());
-        writeCodes(doc.createParagraph(), nonPairCodes, title);
+        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
         doc.write(outputStream);
 
@@ -99,7 +98,7 @@ public class DocUtils {
         header.setWordWrap(true);
         header.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun hr1 = header.createRun();
-        hr1.setText("《我要发·518》福彩3D预测报表");
+        hr1.setText(toUTF8("《我要发·518》福彩3D预测报表"));
         hr1.setBold(true);
         hr1.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
         hr1.setTextPosition(20);
@@ -108,18 +107,18 @@ public class DocUtils {
 
         XWPFRun hr2 = header.createRun();
 
-        hr2.setText("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间：" + CommonUtils.getCurrentDateString());
+        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间：" + CommonUtils.getCurrentDateString()));
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
 
         List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
         String title = String.format("对子共计 %d 注", pairCodes.size());
-        writeCodes(doc.createParagraph(), pairCodes, title);
+        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
 
         List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
         title = String.format("非对子共计 %d 注", nonPairCodes.size());
-        writeCodes(doc.createParagraph(), nonPairCodes, title);
+        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
         // 保存
         StringBuilder sb = new StringBuilder();
@@ -185,6 +184,18 @@ public class DocUtils {
         } else {
             LOGGER.info("创建目录" + destDirName + "失败！");
             return false;
+        }
+    }
+
+    public static String toUTF8(String str){
+        if(StringUtils.isBlank(str)){
+            return str;
+        }
+
+        try {
+            return new String(str.getBytes(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return str;
         }
     }
 

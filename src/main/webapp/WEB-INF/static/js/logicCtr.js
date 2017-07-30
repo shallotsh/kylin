@@ -337,7 +337,8 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         if(response.data != null && response.data.data.error == undefined){
             console.log("success:" + JSON.stringify(response.data, null, 2));
-            window.open("/api/welfare/download?fileName="+response.data.data)
+            // window.open("/api/welfare/download?fileName="+response.data.data)
+            $window.location = "/api/welfare/download?fileName="+response.data.data;
         }else{
             console.log("failed:" + JSON.stringify(response.data, null, 2));
 
