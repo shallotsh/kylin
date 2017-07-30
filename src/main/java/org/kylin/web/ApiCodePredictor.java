@@ -176,7 +176,7 @@ public class ApiCodePredictor {
             File file = new File(sb.toString(), fileName);
 
             if (file.exists()) {
-                response.setCharacterEncoding("GB2312");
+                response.setCharacterEncoding("UTF-8");
                 response.setContentType("application/force-download");// 设置强制下载不打开
                 response.addHeader("Content-Disposition",
                         "attachment;fileName=" + fileName);// 设置文件名
