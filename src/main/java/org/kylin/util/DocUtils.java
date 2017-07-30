@@ -191,14 +191,13 @@ public class DocUtils {
         if(StringUtils.isBlank(str)){
             return str;
         }
-
-        try {
-            String target = new String(str.getBytes(), "UTF-8");
-            LOGGER.info("target:{}", target);
-            return target;
-        } catch (UnsupportedEncodingException e) {
-            return str;
-        }
+        LOGGER.info("target:{}", str);
+        return str;
+//        try {
+//            return new String(str.getBytes(), "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            return str;
+//        }
     }
 
     public static void main(String[] args) throws Exception {
