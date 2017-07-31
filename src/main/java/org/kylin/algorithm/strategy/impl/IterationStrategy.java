@@ -35,7 +35,7 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         WelfareCode base = Encoders.quibinaryEncode3DCodes(riddles);
 
         // 执行策略
-        WelfareCode welfareCode = executeStrategy(base, filterParam);
+        WelfareCode welfareCode = executeStrategy(base, filterParam, wyfParam.getRiddles());
 
         return welfareCode;
     }
@@ -78,14 +78,13 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         return filterParam;
     }
 
-    private WelfareCode executeStrategy(WelfareCode base, FilterParam filterParam){
-        int count = filterParam.getBoldCode().length() > filterParam.getHuBits().length() ?
-                filterParam.getBoldCode().length() : filterParam.getHuBits().length();
+    private WelfareCode executeStrategy(WelfareCode base, FilterParam filterParam, List<String> riddles){
+        int count = CollectionUtils.size(riddles);
 
         List<WelfareCode> welfareCodes = new ArrayList<>();
 
         for(int i = 0; i < count; i++){
-            WelfareCode code = doStrategy(base, filterParam, i);
+            WelfareCode code = doStrategy(base, filterParam, riddles.get(i));
             if(code != null){
                 welfareCodes.add(code);
             }
@@ -94,11 +93,12 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         return Encoders.mergeWelfareCodes(welfareCodes);
     }
 
-    private WelfareCode doStrategy(WelfareCode base, FilterParam filterParam, int i){
+    private WelfareCode doStrategy(WelfareCode base, FilterParam filterParam, String filterString){
 
         WelfareCode welfareCode = new WelfareCode(base);
         FilterParam param = new FilterParam();
-        param.setBoldCode(String.valueOf(filterParam.getBoldCode().charAt(i)));
+        param.setBoldCode(filterString);
+        param.setHuBits(filterString);
         new BoldFilter().filter(welfareCode, param);
 
         // 暂存
@@ -119,7 +119,7 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         cacheCode.toDirect();
 
         // 百个位杀码
-        new HUBitFilter().filter(cacheCode, filterParam);
+        new HUBitFilter().filter(cacheCode, param);
 
         return cacheCode;
     }
