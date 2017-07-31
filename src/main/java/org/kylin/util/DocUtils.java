@@ -153,7 +153,7 @@ public class DocUtils {
         hr.addBreak();
 
         XWPFRun content = paragraph.createRun();
-        content.setFontSize(20);
+        content.setFontSize(14);
 
 
         for(W3DCode w3DCode : w3DCodes) {
