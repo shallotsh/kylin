@@ -72,7 +72,17 @@ public class WelfareCode implements Serializable{
         this.setCodeTypeEnum(code.getCodeTypeEnum());
         this.setCodeTypeId(code.getCodeTypeId());
         this.setPairCount(code.getPairCount());
-        this.setW3DCodes(new ArrayList<>(code.getW3DCodes()));
+        if(!CollectionUtils.isEmpty(code.getW3DCodes())){
+            List<W3DCode> w3DCodes = new ArrayList<>();
+            code.getW3DCodes().forEach(o ->{
+                try {
+                    w3DCodes.add((W3DCode) o.clone());
+                } catch (CloneNotSupportedException e) {
+                    // todo handle exception
+                }
+            });
+            this.setW3DCodes(w3DCodes);
+        }
     }
 
 
@@ -215,26 +225,26 @@ public class WelfareCode implements Serializable{
 
 
     public static int freqSort(W3DCode o1, W3DCode o2){
-        if(o1 == null || o2 == null || o1.getFreq() == null || o2.getFreq() == null){
+        if(o1 == null || o2 == null){
             return 0;
         }
 
         if(o1.getFreq() == o2.getFreq()){
             return bitSort(o1, o2);
         }else {
-            return o2.getFreq().compareTo(o1.getFreq());
+            return o2.getFreq() > o1.getFreq() ? 1 : -1;
         }
     }
 
     public static int tailSort(W3DCode o1, W3DCode o2){
-        if(o1 == null || o2 == null || o1.getSumTail() == null || o2.getSumTail() == null){
+        if(o1 == null || o2 == null ){
             return 0;
         }
 
         if(o1.getSumTail() == o2.getSumTail()){
             return bitSort(o1, o2);
         } else {
-            return o1.getSumTail().compareTo(o2.getSumTail());
+            return o1.getSumTail() > o2.getSumTail() ? 1 : -1;
         }
     }
 

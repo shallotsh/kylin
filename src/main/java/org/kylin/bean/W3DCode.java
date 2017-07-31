@@ -11,10 +11,10 @@ import java.util.Set;
  * @author huangyawu
  * @date 2017/6/30 上午1:42.
  */
-public class W3DCode {
+public class W3DCode implements Cloneable{
     private Integer[] codes = new Integer[3];
-    private Integer freq;
-    private Integer sumTail;
+    private int freq;
+    private int  sumTail;
 
     public W3DCode() {
     }
@@ -49,28 +49,24 @@ public class W3DCode {
         this.codes = codes;
     }
 
-    public Integer getFreq() {
+    public int getFreq() {
         return freq;
     }
 
-    public void setFreq(Integer freq) {
+    public void setFreq(int freq) {
         this.freq = freq;
     }
 
-    public Integer getSumTail() {
+    public int getSumTail() {
         return sumTail;
     }
 
-    public void setSumTail(Integer sumTail) {
+    public void setSumTail(int sumTail) {
         this.sumTail = sumTail;
     }
 
     public void addFreq(int count){
-        if(this.freq == null){
-            this.freq = count;
-        }else{
-            this.freq += count;
-        }
+        this.freq += count;
     }
 
     @Override
@@ -123,6 +119,10 @@ public class W3DCode {
         return result;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 
     public W3DCode asc(){
         if(this.codes[2] == null) {

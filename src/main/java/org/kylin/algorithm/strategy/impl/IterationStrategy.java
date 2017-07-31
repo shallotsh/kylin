@@ -121,7 +121,7 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         // 百个位杀码
         new HUBitFilter().filter(cacheCode, param);
 
-        return cacheCode;
+        return cacheCode.distinct().sort(WelfareCode::bitSort).generate();
     }
 
 }
