@@ -230,7 +230,7 @@ public class WelfareCode implements Serializable{
         }
 
         if(o1.getFreq() == o2.getFreq()){
-            return bitSort(o1, o2);
+            return tailSort(o1, o2);
         }else {
             return o2.getFreq() > o1.getFreq() ? 1 : -1;
         }
