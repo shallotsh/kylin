@@ -146,6 +146,7 @@ public class ApiCodePredictor {
 
 
         try {
+            welfareCode.sort(WelfareCode::tailSort).generate();
             String fileName = DocUtils.saveW3DCodes(welfareCode);
             return  new WyfDataResponse<>(fileName);
         } catch (IOException e) {
