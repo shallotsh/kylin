@@ -107,10 +107,15 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         // 进行 和值尾， 跨度, 大和，全奇全偶， 两头，全大全小 等杀码操作
         new SubTailFilter().filter(welfareCode, filterParam);
         new RangeFilter().filter(welfareCode, filterParam);
-        new BigSumFilter().filter(welfareCode, filterParam);
-        new AllOddEvenFilter().filter(welfareCode, filterParam);
-        new DipolarFilter().filter(welfareCode, filterParam);
-        new OneEndFilter().filter(welfareCode, filterParam);
+        param.setKillDipolar(true);
+        param.setKillOneEnd(true);
+        param.setKillAllOddEven(true);
+        param.setKillBigSum(true);
+
+        new BigSumFilter().filter(welfareCode, param);
+        new AllOddEvenFilter().filter(welfareCode, param);
+        new DipolarFilter().filter(welfareCode, param);
+        new OneEndFilter().filter(welfareCode, param);
 
         // 取余
         cacheCode.minus(welfareCode);
