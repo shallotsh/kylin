@@ -83,7 +83,7 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
             codeFilterMap.forEach((k, filter) -> welfareCode.filter(filter, filterParam));
         }
 
-        welfareCode.distinct().sort(WelfareCode::bitSort).generate();
+        welfareCode.distinct().sort(WelfareCode::freqSort).generate();
 
         LOGGER.info("filter-end codes={}", welfareCode.getCodes());
 

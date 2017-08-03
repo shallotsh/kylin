@@ -97,9 +97,9 @@ public class WelfareCode implements Serializable{
         Map<W3DCode, Integer> w3DCodeIntegerMap = new HashMap<>();
         for(W3DCode w3DCode: w3DCodes){
             if(w3DCodeIntegerMap.containsKey(w3DCode)){
-                w3DCodeIntegerMap.put(w3DCode, w3DCodeIntegerMap.get(w3DCode) + 1);
+                w3DCodeIntegerMap.put(w3DCode, w3DCodeIntegerMap.get(w3DCode) + w3DCode.getFreq());
             }else {
-                w3DCodeIntegerMap.put(w3DCode, 1);
+                w3DCodeIntegerMap.put(w3DCode, w3DCode.getFreq());
             }
         }
         List<W3DCode> result = new ArrayList<>();
