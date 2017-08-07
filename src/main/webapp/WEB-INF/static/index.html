@@ -23,7 +23,7 @@
    </head>
    <body style="background: url(images/bg.jpg);" >
       <div class="container" ng-app="wyf" ng-controller="logicCtr">
-         <h1>我要发·3D码预测(BETA:0.9.2)</h1>
+         <h1>我要发·3D码预测(BETA:0.9.3)</h1>
 
          <div class="col-sm-7 col-md-7" 
             style="background-color: #F5F5F5;
@@ -55,7 +55,7 @@
                   <div class="form-group">
                     <label for="wyf_bold" class="col-sm-4 control-label">胆码</label>
                     <div class="col-sm-8">
-                      <input type="number" class="form-control" ng-model="wyf_bold" id="wyf_bold"
+                      <input type="text" class="form-control" ng-model="wyf_bold" id="wyf_bold"
                            placeholder="请输入胆码">
                     </div>
                   </div>
@@ -75,8 +75,8 @@
                     <div class="form-group">
                         <label for="wyf_sum_tail" class="col-md-4 control-label">和值尾</label>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" ng-model="wyf_sum_tail" id="wyf_sum_tail"
-                                   placeholder="请输入和值尾">
+                            <input type="text" class="form-control" ng-model="wyf_sum_tail" id="wyf_sum_tail"
+                                   placeholder="请输入和值尾" ng-trim="false">
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@
                      <div class="form-group">
                          <label for="wyf_bit_hu" class="col-md-4 control-label">百个位</label>
                          <div class="col-md-8">
-                             <input type="number" class="form-control" ng-model="wyf_bit_hu" id="wyf_bit_hu"
+                             <input type="text" class="form-control" ng-model="wyf_bit_hu" id="wyf_bit_hu"
                                     placeholder="请输入百个位">
                          </div>
                      </div>

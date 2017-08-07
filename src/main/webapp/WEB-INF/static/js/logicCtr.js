@@ -286,6 +286,9 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         paramArray.push($scope.input_3);
         paramArray.push($scope.input_4);
 
+        console.log("type:"+typeof $scope.wyf_sum_tail);
+        console.log("value:"+$scope.wyf_sum_tail);
+
         var filter = {
             "welfareCode": $rootScope.welfareCode,
             "sumValue": $scope.wyf_sum_tail,
