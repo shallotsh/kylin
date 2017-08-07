@@ -137,20 +137,18 @@ public class WelfareCode implements Serializable{
                 || CollectionUtils.size(this.getW3DCodes()) <= 1){
             return this;
         }
-        // todo
+        // 频度相同的3D码进行组选
         List<W3DCode> w3DCodes = new ArrayList<>();
         this.getW3DCodes().forEach(w3DCode -> {
-            int index = TransferUtil.findInGroupW3DCodes(w3DCodes, w3DCode);
-
-            if(index >= 0){
-                w3DCodes.get(index).addFreq(w3DCode.getFreq());
-            }else{
+            int index = TransferUtil.findInGroupW3DCodesWithFreq(w3DCodes, w3DCode);
+            System.out.println(w3DCode + ":" + index);
+            if(index < 0){
                 w3DCodes.add(w3DCode);
             }
         });
 
         this.setW3DCodes(w3DCodes);
-        this.asc().distinct().cleanFreq().sort(WelfareCode::bitSort);
+        this.distinct().sort(WelfareCode::bitSort);
         this.codeTypeEnum = CodeTypeEnum.GROUP;
         return this;
     }

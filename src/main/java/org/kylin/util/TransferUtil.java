@@ -80,6 +80,22 @@ public class TransferUtil {
         return -1;
     }
 
+    public static int findInGroupW3DCodesWithFreq(List<W3DCode> w3DCodes, W3DCode w3DCode){
+        if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null){
+            return -1;
+        }
+
+        for(int i=0; i<w3DCodes.size(); i++){
+            W3DCode code = w3DCodes.get(i);
+            if(max(code) == max(w3DCode) && min(code) == min(w3DCode)
+                    && code.getSumTail() == w3DCode.getSumTail() && code.getFreq() == w3DCode.getFreq()){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
 
     public static int findInGroupW3DCodes(List<W3DCode> w3DCodes, W3DCode w3DCode){
         if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null){

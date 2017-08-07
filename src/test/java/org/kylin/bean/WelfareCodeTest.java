@@ -75,4 +75,33 @@ public class WelfareCodeTest {
 
         System.out.println(welfareCode2.getW3DCodes());
     }
+
+    @Test
+    public void testGroup(){
+        List<W3DCode> w3DCodes = new ArrayList<>();
+        W3DCode code = new W3DCode(3,5,7);
+        code.setFreq(2);
+        w3DCodes.add(code);
+
+        code = new W3DCode(7,5,3);
+        code.setFreq(3);
+        w3DCodes.add(code);
+
+        code = new W3DCode(5,3,7);
+        code.setFreq(2);
+        w3DCodes.add(code);
+
+        code = new W3DCode(1,3,8);
+        code.setFreq(3);
+        w3DCodes.add(code);
+
+        WelfareCode welfareCode = new WelfareCode();
+        welfareCode.setCodeTypeEnum(CodeTypeEnum.DIRECT);
+        welfareCode.setW3DCodes(w3DCodes);
+        welfareCode.generate();
+        System.out.println(welfareCode.getCodes());
+
+        welfareCode.toGroup().generate();
+        System.out.println(welfareCode.getCodes());
+    }
 }
