@@ -2,6 +2,7 @@ package org.kylin.web;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
+import org.kylin.algorithm.filter.impl.FreqFilter;
 import org.kylin.bean.*;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.service.WelfareCodePredictor;
@@ -146,7 +147,11 @@ public class ApiCodePredictor {
 
 
         try {
-            welfareCode.sort(WelfareCode::freqSort).generate();
+            // 去掉频度为1,4的3D码
+            FilterParam filterParam = new FilterParam();
+            filterParam.setFreqs("14");
+
+            welfareCode.filter(new FreqFilter(), filterParam).sort(WelfareCode::freqSort).generate();
             String fileName = DocUtils.saveW3DCodes(welfareCode);
             return  new WyfDataResponse<>(fileName);
         } catch (IOException e) {

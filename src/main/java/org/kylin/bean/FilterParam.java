@@ -1,5 +1,7 @@
 package org.kylin.bean;
 
+import java.util.List;
+
 /**
  * @author huangyawu
  * @date 2017/6/25 下午3:39.
@@ -25,6 +27,8 @@ public class FilterParam {
     private Integer bigSum;
     private Boolean isKillAllOddEven;
     private Integer oddEven;
+
+    private String freqs;
 
     private WelfareCode welfareCode;
 
@@ -182,6 +186,14 @@ public class FilterParam {
         if (oddEven != null && oddEven == 1){
             isKillAllOddEven = true;
         }
+    }
+
+    public String getFreqs() {
+        return freqs;
+    }
+
+    public void setFreqs(String freqs) {
+        this.freqs = freqs;
     }
 
     public WelfareCode getWelfareCode() {
