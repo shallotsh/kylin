@@ -129,14 +129,6 @@ public class DocUtils {
         title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));
         writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
 
-//        List<W3DCode> repeartPairCodes = TransferUtil.getPairCodes(repeatCodes);
-//         title = String.format("对子共计 %d 注", repeartPairCodes.size());
-//        writeCodes(doc.createParagraph(), repeartPairCodes, toUTF8(title));
-//
-//        List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
-//        title = String.format("非对子共计 %d 注", repeatNonPairCodes.size());
-//        writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
-
         // 保存
         StringBuilder sb = new StringBuilder();
         sb.append(targetDirName);
