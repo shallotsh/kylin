@@ -3,8 +3,10 @@ package org.kylin.util;
 import javafx.util.Pair;
 import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.W3DCode;
+import org.kylin.bean.WelfareCode;
 import org.springframework.util.CollectionUtils;
 
+import javax.xml.bind.annotation.W3CDomHandler;
 import java.util.*;
 
 /**
@@ -80,22 +82,69 @@ public class TransferUtil {
         return -1;
     }
 
-    public static int findInGroupW3DCodesWithFreq(List<W3DCode> w3DCodes, W3DCode w3DCode){
-        if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null){
+    /**
+     * 组选编码中找出频度相等的3D码索引
+     * @param w3DCodes
+     * @param w3DCode
+     * @return
+     */
+    public static int findInGroupW3DCodeWithFreq(List<W3DCode> w3DCodes, W3DCode w3DCode){
+        List<Integer> ret = findGroupW3DCodeWithFreq(w3DCodes, w3DCode, w3DCode.getFreq());
+        if(CollectionUtils.isEmpty(ret)){
             return -1;
+        }else{
+            return  ret.get(0);
         }
+    }
+
+    /**
+     * 找出指定频度下与给定3D码为同一组选的索引列表
+     * @param w3DCodes
+     * @param w3DCode
+     * @param freq
+     * @return
+     */
+    private static List<Integer> findGroupW3DCodeWithFreq(List<W3DCode> w3DCodes, W3DCode w3DCode, int freq){
+        if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null){
+            return Collections.emptyList();
+        }
+
+        List<Integer> ret = new ArrayList<>();
 
         for(int i=0; i<w3DCodes.size(); i++){
             W3DCode code = w3DCodes.get(i);
             if(max(code) == max(w3DCode) && min(code) == min(w3DCode)
-                    && code.getSumTail() == w3DCode.getSumTail() && code.getFreq() == w3DCode.getFreq()){
-                return i;
+                    && code.getSumTail() == w3DCode.getSumTail() && code.getFreq() == freq){
+                ret.add(i);
             }
         }
 
-        return -1;
+        return ret;
     }
 
+
+    /**
+     * 在直选编码中，找出指定频度下与给定3D码为同一组选的3D码列表
+     * @param w3DCodes
+     * @param w3DCode
+     * @param freq
+     * @return
+     */
+    public static List<W3DCode> findAllRepeat3DCodesWithFreq(List<W3DCode> w3DCodes, W3DCode w3DCode, int freq){
+        if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null || freq < 0){
+            return Collections.emptyList();
+        }
+
+        List<Integer> rets = findGroupW3DCodeWithFreq(w3DCodes, w3DCode, freq);
+
+        if(CollectionUtils.isEmpty(rets)){
+            return Collections.emptyList();
+        }else{
+            List<W3DCode> ret = new ArrayList<>();
+            rets.forEach(index -> ret.add(w3DCodes.get(index)));
+            return ret;
+        }
+    }
 
     public static int findInGroupW3DCodes(List<W3DCode> w3DCodes, W3DCode w3DCode){
         if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null){
@@ -166,6 +215,43 @@ public class TransferUtil {
                 ret.add(w3DCode);
             }
         });
+
+        return ret;
+    }
+
+    /**
+     * 特殊方法
+     * @param w3DCodes
+     * @return
+     */
+    public static List<W3DCode> findAllRepeatW3DCodes(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> ret = new ArrayList<>();
+        for(W3DCode w3DCode: w3DCodes){
+            if(w3DCode.getFreq() != 3){
+                continue;
+            }
+
+            int index = findInGroupW3DCodeWithFreq(ret, w3DCode);
+            if(index >= 0){
+                // 已经存在，直接加入到结果
+                ret.add(w3DCode);
+                continue;
+            }
+
+            List<W3DCode> searchResult = findAllRepeat3DCodesWithFreq(w3DCodes, w3DCode, 2);
+            if(!CollectionUtils.isEmpty(searchResult)){
+                ret.add(w3DCode);
+                ret.addAll(searchResult);
+            }
+
+        }
+
+        // 频度排序
+        Collections.sort(ret, WelfareCode::freqSort);
 
         return ret;
     }

@@ -120,6 +120,19 @@ public class DocUtils {
         title = String.format("非对子共计 %d 注", nonPairCodes.size());
         writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
+
+        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(welfareCode.getW3DCodes());
+        title = String.format("重叠部分 %d 注", CollectionUtils.size(repeatCodes));
+        writeTitle(doc.createParagraph(), title);
+
+        List<W3DCode> repeartPairCodes = TransferUtil.getPairCodes(repeatCodes);
+         title = String.format("对子共计 %d 注", repeartPairCodes.size());
+        writeCodes(doc.createParagraph(), repeartPairCodes, toUTF8(title));
+
+        List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
+        title = String.format("非对子共计 %d 注", repeatNonPairCodes.size());
+        writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
+
         // 保存
         StringBuilder sb = new StringBuilder();
         sb.append(targetDirName);
@@ -165,6 +178,17 @@ public class DocUtils {
 
         XWPFRun sep = paragraph.createRun();
         sep.setTextPosition(50);
+    }
+
+    public static void writeTitle(XWPFParagraph paragraph, String titleString){
+        paragraph.setPageBreak(true);
+        XWPFRun title = paragraph.createRun();
+        title.setBold(true);
+        title.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
+        title.setFontSize(24);
+        title.setBold(true);
+        title.setText(titleString);
+        title.addBreak();
     }
 
 

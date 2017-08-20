@@ -140,7 +140,7 @@ public class WelfareCode implements Serializable{
         // 频度相同的3D码进行组选
         List<W3DCode> w3DCodes = new ArrayList<>();
         this.getW3DCodes().forEach(w3DCode -> {
-            int index = TransferUtil.findInGroupW3DCodesWithFreq(w3DCodes, w3DCode);
+            int index = TransferUtil.findInGroupW3DCodeWithFreq(w3DCodes, w3DCode);
             System.out.println(w3DCode + ":" + index);
             if(index < 0){
                 w3DCodes.add(w3DCode);

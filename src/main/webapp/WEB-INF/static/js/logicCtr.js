@@ -286,9 +286,6 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         paramArray.push($scope.input_3);
         paramArray.push($scope.input_4);
 
-        console.log("type:"+typeof $scope.wyf_sum_tail);
-        console.log("value:"+$scope.wyf_sum_tail);
-
         var filter = {
             "welfareCode": $rootScope.welfareCode,
             "sumValue": $scope.wyf_sum_tail,
@@ -354,7 +351,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.welfareCode=response.data.data;
         // console.log("resp:" + JSON.stringify($rootScope.welfareCode, null, 2));
         $rootScope.wyfCodes = $rootScope.welfareCode.codes;
-        console.log("wyfCodes:" + JSON.stringify($rootScope.wyfCodes, null, 2));
+        // console.log("wyfCodesx:" + JSON.stringify($rootScope.wyfCodes, null, 2));
         $rootScope.codesCount = $rootScope.wyfCodes.length;
         $rootScope.wyfMessage = "预测请求返回成功";
         $rootScope.isPredict = true;
@@ -367,6 +364,10 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         }
         $rootScope.do_kill = true;
         $rootScope.do_export = true;
+        $rootScope.wyf_statistics = true;
+        $rootScope.pairCount = $rootScope.welfareCode.pairCount;
+        $rootScope.nonPairCount = $rootScope.wyfCodes.length - $rootScope.pairCount;
+        console.log("pairCount:"+$rootScope.pairCount+"; nonPairCount:"+$rootScope.nonPairCount);
     }
 
     function handleException (comment) {
@@ -391,6 +392,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.cache = {};
         $rootScope.cache.isCache = false;
         $rootScope.cache.welfareCode = {};
+        $rootScope.wyf_statistics = false;
     }
 
     function deepCopy(source) {
