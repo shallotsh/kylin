@@ -111,21 +111,23 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
+        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(welfareCode.getW3DCodes());
 
         List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
         String title = String.format("对子共计 %d 注", pairCodes.size());
         writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
 
+        List<W3DCode> repeartPairCodes = TransferUtil.getPairCodes(repeatCodes);
+        title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeartPairCodes));
+        writeCodes(doc.createParagraph(), repeartPairCodes, toUTF8(title));
+
         List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
         title = String.format("非对子共计 %d 注", nonPairCodes.size());
         writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
-
-        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(welfareCode.getW3DCodes());
-        title = String.format("重叠部分 %d 注", CollectionUtils.size(repeatCodes));
-//        writeTitle(doc.createParagraph(), title);
-
-        writeCodes(doc.createParagraph(), repeatCodes, toUTF8(title));
+        List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
+        title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));
+        writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
 
 //        List<W3DCode> repeartPairCodes = TransferUtil.getPairCodes(repeatCodes);
 //         title = String.format("对子共计 %d 注", repeartPairCodes.size());
