@@ -22,6 +22,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
+import org.kylin.constant.CodeTypeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,16 +114,18 @@ public class DocUtils {
 
         List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(welfareCode.getW3DCodes());
 
-        List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
-        String title = String.format("对子共计 %d 注", pairCodes.size());
+        List<W3DCode> nonRepeatCodes = Encoders.minus(welfareCode.getW3DCodes(), repeatCodes, CodeTypeEnum.DIRECT);
+
+        List<W3DCode> pairCodes = TransferUtil.getPairCodes(nonRepeatCodes);
+        String title = String.format("对子不重叠部分 %d 注", pairCodes.size());
         writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
 
         List<W3DCode> repeartPairCodes = TransferUtil.getPairCodes(repeatCodes);
         title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeartPairCodes));
         writeCodes(doc.createParagraph(), repeartPairCodes, toUTF8(title));
 
-        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
-        title = String.format("非对子共计 %d 注", nonPairCodes.size());
+        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(nonRepeatCodes);
+        title = String.format("非对子不重叠共计 %d 注", nonPairCodes.size());
         writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
         List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
@@ -151,14 +154,14 @@ public class DocUtils {
         }
 
         XWPFRun title = paragraph.createRun();
-        title.setFontSize(20);
+        title.setFontSize(18);
         title.setBold(true);
         title.setText(titleString);
         title.addBreak();
 
         XWPFRun hr = paragraph.createRun();
         hr.setFontSize(10);
-        hr.setText("-----------------------------------");
+        hr.setText("----------------------------------------");
         hr.addBreak();
 
         XWPFRun content = paragraph.createRun();
