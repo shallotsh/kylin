@@ -149,7 +149,7 @@ public class ApiCodePredictor {
         try {
             // 去掉频度为1,4的3D码
             FilterParam filterParam = new FilterParam();
-            filterParam.setFreqs("14");
+            filterParam.setFreqs("1");
 
             welfareCode.filter(new FreqFilter(), filterParam).sort(WelfareCode::freqSort).generate();
             String fileName = DocUtils.saveW3DCodes(welfareCode);
