@@ -50,7 +50,8 @@ public class HUBitFilter implements CodeFilter<WelfareCode>{
                 count++;
             }
 
-            if(count != 1 && !(count == 2 && w3DCode.getCodes()[0] == w3DCode.getCodes()[2])) {
+            // 含有即保留
+            if(count == 0) {
                 iterator.remove();
             }
         }

@@ -8,6 +8,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.xml.bind.annotation.W3CDomHandler;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author huangyawu
@@ -220,11 +221,11 @@ public class TransferUtil {
     }
 
     /**
-     * 特殊方法
+     * 特殊方法:频度3，频度2的两两组选比较，有重叠者留下
      * @param w3DCodes
      * @return
      */
-    public static List<W3DCode> findAllRepeatW3DCodes(List<W3DCode> w3DCodes){
+    public static List<W3DCode> findRepeatW3DCodesInFreqs23(List<W3DCode> w3DCodes){
         if(CollectionUtils.isEmpty(w3DCodes)){
             return Collections.emptyList();
         }
@@ -254,5 +255,54 @@ public class TransferUtil {
         Collections.sort(ret, WelfareCode::freqSort);
 
         return ret;
+    }
+
+    /**
+     * 特殊方法:将频度4，频度3，频度2的两两组选比较，有重叠者留下
+     * @param w3DCodes
+     * @return
+     */
+    public static List<W3DCode> findAllRepeatW3DCodes(List<W3DCode> w3DCodes){
+
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> freq2W3DCodes = w3DCodes.stream().filter(w3DCode -> w3DCode.getFreq()==2).collect(Collectors.toList());
+        List<W3DCode> freq3W3DCodes = w3DCodes.stream().filter(w3DCode -> w3DCode.getFreq()==3).collect(Collectors.toList());
+        List<W3DCode> freq4W3DCodes = w3DCodes.stream().filter(w3DCode -> w3DCode.getFreq()==4).collect(Collectors.toList());
+
+        Set<W3DCode> w3DCodeSet = new HashSet<>();
+
+        w3DCodeSet.addAll(getSpecialIntersection(freq2W3DCodes, freq3W3DCodes, 3));
+        w3DCodeSet.addAll(getSpecialIntersection(freq2W3DCodes, freq4W3DCodes, 4));
+        w3DCodeSet.addAll(getSpecialIntersection(freq3W3DCodes, freq4W3DCodes, 4));
+
+        return new ArrayList<>(w3DCodeSet);
+    }
+
+
+    public static List<W3DCode> getSpecialIntersection(List<W3DCode> codes1, List<W3DCode> codes2, int freq){
+        if(CollectionUtils.isEmpty(codes1) || CollectionUtils.isEmpty(codes2)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> w3DCodes = new ArrayList<>();
+        codes1.forEach(code -> {
+            int index = findInGroupW3DCodeWithFreq(w3DCodes, code);
+            if(index >= 0){
+                // 已经存在，直接加入到结果
+                w3DCodes.add(code);
+                return;
+            }
+            List<W3DCode> searchResult = findAllRepeat3DCodesWithFreq(codes2, code, freq);
+            if(!CollectionUtils.isEmpty(searchResult)){
+                w3DCodes.add(code);
+                w3DCodes.addAll(searchResult);
+            }
+
+        });
+
+        return w3DCodes;
     }
 }
