@@ -151,7 +151,9 @@ public class ApiCodePredictor {
             FilterParam filterParam = new FilterParam();
             filterParam.setFreqs("1");
 
-            welfareCode.filter(new FreqFilter(), filterParam).sort(WelfareCode::freqSort).generate();
+            if(!CodeTypeEnum.GROUP.equals(welfareCode.getCodeTypeEnum())) {
+                welfareCode.filter(new FreqFilter(), filterParam).sort(WelfareCode::freqSort).generate();
+            }
             String fileName = DocUtils.saveW3DCodes(welfareCode);
             return  new WyfDataResponse<>(fileName);
         } catch (IOException e) {

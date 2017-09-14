@@ -61,7 +61,8 @@ public class DocUtils {
 
         XWPFRun hr2 = header.createRun();
 
-        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间：" + CommonUtils.getCurrentDateString()));
+        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间："
+                + CommonUtils.getCurrentDateString() + " 编码方式:" + welfareCode.getCodeTypeEnum().getDesc()));
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
@@ -108,7 +109,8 @@ public class DocUtils {
 
         XWPFRun hr2 = header.createRun();
 
-        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间：" + CommonUtils.getCurrentDateString()));
+        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间："
+                + CommonUtils.getCurrentDateString() + " 编码方式:" + welfareCode.getCodeTypeEnum().getDesc()));
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
