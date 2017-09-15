@@ -122,9 +122,9 @@ public class DocUtils {
         String title = String.format("对子不重叠部分 %d 注", pairCodes.size());
         writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
 
-        List<W3DCode> repeartPairCodes = TransferUtil.getPairCodes(repeatCodes);
-        title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeartPairCodes));
-        writeCodes(doc.createParagraph(), repeartPairCodes, toUTF8(title));
+        List<W3DCode> repeatPairCodes = TransferUtil.getPairCodes(repeatCodes);
+        title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeatPairCodes));
+        writeCodes(doc.createParagraph(), repeatPairCodes, toUTF8(title));
 
         List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(nonRepeatCodes);
         title = String.format("非对子不重叠共计 %d 注", nonPairCodes.size());
@@ -133,6 +133,26 @@ public class DocUtils {
         List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
         title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));
         writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
+
+
+        // 输出组选
+        if(CodeTypeEnum.DIRECT.equals(welfareCode.getCodeTypeEnum())){
+
+            XWPFRun hr = doc.createParagraph().createRun();
+            hr.setFontSize(10);
+            hr.setText("----------------------------------------------------------------------");
+            hr.addBreak();
+
+            List<W3DCode> groupRepeatPairCodes = TransferUtil.grouplize(repeatPairCodes);
+            title = String.format("对子重叠部分（组选） %d 注", CollectionUtils.size(groupRepeatPairCodes));
+            writeCodes(doc.createParagraph(), groupRepeatPairCodes, toUTF8(title));
+
+            List<W3DCode> groupRepeatNonPairCodes = TransferUtil.grouplize(repeatNonPairCodes);
+            title = String.format("非对子重叠部分 (组选) %d 注", CollectionUtils.size(groupRepeatNonPairCodes));
+            writeCodes(doc.createParagraph(), groupRepeatNonPairCodes, toUTF8(title));
+        }
+
+
 
         // 保存
         StringBuilder sb = new StringBuilder();
@@ -147,7 +167,13 @@ public class DocUtils {
         return fileName + ".docx";
     }
 
+    private static void exportDirectCodes(XWPFParagraph paragraph, List<W3DCode> w3DCodes, String titleString){
 
+    }
+
+    private static void exportGroupCodes(XWPFParagraph paragraph, List<W3DCode> w3DCodes, String titleString){
+
+    }
 
 
     public static void writeCodes(XWPFParagraph paragraph, List<W3DCode> w3DCodes, String titleString){

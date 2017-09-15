@@ -147,6 +147,22 @@ public class TransferUtil {
         }
     }
 
+    public static List<W3DCode> grouplize(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+        List<W3DCode> ret = new ArrayList<>();
+        w3DCodes.forEach(w3DCode -> {
+            int index = TransferUtil.findInGroupW3DCodes(w3DCodes, w3DCode);
+            if(index < 0){
+                ret.add(w3DCode);
+            }
+        });
+
+        return ret;
+    }
+
+
     public static int findInGroupW3DCodes(List<W3DCode> w3DCodes, W3DCode w3DCode){
         if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null){
             return -1;

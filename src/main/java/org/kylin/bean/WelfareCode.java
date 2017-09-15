@@ -138,14 +138,7 @@ public class WelfareCode implements Serializable{
             return this;
         }
 
-        List<W3DCode> w3DCodes = new ArrayList<>();
-        this.getW3DCodes().forEach(w3DCode -> {
-            int index = TransferUtil.findInGroupW3DCodes(w3DCodes, w3DCode);
-            System.out.println(w3DCode + ":" + index);
-            if(index < 0){
-                w3DCodes.add(w3DCode);
-            }
-        });
+        List<W3DCode> w3DCodes = TransferUtil.grouplize(this.getW3DCodes());
 
         this.setW3DCodes(w3DCodes);
         this.cleanFreq().distinct().sort(WelfareCode::bitSort);
