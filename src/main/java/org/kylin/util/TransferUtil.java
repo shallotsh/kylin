@@ -153,7 +153,7 @@ public class TransferUtil {
         }
         List<W3DCode> ret = new ArrayList<>();
         w3DCodes.forEach(w3DCode -> {
-            int index = TransferUtil.findInGroupW3DCodes(w3DCodes, w3DCode);
+            int index = TransferUtil.findInGroupW3DCodes(ret, w3DCode);
             if(index < 0){
                 ret.add(w3DCode);
             }
