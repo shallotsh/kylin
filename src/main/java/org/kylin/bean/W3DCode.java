@@ -4,8 +4,8 @@ package org.kylin.bean;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Set;
+import org.kylin.constant.BitConstant;
 
 /**
  * @author huangyawu
@@ -75,11 +75,11 @@ public class W3DCode implements Cloneable{
         sb.append("[");
         sb.append(this.getFreq());
         sb.append("]");
-        if(this.codes[2] != null){
-            sb.append(this.codes[2]);
+        if(this.codes[BitConstant.HUNDRED] != null){
+            sb.append(this.codes[BitConstant.HUNDRED]);
         }
-        sb.append(this.codes[1]);
-        sb.append(this.codes[0]);
+        sb.append(this.codes[BitConstant.DECADE]);
+        sb.append(this.codes[BitConstant.UNIT]);
         sb.append("-");
         sb.append(this.sumTail);
 
@@ -96,24 +96,24 @@ public class W3DCode implements Cloneable{
         }
 
         W3DCode w3DCode = (W3DCode) obj;
-        return w3DCode.codes[0] == this.codes[0]
-                && w3DCode.codes[1] == this.codes[1]
-                && w3DCode.codes[2] == this.codes[2] ;
+        return w3DCode.codes[BitConstant.UNIT] == this.codes[BitConstant.UNIT]
+                && w3DCode.codes[BitConstant.DECADE] == this.codes[BitConstant.DECADE]
+                && w3DCode.codes[BitConstant.HUNDRED] == this.codes[BitConstant.HUNDRED] ;
     }
 
     @Override
     public int hashCode() {
         int prime = 31;
         int result = 1;
-        if(this.codes[2] != null) {
-            result = prime * result + this.codes[2];
+        if(this.codes[BitConstant.HUNDRED] != null) {
+            result = prime * result + this.codes[BitConstant.HUNDRED];
         }
-        if(this.codes[1] != null) {
-            result = prime * result + this.codes[1];
+        if(this.codes[BitConstant.DECADE] != null) {
+            result = prime * result + this.codes[BitConstant.DECADE];
         }
 
-        if(this.codes[0] != null){
-            result = prime * result + this.codes[0];
+        if(this.codes[BitConstant.UNIT] != null){
+            result = prime * result + this.codes[BitConstant.UNIT];
         }
 
         return result;
@@ -125,16 +125,16 @@ public class W3DCode implements Cloneable{
     }
 
     public W3DCode asc(){
-        if(this.codes[2] == null) {
+        if(this.codes[BitConstant.HUNDRED] == null) {
             Arrays.sort(this.codes, 0, 2);
-            int tmp = this.codes[0];
-            this.codes[0] = this.codes[1];
-            this.codes[1] = tmp;
+            int tmp = this.codes[BitConstant.UNIT];
+            this.codes[BitConstant.UNIT] = this.codes[BitConstant.DECADE];
+            this.codes[BitConstant.DECADE] = tmp;
         }else{
             Arrays.sort(this.codes, 0, 3);
-            int tmp = this.codes[0];
-            this.codes[0] = this.codes[2];
-            this.codes[2] = tmp;
+            int tmp = this.codes[BitConstant.UNIT];
+            this.codes[BitConstant.UNIT] = this.codes[BitConstant.HUNDRED];
+            this.codes[BitConstant.HUNDRED] = tmp;
         }
 
         return this;
@@ -142,33 +142,33 @@ public class W3DCode implements Cloneable{
 
     public int sum(){
         int sum = 0;
-        if(this.codes[2] != null){
-            sum += this.codes[2];
+        if(this.codes[BitConstant.HUNDRED] != null){
+            sum += this.codes[BitConstant.HUNDRED];
         }
 
-        if(this.codes[1] != null){
-            sum += this.codes[1];
+        if(this.codes[BitConstant.DECADE] != null){
+            sum += this.codes[BitConstant.DECADE];
         }
 
-        if(this.codes[0] != null){
-            sum += this.codes[0];
+        if(this.codes[BitConstant.UNIT] != null){
+            sum += this.codes[BitConstant.UNIT];
         }
 
         return sum;
     }
 
     public int getMax(){
-        int max = Math.max(this.codes[0], this.codes[1]);
-        if(this.codes[2] != null){
-            max = Math.max(this.codes[2], max);
+        int max = Math.max(this.codes[BitConstant.UNIT], this.codes[BitConstant.DECADE]);
+        if(this.codes[BitConstant.HUNDRED] != null){
+            max = Math.max(this.codes[BitConstant.HUNDRED], max);
         }
         return max;
     }
 
     public int getMin(){
-        int min = Math.min(this.codes[0], this.codes[1]);
-        if(this.codes[2] != null){
-            min = Math.min(this.codes[2], min);
+        int min = Math.min(this.codes[BitConstant.UNIT], this.codes[BitConstant.DECADE]);
+        if(this.codes[BitConstant.HUNDRED] != null){
+            min = Math.min(this.codes[BitConstant.HUNDRED], min);
         }
 
         return min;
@@ -180,10 +180,10 @@ public class W3DCode implements Cloneable{
             return false;
         }
 
-        boolean flag = seq.contains(this.getCodes()[0]) && seq.contains(this.getCodes()[1]);
+        boolean flag = seq.contains(this.getCodes()[BitConstant.UNIT]) && seq.contains(this.getCodes()[BitConstant.DECADE]);
 
-        if(this.getCodes()[2] != null){
-            return flag && seq.contains(this.getCodes()[2]);
+        if(this.getCodes()[BitConstant.HUNDRED] != null){
+            return flag && seq.contains(this.getCodes()[BitConstant.HUNDRED]);
         }else{
             return flag;
         }

@@ -3,6 +3,7 @@ package org.kylin.bean;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.algorithm.filter.CodeFilter;
+import org.kylin.constant.BitConstant;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
@@ -205,12 +206,14 @@ public class WelfareCode implements Serializable{
     }
 
     public static int bitSort(W3DCode o1, W3DCode o2){
-        if(o1.getCodes()[2] != null && o2.getCodes()[2] != null && !o1.getCodes()[2].equals(o2.getCodes()[2])){
-            return o1.getCodes()[2].compareTo(o2.getCodes()[2]);
-        }else if (!o1.getCodes()[1].equals(o2.getCodes()[1])){
-            return o1.getCodes()[1].compareTo(o2.getCodes()[1]);
+        if(o1.getCodes()[BitConstant.HUNDRED] != null
+                && o2.getCodes()[BitConstant.HUNDRED] != null
+                && !o1.getCodes()[BitConstant.HUNDRED].equals(o2.getCodes()[BitConstant.HUNDRED])){
+            return o1.getCodes()[BitConstant.HUNDRED].compareTo(o2.getCodes()[BitConstant.HUNDRED]);
+        }else if (!o1.getCodes()[BitConstant.DECADE].equals(o2.getCodes()[BitConstant.DECADE])){
+            return o1.getCodes()[BitConstant.DECADE].compareTo(o2.getCodes()[BitConstant.DECADE]);
         }else{
-            return o1.getCodes()[0].compareTo(o2.getCodes()[0]);
+            return o1.getCodes()[BitConstant.UNIT].compareTo(o2.getCodes()[BitConstant.UNIT]);
         }
     }
 
