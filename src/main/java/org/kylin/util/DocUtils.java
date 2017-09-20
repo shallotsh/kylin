@@ -181,17 +181,17 @@ public class DocUtils {
     private static void exportOneKeyStrategy(XWPFDocument doc, WelfareCode welfareCode){
         List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
 
-        List<W3DCode> pairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
-        String title = String.format("对子不重叠部分 %d 注", pairCodes.size());
-        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
+//        List<W3DCode> pairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
+//        String title = String.format("对子不重叠部分 %d 注", pairCodes.size());
+//        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
 
         List<W3DCode> repeatPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_OVERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
-        title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeatPairCodes));
+        String title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeatPairCodes));
         writeCodes(doc.createParagraph(), repeatPairCodes, toUTF8(title));
 
-        List<W3DCode> nonPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.NON_PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
-        title = String.format("非对子不重叠共计 %d 注", nonPairCodes.size());
-        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
+//        List<W3DCode> nonPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.NON_PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
+//        title = String.format("非对子不重叠共计 %d 注", nonPairCodes.size());
+//        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
         List<W3DCode> repeatNonPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.NON_PAIR_OVERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
         title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));

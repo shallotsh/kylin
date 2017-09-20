@@ -157,19 +157,19 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         List<W3DCode> w3DCodeList = new ArrayList<>();
 
         List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(w3DCodes);
-        List<W3DCode> nonRepeatCodes = Encoders.minus(w3DCodes, repeatCodes, CodeTypeEnum.DIRECT);
+//        List<W3DCode> nonRepeatCodes = Encoders.minus(w3DCodes, repeatCodes, CodeTypeEnum.DIRECT);
 
-        List<W3DCode> pairCodes = TransferUtil.getPairCodes(nonRepeatCodes);
-        classify(pairCodes, ClassifyEnum.PAIR_UNDERLAP);
-        w3DCodeList.addAll(pairCodes);
+//        List<W3DCode> pairCodes = TransferUtil.getPairCodes(nonRepeatCodes);
+//        classify(pairCodes, ClassifyEnum.PAIR_UNDERLAP);
+//        w3DCodeList.addAll(pairCodes);
 
         List<W3DCode> repeatPairCodes = TransferUtil.getPairCodes(repeatCodes);
         classify(repeatPairCodes, ClassifyEnum.PAIR_OVERLAP);
         w3DCodeList.addAll(repeatPairCodes);
 
-        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(nonRepeatCodes);
-        classify(nonPairCodes, ClassifyEnum.NON_PAIR_UNDERLAP);
-        w3DCodeList.addAll(nonPairCodes);
+//        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(nonRepeatCodes);
+//        classify(nonPairCodes, ClassifyEnum.NON_PAIR_UNDERLAP);
+//        w3DCodeList.addAll(nonPairCodes);
 
         List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
         classify(repeatNonPairCodes, ClassifyEnum.NON_PAIR_OVERLAP);
