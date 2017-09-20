@@ -5,6 +5,7 @@ import java.io.*;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import freemarker.template.utility.StringUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -22,6 +23,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
+import org.kylin.constant.ClassifyEnum;
 import org.kylin.constant.CodeTypeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,23 +116,25 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
-        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(welfareCode.getW3DCodes());
+//        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(welfareCode.getW3DCodes());
+//
+//        List<W3DCode> nonRepeatCodes = Encoders.minus(welfareCode.getW3DCodes(), repeatCodes, CodeTypeEnum.DIRECT);
 
-        List<W3DCode> nonRepeatCodes = Encoders.minus(welfareCode.getW3DCodes(), repeatCodes, CodeTypeEnum.DIRECT);
+        List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
 
-        List<W3DCode> pairCodes = TransferUtil.getPairCodes(nonRepeatCodes);
+        List<W3DCode> pairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
         String title = String.format("对子不重叠部分 %d 注", pairCodes.size());
         writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
 
-        List<W3DCode> repeatPairCodes = TransferUtil.getPairCodes(repeatCodes);
+        List<W3DCode> repeatPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_OVERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
         title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeatPairCodes));
         writeCodes(doc.createParagraph(), repeatPairCodes, toUTF8(title));
 
-        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(nonRepeatCodes);
+        List<W3DCode> nonPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.NON_PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
         title = String.format("非对子不重叠共计 %d 注", nonPairCodes.size());
         writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
-        List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
+        List<W3DCode> repeatNonPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.NON_PAIR_OVERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
         title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));
         writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
 
@@ -139,8 +143,8 @@ public class DocUtils {
         if(CodeTypeEnum.DIRECT.equals(welfareCode.getCodeTypeEnum())){
 
             XWPFRun hr = doc.createParagraph().createRun();
-            hr.setFontSize(10);
-            hr.setText("----------------------------------------------------------------------");
+            hr.setFontSize(12);
+            hr.setText("-------------------------------组选部分-----------------------------------");
             hr.addBreak();
 
             List<W3DCode> groupRepeatPairCodes = TransferUtil.grouplize(repeatPairCodes);

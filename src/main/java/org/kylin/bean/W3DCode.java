@@ -15,6 +15,7 @@ public class W3DCode implements Cloneable{
     private Integer[] codes = new Integer[3];
     private int freq;
     private int  sumTail;
+    private int classify;
 
     public W3DCode() {
     }
@@ -121,7 +122,9 @@ public class W3DCode implements Cloneable{
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+        W3DCode newObj = (W3DCode) super.clone();
+        newObj.setClassify(this.classify);
+        return newObj;
     }
 
     public W3DCode asc(){
@@ -174,6 +177,14 @@ public class W3DCode implements Cloneable{
         return min;
     }
 
+
+    public int getClassify() {
+        return classify;
+    }
+
+    public void setClassify(int classify) {
+        this.classify = classify;
+    }
 
     public boolean isInSeq(Set<Integer> seq){
         if(CollectionUtils.isEmpty(seq)){

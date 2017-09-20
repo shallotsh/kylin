@@ -1,6 +1,7 @@
 package org.kylin.bean;
 
 import org.junit.Test;
+import org.kylin.constant.ClassifyEnum;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.util.TransferUtil;
 
@@ -102,6 +103,30 @@ public class WelfareCodeTest {
         System.out.println(welfareCode.getCodes());
 
         welfareCode.toGroup().generate();
+        System.out.println(welfareCode.getCodes());
+    }
+
+    @Test
+    public void testDistinct() {
+        List<W3DCode> w3DCodes = new ArrayList<>();
+        W3DCode code = new W3DCode(3, 5, 7);
+        code.setFreq(2);
+        code.setClassify(ClassifyEnum.NON_PAIR_OVERLAP.getIndex());
+        w3DCodes.add(code);
+
+        code = new W3DCode(7,5,3);
+        code.setFreq(3);
+        code.setClassify(4);
+        w3DCodes.add(code);
+
+        code = new W3DCode(5,3,7);
+        code.setClassify(2);
+        w3DCodes.add(code);
+
+        WelfareCode welfareCode = new WelfareCode();
+        welfareCode.setCodeTypeEnum(CodeTypeEnum.DIRECT);
+        welfareCode.setW3DCodes(w3DCodes);
+        welfareCode.distinct().generate();
         System.out.println(welfareCode.getCodes());
     }
 }

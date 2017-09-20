@@ -5,8 +5,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.kylin.algorithm.filter.impl.*;
 import org.kylin.algorithm.strategy.Strategy;
 import org.kylin.bean.FilterParam;
+import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
 import org.kylin.bean.WyfParam;
+import org.kylin.constant.ClassifyEnum;
+import org.kylin.constant.CodeTypeEnum;
 import org.kylin.constant.ConstantsEnum;
 import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
@@ -14,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -90,7 +94,22 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
             }
         }
 
-        return Encoders.mergeWelfareCodes(welfareCodes);
+        WelfareCode merge = Encoders.mergeWelfareCodes(welfareCodes);
+
+        // 去掉频度为1的3D码
+        FilterParam param = new FilterParam();
+        param.setFreqs("1");
+
+        if(merge != null &&
+                !CollectionUtils.isEmpty(merge.getW3DCodes())
+                && !CodeTypeEnum.GROUP.equals(merge.getCodeTypeEnum())) {
+            merge.filter(new FreqFilter(), filterParam).sort(WelfareCode::tailSort).generate();
+        }
+
+        // 执行分类
+        merge.setW3DCodes(doClassify(merge.getW3DCodes()));
+
+        return merge.distinct().sort(WelfareCode::tailSort).generate();
     }
 
     private WelfareCode doStrategy(WelfareCode base, FilterParam filterParam, String filterString){
@@ -126,7 +145,46 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
         // 百个位杀码
         new HUBitFilter().filter(cacheCode, param);
 
-        return cacheCode.distinct().sort(WelfareCode::bitSort).generate();
+        return cacheCode.distinct().sort(WelfareCode::tailSort).generate();
     }
 
+
+    private List<W3DCode> doClassify(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> w3DCodeList = new ArrayList<>();
+
+        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(w3DCodes);
+        List<W3DCode> nonRepeatCodes = Encoders.minus(w3DCodes, repeatCodes, CodeTypeEnum.DIRECT);
+
+        List<W3DCode> pairCodes = TransferUtil.getPairCodes(nonRepeatCodes);
+        classify(pairCodes, ClassifyEnum.PAIR_UNDERLAP);
+        w3DCodeList.addAll(pairCodes);
+
+        List<W3DCode> repeatPairCodes = TransferUtil.getPairCodes(repeatCodes);
+        classify(repeatPairCodes, ClassifyEnum.PAIR_OVERLAP);
+        w3DCodeList.addAll(repeatPairCodes);
+
+        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(nonRepeatCodes);
+        classify(nonPairCodes, ClassifyEnum.NON_PAIR_UNDERLAP);
+        w3DCodeList.addAll(nonPairCodes);
+
+        List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
+        classify(repeatNonPairCodes, ClassifyEnum.NON_PAIR_OVERLAP);
+        w3DCodeList.addAll(repeatNonPairCodes);
+
+        return w3DCodeList;
+    }
+
+    private void classify(List<W3DCode> w3DCodes, ClassifyEnum classifyEnum){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return;
+        }
+
+        for(W3DCode w3DCode : w3DCodes){
+            w3DCode.setClassify(classifyEnum.getIndex());
+        }
+    }
 }

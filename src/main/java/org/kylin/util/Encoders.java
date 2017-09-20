@@ -163,7 +163,7 @@ public class Encoders {
         if(CodeTypeEnum.GROUP == type) {
             w3DCodeList.forEach(w3DCode -> {
                 int index = TransferUtil.findInGroupW3DCodes(mergeCodes, w3DCode);
-                LOGGER.info("index:{}, w3DCode:{}", index, w3DCode);
+                LOGGER.debug("index:{}, w3DCode:{}", index, w3DCode);
                 if( index >= 0){
                     W3DCode tmp  = mergeCodes.get(index);
                     tmp.setFreq(tmp.getFreq() + w3DCode.getFreq());
@@ -203,7 +203,6 @@ public class Encoders {
             for(W3DCode code: w3DCodeList){
                 if(equals(w3DCode, code, type)){
                     flag = true;
-                    System.out.println("code:" + code);
                     break;
                 }
             }
