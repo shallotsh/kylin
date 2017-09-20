@@ -116,10 +116,69 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
-//        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(welfareCode.getW3DCodes());
-//
-//        List<W3DCode> nonRepeatCodes = Encoders.minus(welfareCode.getW3DCodes(), repeatCodes, CodeTypeEnum.DIRECT);
+        if(welfareCode.getW3DCodes().get(0).getClassify() != 0){
+            exportOneKeyStrategy(doc, welfareCode);
+        }else{
+            exportNormal(doc, welfareCode);
+        }
 
+
+        // 保存
+        StringBuilder sb = new StringBuilder();
+        sb.append(targetDirName);
+        sb.append(File.separator);
+        sb.append(fileName);
+        sb.append(".docx");
+        FileOutputStream out = new FileOutputStream(sb.toString());
+        doc.write(out);
+        out.close();
+
+        return fileName + ".docx";
+    }
+
+    private static void exportNormal(XWPFDocument doc, WelfareCode welfareCode){
+        List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
+        List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(w3DCodes);
+
+        List<W3DCode> nonRepeatCodes = Encoders.minus(w3DCodes, repeatCodes, CodeTypeEnum.DIRECT);
+
+        List<W3DCode> pairCodes = TransferUtil.getPairCodes(nonRepeatCodes);
+        String title = String.format("对子不重叠部分 %d 注", pairCodes.size());
+        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
+
+        List<W3DCode> repeatPairCodes = TransferUtil.getPairCodes(repeatCodes);
+        title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeatPairCodes));
+        writeCodes(doc.createParagraph(), repeatPairCodes, toUTF8(title));
+
+        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(nonRepeatCodes);
+        title = String.format("非对子不重叠共计 %d 注", nonPairCodes.size());
+        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
+
+        List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
+        title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));
+        writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
+
+
+        // 输出组选
+        if(CodeTypeEnum.DIRECT.equals(welfareCode.getCodeTypeEnum())){
+
+            XWPFRun hr = doc.createParagraph().createRun();
+            hr.setFontSize(10);
+            hr.setText("----------------------------------------------------------------------");
+            hr.addBreak();
+
+            List<W3DCode> groupRepeatPairCodes = TransferUtil.grouplize(repeatPairCodes);
+            title = String.format("对子重叠部分（组选） %d 注", CollectionUtils.size(groupRepeatPairCodes));
+            writeCodes(doc.createParagraph(), groupRepeatPairCodes, toUTF8(title));
+
+            List<W3DCode> groupRepeatNonPairCodes = TransferUtil.grouplize(repeatNonPairCodes);
+            title = String.format("非对子重叠部分 (组选) %d 注", CollectionUtils.size(groupRepeatNonPairCodes));
+            writeCodes(doc.createParagraph(), groupRepeatNonPairCodes, toUTF8(title));
+        }
+
+    }
+
+    private static void exportOneKeyStrategy(XWPFDocument doc, WelfareCode welfareCode){
         List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
 
         List<W3DCode> pairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
@@ -156,26 +215,6 @@ public class DocUtils {
             writeCodes(doc.createParagraph(), groupRepeatNonPairCodes, toUTF8(title));
         }
 
-
-
-        // 保存
-        StringBuilder sb = new StringBuilder();
-        sb.append(targetDirName);
-        sb.append(File.separator);
-        sb.append(fileName);
-        sb.append(".docx");
-        FileOutputStream out = new FileOutputStream(sb.toString());
-        doc.write(out);
-        out.close();
-
-        return fileName + ".docx";
-    }
-
-    private static void exportDirectCodes(XWPFParagraph paragraph, List<W3DCode> w3DCodes, String titleString){
-
-    }
-
-    private static void exportGroupCodes(XWPFParagraph paragraph, List<W3DCode> w3DCodes, String titleString){
 
     }
 
