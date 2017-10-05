@@ -2,7 +2,6 @@ package org.kylin.web;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
-import org.kylin.algorithm.filter.impl.FreqFilter;
 import org.kylin.bean.*;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.service.WelfareCodePredictor;
@@ -18,7 +17,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.Collections;
 
 /**
  * @author huangyawu
@@ -85,6 +83,15 @@ public class ApiCodePredictor {
         }
 
         return new WyfDataResponse<>(welfareCode);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/codes/high/freq",  method = RequestMethod.POST)
+    public WyfResponse highFreqFilter(@RequestBody WelfareCode welfareCode){
+        LOGGER.info("api-code-predictor-high-freq code={}", JSON.toJSONString(welfareCode));
+        WelfareCode code = welfareCodePredictor.highFreq(welfareCode);
+
+        return new WyfDataResponse<>(code);
     }
 
     @ResponseBody

@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import org.kylin.algorithm.filter.CodeFilter;
 import org.kylin.bean.FilterParam;
 import org.kylin.bean.PolyParam;
+import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
 import org.kylin.constant.CodeTypeEnum;
+import org.kylin.constant.WelfareConfig;
 import org.kylin.service.WelfareCodePredictor;
 import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
@@ -112,5 +114,23 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
         }
 
         return Encoders.mergeWelfareCodes(welfareCodes);
+    }
+
+    @Override
+    public WelfareCode highFreq(WelfareCode welfareCode) {
+        if(welfareCode == null || CollectionUtils.isEmpty(welfareCode.getW3DCodes())){
+            return welfareCode;
+        }
+
+        List<W3DCode> w3DCodes = TransferUtil.parseFromStringArrays(WelfareConfig.HFC);
+        WelfareCode hfCode = new WelfareCode(welfareCode);
+        hfCode.setW3DCodes(w3DCodes);
+
+        List<W3DCode> w3DCodeList = welfareCode.getIntersection(hfCode  );
+        welfareCode.setW3DCodes(w3DCodeList);
+
+        welfareCode.sort(WelfareCode::bitSort).generate();
+
+        return welfareCode;
     }
 }

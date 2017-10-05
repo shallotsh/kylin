@@ -274,4 +274,29 @@ public class WelfareCode implements Serializable{
         return this;
     }
 
+    public List<W3DCode> getIntersection(WelfareCode welfareCode){
+        if(CollectionUtils.isEmpty(this.getW3DCodes())){
+            return Collections.emptyList();
+        }
+        if( welfareCode == null || welfareCode.getCodeTypeEnum() != this.getCodeTypeEnum()){
+            return Collections.emptyList();
+        }
+        List<W3DCode> codes = welfareCode.getW3DCodes();
+
+        if(CollectionUtils.isEmpty(codes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> w3DCodeList = new ArrayList<>();
+        List<W3DCode> w3DCodes = this.getW3DCodes();
+        for(W3DCode w3DCode : w3DCodes){
+            if (TransferUtil.findInW3DCodes(codes, w3DCode, welfareCode.codeTypeEnum) <  0){
+                continue;
+            } else {
+                w3DCodeList.add(w3DCode);
+            }
+        }
+        return w3DCodeList;
+    }
+
 }

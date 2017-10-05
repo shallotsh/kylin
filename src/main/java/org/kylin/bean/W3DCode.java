@@ -200,4 +200,15 @@ public class W3DCode implements Cloneable{
         }
     }
 
+    public W3DCode setBit(int index, Integer value){
+        if((index != BitConstant.DECADE
+                && index != BitConstant.HUNDRED
+                && index != BitConstant.UNIT) || value < 0){
+            throw new  RuntimeException("参数错误");
+        }
+
+        this.codes[index] = value;
+        return this;
+    }
+
 }

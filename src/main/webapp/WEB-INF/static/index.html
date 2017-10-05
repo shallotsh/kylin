@@ -22,7 +22,7 @@
    </head>
    <body style="background: url(images/bj.png);" >
       <div class="container" ng-app="wyf" ng-controller="logicCtr">
-         <h1>我要发·3D码预测(BETA:0.9.9)</h1>
+         <h1>我要发·3D码预测(BETA:0.9.10)</h1>
 
          <div class="col-sm-7 col-md-7" 
             style="background-color: #F5F5F5;
@@ -124,6 +124,7 @@
                  <button type="button" class="btn btn-primary" ng-click="killCode()" ng-model="do_kill">杀码</button>
                  <button type="button" class="btn btn-success" ng-click="transfer2Group()" ng-model="group" ng-disabled="group">转组选</button>
                  <button type="button" class="btn btn-primary" ng-click="add2Queue()" ng-model="do_add">添加到队列</button>
+                 <button type="button" class="btn btn-info" ng-click="highFreqFilter()" >高频杀码</button>
                  <button type="button" class="btn btn-success" ng-click="oneKey()" >一键预测</button>
              </div>
 

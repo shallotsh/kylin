@@ -42,4 +42,11 @@ public interface WelfareCodePredictor {
      * @return
      */
     WelfareCode compSelect(List<WelfareCode> welfareCodes);
+
+    /**
+     * 高频杀码
+     * @param welfareCode
+     * @return
+     */
+    WelfareCode highFreq(WelfareCode welfareCode);
 }

@@ -1,9 +1,11 @@
 package org.kylin.util;
 
 import javafx.util.Pair;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
+import org.kylin.constant.CodeTypeEnum;
 import org.springframework.util.CollectionUtils;
 
 import javax.xml.bind.annotation.W3CDomHandler;
@@ -68,6 +70,21 @@ public class TransferUtil {
 
         return seqInts;
     }
+
+    public static int findInW3DCodes(List<W3DCode> w3DCodes, W3DCode w3DCode, CodeTypeEnum codeType){
+        if(codeType == null){
+            throw new RuntimeException("参数错误");
+        }
+
+        if(codeType == CodeTypeEnum.DIRECT){
+            return findInDirectW3DCodes(w3DCodes, w3DCode);
+        }else if(codeType == CodeTypeEnum.GROUP){
+            return findInGroupW3DCodes(w3DCodes, w3DCode);
+        }else {
+            throw new UnsupportedOperationException("暂不支持的操作");
+        }
+    }
+
 
     public static int findInDirectW3DCodes(List<W3DCode> w3DCodes, W3DCode w3DCode){
         if(CollectionUtils.isEmpty(w3DCodes) || w3DCode == null){
@@ -318,6 +335,41 @@ public class TransferUtil {
             }
 
         });
+
+        return w3DCodes;
+    }
+
+    public static W3DCode parseFromString(String code){
+        if(StringUtils.isEmpty(code) || code.length() != 3){
+            return null;
+        }
+        W3DCode w3DCode = new W3DCode();
+        int length = code.length();
+        int total = 0;
+        for(int i=0; i<length; i++){
+            if(StringUtils.isNumeric(code.substring(i,i+1))){
+                int tmp = Integer.parseInt(code.substring(i, i+1));
+                w3DCode.getCodes()[length - i - 1] = tmp;
+                total += tmp;
+            }
+        }
+        w3DCode.setFreq(1000);
+        w3DCode.setSumTail(total % 10);
+
+        return w3DCode;
+    }
+
+    public static List<W3DCode> parseFromStringArrays(String[] codes){
+        if(ArrayUtils.isEmpty(codes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> w3DCodes = new ArrayList<>();
+        for(String code: codes){
+            W3DCode w3DCode = parseFromString(code);
+            if(w3DCode != null)
+            w3DCodes.add(w3DCode);
+        }
 
         return w3DCodes;
     }

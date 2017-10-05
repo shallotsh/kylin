@@ -279,6 +279,32 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     }
 
+    $scope.highFreqFilter = function () {
+        if(!$rootScope.isPredict){
+            handleException("请先完成预测");
+            return;
+        }
+
+        var data = deepCopy($rootScope.welfareCode);
+
+        // console.log("high frequency code filter:" + JSON.stringify(data, null, 2));
+
+        $http({
+            method:"POST",
+            url:"/api/welfare/codes/high/freq",
+            data: JSON.stringify(data),
+            headers:{
+                "Content-Type": "application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleResponse(response);
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("高频杀码失败!");
+        });
+    }
+
+
     $scope.oneKey = function () {
         var paramArray = [];
         paramArray.push($scope.input_1);
