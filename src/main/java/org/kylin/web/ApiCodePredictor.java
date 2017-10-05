@@ -69,7 +69,7 @@ public class ApiCodePredictor {
     @RequestMapping(value = "/codes/filter", method = RequestMethod.POST)
     public WyfResponse doFilter(@RequestBody FilterParam filterParam){
 
-        LOGGER.info("api-code-predictor-filter param={}", JSON.toJSONString(filterParam));
+        LOGGER.info("api-code-predictor-filter param={}", filterParam);
 
         if(filterParam == null || filterParam.getWelfareCode() == null){
             LOGGER.warn("api-code-predictor-filter-bad-quest");

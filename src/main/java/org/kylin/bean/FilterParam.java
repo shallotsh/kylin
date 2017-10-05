@@ -203,4 +203,30 @@ public class FilterParam {
     public void setWelfareCode(WelfareCode welfareCode) {
         this.welfareCode = welfareCode;
     }
+
+    @Override
+    public String toString() {
+        return "FilterParam{" +
+                "sumValue='" + sumValue + '\'' +
+                ", boldCode='" + boldCode + '\'' +
+                ", gossip='" + gossip + '\'' +
+                ", range='" + range + '\'' +
+                ", ternaryLocation='" + ternaryLocation + '\'' +
+                ", fishMan='" + fishMan + '\'' +
+                ", huBits='" + huBits + '\'' +
+                ", hBits='" + hBits + '\'' +
+                ", dBits='" + dBits + '\'' +
+                ", uBits='" + uBits + '\'' +
+                ", isKillDipolar=" + isKillDipolar +
+                ", dipolar=" + dipolar +
+                ", isKillOneEnd=" + isKillOneEnd +
+                ", oneEnd=" + oneEnd +
+                ", isKillBigSum=" + isKillBigSum +
+                ", bigSum=" + bigSum +
+                ", isKillAllOddEven=" + isKillAllOddEven +
+                ", oddEven=" + oddEven +
+                ", freqs='" + freqs + '\'' +
+                ", welfareCode=" + welfareCode +
+                '}';
+    }
 }

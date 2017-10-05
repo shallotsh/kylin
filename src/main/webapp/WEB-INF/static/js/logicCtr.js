@@ -298,6 +298,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
+            $rootScope.wyfMessage = highFreqFormat($rootScope.codesCount);
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("高频杀码失败!");
@@ -379,7 +380,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.wyfCodes = $rootScope.welfareCode.codes;
         // console.log("wyfCodesx:" + JSON.stringify($rootScope.wyfCodes, null, 2));
         $rootScope.codesCount = $rootScope.wyfCodes.length;
-        $rootScope.wyfMessage = "预测请求返回成功";
+        $rootScope.wyfMessage = "请求返回成功";
         $rootScope.isPredict = true;
         if($rootScope.welfareCode.codeTypeEnum == "DIRECT"){
             $rootScope.group = false;
@@ -471,6 +472,10 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
     function compFormat(queueCount, total){
         return "参与综合选码队列：" + queueCount + ", 共选出 " + total + " 注3D码.";
+    }
+
+    function highFreqFormat(total){
+        return "高频杀码选出： " + total + " 注3D码.";
     }
 
 });
