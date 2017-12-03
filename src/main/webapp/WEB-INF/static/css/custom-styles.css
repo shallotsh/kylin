@@ -839,10 +839,7 @@ ul.dropdown-menu.dropdown-messages li a div {
     }
 
     .navbar-side {
-        z-index: 1;
-        position: fixed;
-        width: 100%;
-        top: 80px;
+        display: none;
     }
 }
 
@@ -871,10 +868,7 @@ ul.dropdown-menu.dropdown-messages li a div {
     }
 
     .navbar-side {
-        z-index: 1;
-        position: fixed;
-        width: 100%;
-        top: 80px;
+        display: none;
     }
 }
 
