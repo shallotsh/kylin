@@ -12,6 +12,16 @@ public class Home {
 
     @RequestMapping("/")
     public String index(){
-        return "index";
+        return "wyf";
+    }
+
+    @RequestMapping("/origin")
+    public String origin(){
+        return "v1";
+    }
+
+    @RequestMapping("/login")
+    public String login(){
+        return "login";
     }
 }

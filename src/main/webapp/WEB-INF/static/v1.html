@@ -1,0 +1,333 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content="" name="description"/>
+    <meta content="shallotsh" name="author"/>
+    <title>我要发-预测系统-三码法</title>
+    <!-- Bootstrap Styles-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- FontAwesome Styles-->
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <!-- Custom Styles-->
+    <link href="css/custom-styles.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+
+    <script src="https://cdn.staticfile.org/angular.js/1.5.0/angular.js"></script>
+    <script src="https://cdn.staticfile.org/angular.js/1.5.0/angular-route.min.js"></script>
+
+</head>
+<body>
+<div class="container-fluid" ng-app="wyf" ng-controller="logicCtr">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发 </strong></a>
+            <div id="sideNav" href="">
+                <i class="fa fa-bars icon"></i>
+            </div>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+    </nav>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+                <li>
+                    <a href="/"><i class="fa fa-cubes"></i> 排五法</a>
+                </li>
+                <li>
+                    <a class="active-menu" href="/origin"><i class="fa fa-fw fa-cube"></i> 三码法</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper">
+        <div id="page-inner">
+            <div class="col-sm-7 col-md-7"
+                 style="background-color: #F5F5F5;
+            box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444;" >
+                <h3>预测操作</h3>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-2 col-md-2" style="text-align: center;vertical-align: middle; padding-right: 0px; padding-left: 0px;">
+                        <label class="col-md-12 control-label" style="vertical-align: middle;"tools
+                        >预测序列</label>
+                    </div>
+                    <div class="col-sm-2 col-md-2" style="margin-right: 0px; padding-right: 0px;" >
+                        <input type="text" class="form-control" placeholder="序列1" ng-model="input_1" value="12"/>
+                    </div>
+                    <div class="col-sm-2 col-md-2" style="margin-right: 0px; padding-right: 0px;">
+                        <input type="text" class="form-control" placeholder="序列2" ng-model="input_2" value="32"/>
+                    </div>
+                    <div class="col-sm-2 col-md-2" style="margin-right: 0px; padding-right: 0px;">
+                        <input type="text" class="form-control" placeholder="序列3" ng-model="input_3" value="983"/>
+                    </div>
+                    <div class="col-sm-2 col-md-2"  style="margin-right: 0px; padding-right: 0px;">
+                        <input type="text" class="form-control" placeholder="序列4" ng-model="input_4" value="32"/>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="wyf_bold" class="col-sm-4 control-label">胆码</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" ng-model="wyf_bold" id="wyf_bold"
+                                       placeholder="请输入胆码">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <button type="button"  class="btn btn-success" ng-click="doCache()" ng-model="do_cache" >{{do_cache}}</button>
+                            <span ng-show="query_cache" ng-model="query_cache" style="color:red;">已暂存</span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr/>
+                <div class="row">
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="wyf_sum_tail" class="col-md-4 control-label">和值尾</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="wyf_sum_tail" id="wyf_sum_tail"
+                                       placeholder="请输入和值尾" ng-trim="false">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="wyf_range" class="col-sm-4 control-label">跨度</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" ng-model="wyf_range" id="wyf_range"
+                                       placeholder="请输入跨度">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr/>
+
+                <label>杀码选项</label>
+                <div>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="option1" ng-model="wyf_dipolar"> 杀两头
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="option2" ng-model="wyf_one_end"> 杀全大全小
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="option3" ng-model="wyf_big_sum"> 杀大和
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox4" value="option4" ng-model="wyf_all_odd_even"> 杀全奇全偶
+                    </label>
+                </div>
+                <hr/>
+                <button type="button"  class="btn btn-success" ng-click="minus()" ng-model="do_minus">取余</button>
+                <button type="button" class="btn btn-success" ng-click="transfer2Direct()" ng-model="direct" ng-disabled="direct" >转直选</button>
+
+
+                <button type="button" class="btn btn-primary" ng-click="compSelect()" ng-model="com_select">综合选码</button>
+                <button type="button" class="btn btn-primary" ng-click="exportCode()" ng-model="do_export">导出</button>
+                <button type="button" class="btn btn-danger" ng-click="reset()" ng-model="do_reset">重置</button>
+
+
+                <div>
+                    <button type="button" class="btn btn-success" ng-click="predict()" >预测</button>
+                    <button type="button" class="btn btn-primary" ng-click="killCode()" ng-model="do_kill">杀码</button>
+                    <button type="button" class="btn btn-success" ng-click="transfer2Group()" ng-model="group" ng-disabled="group">转组选</button>
+                    <button type="button" class="btn btn-primary" ng-click="add2Queue()" ng-model="do_add">添加到队列</button>
+                    <button type="button" class="btn btn-info" ng-click="highFreqFilter()" >高频杀码</button>
+                    <button type="button" class="btn btn-success" ng-click="oneKey()" >一键预测</button>
+                </div>
+
+                <div>
+                    <label class="radio-inline">
+                        <input type="radio"  ng-value="3" name="encode" ng-model="quibinary_first">先二码
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio"  ng-value="1" name="encode" ng-model="quibinary_first">先三码
+                    </label>
+                    <!--<label class="checkbox-inline">-->
+                    <!--<input type="checkbox" id="inlineCheckbox5" value="option3"> 分类导出-->
+                    <!--</label>-->
+
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="wyf_bit_hu" class="col-md-4 control-label">百个位</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="wyf_bit_hu" id="wyf_bit_hu"
+                                       placeholder="请输入百个位">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="wyf_gossip" class="col-md-4 control-label">二码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="wyf_gossip" id="wyf_gossip"
+                                       placeholder="35#25#68">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="wyf_locate_three" class="col-md-4 control-label">定三码</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="wyf_locate_three" id="wyf_locate_three"
+                                       placeholder="2345#1268#234">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label for="wyf_fish_man" class="col-sm-4 control-label">钓叟</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" ng-model="wyf_fish_man" id="wyf_fish_man"
+                                       placeholder="3495#237">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="wyf_bit_h" class="col-md-4 control-label">百位</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" ng-model="wyf_bit_h" id="wyf_bit_h"
+                                       placeholder="百位">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="wyf_bit_d" class="col-sm-4 control-label">十位</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" ng-model="wyf_bit_d" id="wyf_bit_d"
+                                       placeholder="十位">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <div class="form-group">
+                            <label for="wyf_bit_u" class="col-sm-4 control-label">个位</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" ng-model="wyf_bit_u" id="wyf_bit_u"
+                                       placeholder="个位">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <hr/>
+
+            </div>
+
+
+            <div class="col-sm-4 col-md-4"
+                 style="background-color: #F5F5F5;
+            box-shadow: inset 1px -1px 1px #444, inset -1px 1px 1px #444; margin-left:10px;" >
+                <h3>预测状态</h3>
+                <hr/>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3" ng-model="wyfMessage" readonly="true"></textarea>
+                </div>
+                <hr/>
+                <hr/>
+                <hr/>
+                <div class="wyf-output-title">
+                    <nobr><h3 style="display: inline-block; margin-right: 8px">预测队列</h3>(双击删除)</nobr>
+
+                </div>
+                <div class="wyf-predict-queue" >
+                    <button ng-repeat="item in cacheQueue" class="button white medium"  ng-click="selectQueue($index)" ng-dblclick="delQueue($index)">队列{{$index}}</button>
+                </div>
+
+                <hr/>
+                <div class="wyf-output-title">
+                    <h3>预测3D码序列: {{codesCount}} 注</h3>
+                    <hr/>
+                    <span ng-show="wyf_statistics" ng-model="wyf_statistics">对子: {{pairCount}}注 非对子: {{nonPairCount}}注</span>
+                </div>
+                <hr/>
+                <div class="wyf-codes">
+                    <ul>
+                        <li ng-repeat="item in wyfCodes"><span style="display: inline-block;">{{item}}</span></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<!-- Bootstrap Js -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script src="js/jquery.metisMenu.js"></script>
+<!-- Custom Js -->
+<script src="js/custom-scripts.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/logicCtr.js"></script>
+<script src="js/dataCtr.js"></script>
+
+
+</body>
+</html>

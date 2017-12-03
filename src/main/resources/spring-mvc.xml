@@ -29,6 +29,7 @@
     <mvc:resources mapping="/js/**" location="/WEB-INF/static/js/"/>
     <mvc:resources mapping="/images/**" location="/WEB-INF/static/images/"/>
     <mvc:resources mapping="/html/**" location="/WEB-INF/static/"/>
+    <mvc:resources mapping="/fonts/**" location="/WEB-INF/static/fonts/"/>
 
     <!--但是项目部署到linux下发现WEB-INF的静态资源会出现无法解析的情况，但是本地tomcat访问正常，因此建议还是直接把静态资源放在webapp的statics下，映射配置如下-->
     <!--<mvc:resources mapping="/css/**" location="/statics/css/"/>-->

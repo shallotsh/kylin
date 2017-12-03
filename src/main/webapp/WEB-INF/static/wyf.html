@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content="" name="description"/>
+    <meta content="shallotsh" name="author"/>
+    <title>我要发-预测系统-排五法</title>
+    <!-- Bootstrap Styles-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- FontAwesome Styles-->
+    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <!--&lt;!&ndash; Morris Chart Styles&ndash;&gt;-->
+    <!--<link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet"/>-->
+    <!-- Custom Styles-->
+    <link href="css/wyf.css" rel="stylesheet">
+    <link href="css/custom-styles.css" rel="stylesheet"/>
+    <!-- Google Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+</head>
+
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-default top-navbar" role="navigation" style="margin-top: 0px;">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发 </strong></a>
+
+            <div id="sideNav" href="">
+                <i class="fa fa-bars icon"></i>
+            </div>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <!-- /.dropdown -->
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    </li>
+                    <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+            <!-- /.dropdown -->
+        </ul>
+    </nav>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+                <li>
+                    <a class="active-menu" href="/"><i class="fa fa-cubes"></i> 排五法</a>
+                </li>
+                <li>
+                    <a href="/origin"><i class="fa fa-fw fa-cube"></i> 三码法</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+    <!-- /. NAV SIDE  -->
+
+    <div id="page-wrapper">
+
+        <div id="page-inner">
+            <!-- input sequence -->
+            <div class="row">
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="序列1" />
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="序列2"/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="序列3"/>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" placeholder="序列4"/>
+                </div>
+                <div class="col-sm-2 col-sm-push-1">
+                    <button type="button" class="btn btn-primary fill_parent"> 组 码 </button>
+                </div>
+            </div>
+
+            <!-- operate for transfer -->
+            <div class="row border-dashed-vertical">
+                <div class=" form-inline col-sm-3">
+                    <label for="sum_code" class="control-label">和杀</label>
+                    <input type="text" class="form-control fill_parent_50" id="sum_code" placeholder="和杀码">
+                </div>
+                <div class=" form-inline col-sm-3">
+                    <label for="bold_code" class="control-label">胆杀</label>
+                    <input type="email" class="form-control fill_parent_50" id="bold_code" placeholder="胆杀码">
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary fill_parent"> 杀 码 </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary fill_parent"> 转直选 </button>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary fill_parent"> 排五 </button>
+                </div>
+            </div>
+
+            <div class="row  content_align_center border-dashed-bottom" >
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-success fill_parent_50"> 导出 </button>
+                </div>
+
+                <div class="col-sm-9 div-padding-right-none" >
+                    <textarea class="form-control" placeholder="操作历史记录" rows="2" ></textarea>
+                </div>
+            </div>
+
+
+            <!-- coperate for 5code -->
+            <div class="row " >
+                <div class="col-sm-3 content_align_center">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-info fill_parent"> 小和杀 </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-info fill_parent"> 含三杀 </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-info fill_parent"> 大和杀 </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-info fill_parent"> 含四杀 </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-info fill_parent"> 奇偶杀 </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-info fill_parent"> 含五杀 </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="myriabit">万</label>
+                                <input type="text" class="form-inline" id="myriabit" placeholder="万位">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="kilobit">千</label>
+                                <input type="text" class="form-inline" id="kilobit" placeholder="千位">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="hundred">百</label>
+                                <input type="text" class="form-inline" id="hundred" placeholder="百位">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="decade">十</label>
+                                <input type="text" class="form-inline" id="decade" placeholder="十位">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="unit">个</label>
+                                <input type="text" class="form-inline" id="unit" placeholder="个位">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-info fill_parent_50"> 位 杀 </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- for result show -->
+                <div class="col-sm-9 " >
+                    <div class="row right-div-padding div-margin-bottom-clear">
+                        <div >
+                            <span>这一行是统计数据展示区域</span>
+                        </div>
+                    </div>
+                    <div class="row right-div-padding div-margin-top-clear">
+                        <div class="border-solid code-show">
+                            3D码展示区域
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="footer content_align_center">
+                <span>Copyright@2017</span>
+            </div>
+        </div>
+
+            <!-- /. ROW  -->
+
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+<!-- Bootstrap Js -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Js -->
+<script src="js/jquery.metisMenu.js"></script>
+
+<!-- Custom Js -->
+<script src="js/custom-scripts.js"></script>
+
+
+</body>
+
+</html>
