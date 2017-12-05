@@ -25,3 +25,6 @@ rebel.xml
 #.class
 rebel.xml
 log.txt
+
+# react
+/src/main/webapp/reactapp/node_modules
