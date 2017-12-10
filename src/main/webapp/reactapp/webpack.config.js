@@ -5,7 +5,7 @@ var webpack = require('webpack');
  */
 var config = {
     devtool: 'eval-source-map',
-    entry: __dirname + "/source/App.js",
+    entry: __dirname + "/src/App.js",
     output: {
         path: __dirname + "/public/js",
         filename: "arrange.js"
