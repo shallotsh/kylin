@@ -5,6 +5,8 @@
 /src/main/webapp/WEB-INF/lib
 /src/main/webapp/static/**/.cache/
 
+/src/main/webapp/reactapp
+
 # eclipse intellij ide settings
 /target
 /.settings
