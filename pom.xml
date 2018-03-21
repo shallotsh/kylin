@@ -214,6 +214,20 @@
               <target>1.8</target>
           </configuration>
       </plugin>
+
+        <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>9.4.8.v20171121</version>
+            <configuration>
+                <httpConnector>
+                    <port>9000</port>
+                </httpConnector>
+                <stopPort>9002</stopPort>
+                <stopKey>a</stopKey>
+                <scanIntervalSeconds>0</scanIntervalSeconds>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
 </project>

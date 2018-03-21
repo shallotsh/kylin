@@ -53,6 +53,7 @@ public class ApiCodePredictor {
     public WyfResponse transfer(@RequestBody WelfareCode welfareCode){
         LOGGER.info("transfer-codes welfareCode={}", JSON.toJSONString(welfareCode));
         if(welfareCode == null || welfareCode.getW3DCodes() == null){
+            LOGGER.warn("参数不合法");
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数为空");
         }
 
