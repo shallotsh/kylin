@@ -23,6 +23,8 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
+import org.kylin.bean.p5.WCode;
+import org.kylin.bean.p5.WCodeReq;
 import org.kylin.constant.ClassifyEnum;
 import org.kylin.constant.CodeTypeEnum;
 import org.slf4j.Logger;
@@ -219,6 +221,89 @@ public class DocUtils {
     }
 
 
+    public static String saveWCodes(WCodeReq wCodeReq) throws IOException {
+        if(wCodeReq == null || CollectionUtils.isEmpty(wCodeReq.getwCodes())){
+            return "";
+        }
+
+        String fileName = CommonUtils.getCurrentTimeString();
+        String subDirectory = fileName.substring(0,6);
+        String targetDirName = BASE_PATH + subDirectory;
+
+        if(!createDirIfNotExist(targetDirName)){
+            LOGGER.info("save-wCodes-create-directory-error targetDirName={}", targetDirName);
+            throw new IOException("directory create error");
+        }
+
+        XWPFDocument doc = new XWPFDocument();
+
+        XWPFParagraph header = doc.createParagraph();
+        header.setVerticalAlignment(TextAlignment.TOP);
+        header.setWordWrap(true);
+        header.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun hr1 = header.createRun();
+        hr1.setText(toUTF8("《我要发·排列5》福彩3D预测报表"));
+        hr1.setBold(true);
+        hr1.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
+        hr1.setTextPosition(20);
+        hr1.setFontSize(28);
+        hr1.addBreak();
+
+        XWPFRun hr2 = header.createRun();
+
+        hr2.setText(toUTF8("共计" + wCodeReq.getwCodes().size() + "注排列5码!!!     时间："
+                + CommonUtils.getCurrentDateString() ));
+        hr2.setTextPosition(10);
+        hr2.setFontSize(18);
+
+        exportWCodes(doc, wCodeReq.getwCodes());
+
+
+        // 保存
+        StringBuilder sb = new StringBuilder();
+        sb.append(targetDirName);
+        sb.append(File.separator);
+        sb.append(fileName);
+        sb.append(".docx");
+        FileOutputStream out = new FileOutputStream(sb.toString());
+        doc.write(out);
+        out.close();
+
+        return fileName + ".docx";
+    }
+
+
+    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes){
+
+        XWPFParagraph paragraph = doc.createParagraph();
+        XWPFRun title = paragraph.createRun();
+        title.setFontSize(18);
+        title.setBold(true);
+        title.setText(toUTF8("排列5码"));
+        title.addBreak();
+
+        XWPFRun hr = paragraph.createRun();
+        hr.setFontSize(10);
+        hr.setText("----------------------------------------");
+        hr.addBreak();
+
+        XWPFRun content = paragraph.createRun();
+        content.setFontSize(14);
+
+
+        for(WCode w3DCode : wCodes) {
+            content.setText(w3DCode.getString() + "     ");
+        }
+
+        content.addBreak();
+        content.setTextPosition(20);
+
+        XWPFRun sep = paragraph.createRun();
+        sep.setTextPosition(50);
+    }
+
+
+
     public static void writeCodes(XWPFParagraph paragraph, List<W3DCode> w3DCodes, String titleString){
         if(paragraph == null || CollectionUtils.isEmpty(w3DCodes)){
             return;
@@ -280,7 +365,6 @@ public class DocUtils {
             return false;
         }
     }
-
     public static String toUTF8(String str){
         if(StringUtils.isBlank(str)){
             return str;

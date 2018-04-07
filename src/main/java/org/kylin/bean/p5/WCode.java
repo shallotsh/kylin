@@ -99,6 +99,15 @@ public class WCode implements Cloneable{
         this.freq += count;
     }
 
+    public String getString(){
+        StringBuilder sb = new StringBuilder();
+        int size = CollectionUtils.size(codes);
+        for(int i=size-1; i>=0; i--){
+            sb.append(codes.get(i));
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         if(CollectionUtils.isEmpty(codes)){

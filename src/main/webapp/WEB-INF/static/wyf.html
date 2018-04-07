@@ -118,15 +118,15 @@
                 </div>
             </div>
 
-            <div class="row  content_align_center border-dashed-bottom" >
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-success fill_parent_50"> 导出 </button>
-                </div>
+            <!--<div class="row  content_align_center border-dashed-bottom" >-->
+                <!--<div class="col-sm-3">-->
+                    <!--<button type="button" class="btn btn-success fill_parent_50"> 导出 </button>-->
+                <!--</div>-->
 
-                <div class="col-sm-9 div-padding-right-none" >
-                    <textarea class="form-control" placeholder="操作历史记录" rows="2" ></textarea>
-                </div>
-            </div>
+                <!--<div class="col-sm-9 div-padding-right-none" >-->
+                    <!--<textarea class="form-control" placeholder="操作历史记录" rows="2" ></textarea>-->
+                <!--</div>-->
+            <!--</div>-->
 
 
             <!-- coperate for 5code -->
@@ -208,9 +208,12 @@
 
                 <!-- for result show -->
                 <div class="col-sm-9 " >
-                    <div class="row right-div-padding div-margin-bottom-clear">
-                        <div >
+                    <div class="row ">
+                        <div class="col-sm-9 div-margin-bottom-clear">
                             <span>{{wyfMessage}}</span>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="button" @click="exportCodes" v-show="config.isP5" class="btn btn-success fill_parent_50" style="margin-bottom: 10px"> 导出 </button>
                         </div>
                     </div>
                     <div class="row right-div-padding div-margin-top-clear">

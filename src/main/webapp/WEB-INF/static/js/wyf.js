@@ -94,6 +94,16 @@ var app = new Vue({
             this.wyfMessage = "排5 " + msg + " 生成: "  + this.wyfCodes.length + " 注";
         },
 
+        handleDownload: function(data) {
+            console.log("downloads:"+data);
+            if(data == null){
+                console.log("request error.");
+                return;
+            }
+            window.location = "/api/welfare/download?fileName=" + data;
+        }
+        ,
+
         transfer2Direct: function () {
             if(!this.config.isPredict){
                 this.handleException("请先完成预测");
@@ -278,6 +288,32 @@ var app = new Vue({
             }).catch(function(reason) {
                 console.log(reason);
                 app.handleException("位杀请求失败!");
+            });
+        },
+
+        exportCodes: function(){
+            if(!this.config.isP5){
+                this.handleException("请先完成排5");
+                return;
+            }
+
+            var args = {
+                wCodes: this.welfareCode
+            };
+
+            // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
+            axios({
+                method:"POST",
+                url:"/api/p5/codes/export",
+                data: JSON.stringify(args),
+                headers:{
+                    "Content-Type": "application/json; charset=UTF-8"
+                }
+            }).then(function(response) {
+                app.handleDownload(response.data.data);
+            }).catch(function(reason) {
+                console.log(reason);
+                app.handleException("导出请求失败!");
             });
         },
 

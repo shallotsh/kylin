@@ -9,6 +9,7 @@ import org.kylin.bean.WyfResponse;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
 import org.kylin.service.pfive.WCodeProcessService;
+import org.kylin.util.DocUtils;
 import org.kylin.util.WCodeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -67,6 +69,21 @@ public class KylinPermutationFiveMethodApi {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "/codes/export",  method = RequestMethod.POST)
+    public WyfResponse exportCodes(@RequestBody WCodeReq wCodeReq){
+        if(wCodeReq == null){
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "导出数据错误");
+        }
+
+        try {
+            String fileName = DocUtils.saveWCodes(wCodeReq);
+            return  new WyfDataResponse<>(fileName);
+        } catch (IOException e) {
+            LOGGER.error("export-codes-error wCodeReq={}", JSON.toJSONString(wCodeReq));
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误");
+        }
+    }
 
 
 
