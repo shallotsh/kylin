@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  */
 public class TransferUtil {
 
-    public static List<Set<Integer>> parse(String seq){
+    public static List<Set<Integer>> parseList(String seq){
         if(StringUtils.isBlank(seq) || seq.length() < 2){
             return Collections.emptyList();
         }

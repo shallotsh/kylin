@@ -55,7 +55,7 @@
 //
 //        WelfareCode welfareCode = new WelfareCode();
 //        welfareCode.setW3DCodes(w3DCodes);
-//        welfareCode.filter(new BigSumFilter(), filterParam);
+//        welfareCode.filter(new BigSumProcessor(), filterParam);
 //
 //        LOGGER.info(JSON.toJSONString(welfareCode.getW3DCodes()));
 //
