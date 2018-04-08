@@ -108,7 +108,7 @@
                     <input type="text" size="12" class="form-control fill_parent_50" v-model="boldCode" id="bold_code" placeholder="胆杀码">
                 </div>
                 <div class="col-sm-2">
-                    <button type="button" @click="killCode" class="btn btn-primary fill_parent"> 杀 码 </button>
+                    <button type="button" @click="killCode" :disabled="config.isP5" class="btn btn-primary fill_parent"> 杀 码 </button>
                 </div>
                 <div class="col-sm-2">
                     <button type="button" @click="transfer2Direct" class="btn btn-primary fill_parent"> 转直选 </button>
@@ -162,6 +162,12 @@
                             <div class="col-sm-6">
                                 <button type="button" @click="boldProcess(6)" class="btn btn-info fill_parent"> 含五杀 </button>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button type="button" @click="constProcess(7)" class="btn btn-info fill_parent"> 杀全大全小 </button>
+                            </div>
+
                         </div>
                     </div>
 

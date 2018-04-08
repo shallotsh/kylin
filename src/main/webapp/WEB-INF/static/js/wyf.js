@@ -43,12 +43,12 @@ var app = new Vue({
                 "riddles": paramArray,
                 "targetCodeType": 3
             };
+            this.wyfMessage = "正在计算...";
             axios({
               method: 'post',
               url: '/api/welfare/codes/predict',
               data: args
             }).then(function(response) {
-                    console.log(response.data.data);
                     app.handleThreeCodeResponse(response.data.data);
                 })
                 .catch(function(error){
@@ -67,6 +67,8 @@ var app = new Vue({
             this.config.isPredict=true;
             this.config.canKill=true;
             this.config.canExport=true;
+            app.config.isP5 = false;
+            console.log('isP5:' + this.config.isP5);
             if(this.welfareCode.codeTypeEnum == "DIRECT"){
                 this.config.config3.isGroup = false;
                 this.config.config3.isDirect = true;
@@ -79,17 +81,14 @@ var app = new Vue({
         },
 
         handleFiveCodeResponse: function (data, msg) {
-            console.log('data: ' + JSON.stringify(data, null, 2));
             this.config.isP5 = true;
             this.welfareCode = data;
             var printCodes = [];
             for( idx in this.welfareCode){
                 code = this.welfareCode[idx];
-                console.log('code:' + JSON.stringify(code, null, 2));
                 code.codes.reverse();
                 printCodes.push(code.codes.join(""));
             }
-            console.log('输出：' + JSON.stringify(printCodes, null, 2));
             this.wyfCodes = printCodes;
             this.wyfMessage = "排5 " + msg + " 生成: "  + this.wyfCodes.length + " 注";
         },
@@ -145,8 +144,6 @@ var app = new Vue({
                 "boldCode": this.boldCode
             };
 
-            // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
-            console.log(JSON.stringify(args, null ,2));
             var count = this.wyfCodes.length;
 
             axios({
@@ -180,8 +177,7 @@ var app = new Vue({
                     "Content-Type": "application/json; charset=UTF-8"
                 }
             };
-
-            console.log("requestConfig:" + JSON.stringify(requestConfig, null, 2));
+            app.wyfMessage = "正在计算排列5码...";
 
             axios(requestConfig).then(function (resp) {
                 console.log(JSON.stringify(resp));
@@ -234,10 +230,8 @@ var app = new Vue({
                 boldCodeFive: this.boldCodeFive
             };
 
-            // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
-            console.log(JSON.stringify(args, null ,2));
             var count = this.wyfCodes.length;
-
+            this.wyfMessage = "正在进行胆码杀...";
             axios({
                 method:"POST",
                 url:"/api/p5/sequence/process",
@@ -271,9 +265,9 @@ var app = new Vue({
                 wCodes: this.welfareCode
             };
 
-            // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
-            console.log(JSON.stringify(args, null ,2));
             var count = this.wyfCodes.length;
+
+            app.wyfMessage = "正在执行位杀...";
 
             axios({
                 method:"POST",

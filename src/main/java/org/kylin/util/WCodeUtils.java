@@ -93,4 +93,18 @@ public class WCodeUtils {
         return CollectionUtils.size(codes);
     }
 
+
+    public static boolean isExtremumCodes(WCode wCode){
+        if(wCode == null ){
+            return false;
+        }
+
+        List<Integer> codes = wCode.getCodes().stream().filter(e -> e >= 5).collect(Collectors.toList());
+        if(CollectionUtils.size(codes) == 5 || CollectionUtils.size(codes) == 0){
+            return true;
+        }
+
+        return false;
+    }
+
 }
