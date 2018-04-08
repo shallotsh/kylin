@@ -30,6 +30,10 @@ public class BitFilterStrategy implements Strategy<List<WCode>, WCodeReq> {
         // 默认bits序列从低位开始
         int dim = 0;
         for(Set<Integer> bits: bitsArray){
+            if(CollectionUtils.isEmpty(bits)){
+                dim++;
+                continue;
+            }
             Iterator<WCode> iterator = wCodes.iterator();
             while (iterator.hasNext()){
                 WCode wCode = iterator.next();
