@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发 </strong></a>
+            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发v1.0 </strong></a>
 
             <div id="sideNav" href="">
                 <i class="fa fa-bars icon"></i>
@@ -101,11 +101,11 @@
             <div class="row border-dashed-vertical">
                 <div class=" form-inline col-sm-3">
                     <label for="sum_code" class="control-label">和杀</label>
-                    <input type="text" size="12" class="form-control fill_parent_50" v-model="sumValue" id="sum_code" placeholder="和杀码">
+                    <input type="text" size="14" class="form-control fill_parent_50" v-model="sumValue" id="sum_code" placeholder="和杀码">
                 </div>
                 <div class=" form-inline col-sm-3">
                     <label for="bold_code" class="control-label">胆杀</label>
-                    <input type="text" size="12" class="form-control fill_parent_50" v-model="boldCode" id="bold_code" placeholder="胆杀码">
+                    <input type="text" size="14" class="form-control fill_parent_50" v-model="boldCode" id="bold_code" placeholder="3码胆">
                 </div>
                 <div class="col-sm-2">
                     <button type="button" @click="killCode" :disabled="config.isP5" class="btn btn-primary fill_parent"> 杀 码 </button>
@@ -136,7 +136,7 @@
                         <div class="row">
                             <div class=" form-inline col-sm-12">
                                 <label for="bold_code" class="control-label">胆杀码</label>
-                                <input type="text" v-model="boldCodeFive" size="14" class="form-control fill_parent_50" id="bold_code_five" placeholder="五码胆">
+                                <input type="text" v-model="boldCodeFive" size="16" class="form-control fill_parent_50" id="bold_code_five" placeholder="5码胆">
                             </div>
                         </div>
                         <div class="row">
