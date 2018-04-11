@@ -40,11 +40,13 @@ public class KylinPermutationFiveMethodApi {
         }
 
         List<W3DCode> w3DCodes = JSON.parseArray(codeString, W3DCode.class);
-
+        LOGGER.info("解析请求中的3码 size={}", CollectionUtils.size(w3DCodes));
 
         List<WCode> wCodes = WCodeUtils.fromW3DCodes(w3DCodes);
+        LOGGER.info("转换请求中的3码 size={}", CollectionUtils.size(w3DCodes));
 
         List<WCode> permutations = WCodeUtils.transferToPermutationFiveCodes(wCodes);
+        LOGGER.info("排列5码 ori_size={},size={}", CollectionUtils.size(wCodes), CollectionUtils.size(permutations));
 
         return new WyfDataResponse<>(permutations);
     }
