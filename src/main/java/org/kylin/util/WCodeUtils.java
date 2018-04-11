@@ -107,4 +107,30 @@ public class WCodeUtils {
         return false;
     }
 
+    public static boolean isPair(WCode wCode){
+        if(wCode == null){
+            return false;
+        }
+
+        return wCode.getCodes().get(1) == wCode.getCodes().get(2)
+                || wCode.getCodes().get(1) == wCode.getCodes().get(0)
+                || wCode.getCodes().get(0) == wCode.getCodes().get(2);
+    }
+
+    public static List<WCode> filterPairCodes(List<WCode> wCodes){
+        if(CollectionUtils.isEmpty(wCodes)){
+            return Collections.emptyList();
+        }
+
+        return wCodes.stream().filter(wCode -> isPair(wCode)).collect(Collectors.toList());
+    }
+
+    public static List<WCode> filterNonPairCodes(List<WCode> wCodes){
+        if(CollectionUtils.isEmpty(wCodes)){
+            return Collections.emptyList();
+        }
+
+        return wCodes.stream().filter(wCode -> !isPair(wCode)).collect(Collectors.toList());
+    }
+
 }

@@ -4,7 +4,7 @@
   <groupId>kylin</groupId>
   <artifactId>org.kylin</artifactId>
   <packaging>war</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>org.kylin Maven Webapp</name>
   <url>http://maven.apache.org</url>
 

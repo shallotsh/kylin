@@ -26,11 +26,11 @@ public class WCode implements Cloneable{
 
     public WCode(int dim, int m, int t, int h, int d, int u){
         codes = new ArrayList<>();
-        codes.add(u);
-        codes.add(d);
-        codes.add(h);
-        codes.add(t);
         codes.add(m);
+        codes.add(t);
+        codes.add(h);
+        codes.add(d);
+        codes.add(u);
         this.dim = 5;
         this.sumTail = sum() % 10;
         this.freq = 1;
@@ -39,9 +39,9 @@ public class WCode implements Cloneable{
 
     public WCode(int dim, int h, int d, int u) {
         codes = new ArrayList<>();
-        codes.add(u);
-        codes.add(d);
         codes.add(h);
+        codes.add(d);
+        codes.add(u);
         this.dim = dim;
         this.freq = 1;
         int sum = h + d + u;
@@ -102,7 +102,7 @@ public class WCode implements Cloneable{
     public String getString(){
         StringBuilder sb = new StringBuilder();
         int size = CollectionUtils.size(codes);
-        for(int i=size-1; i>=0; i--){
+        for(int i=0; i<size; i++){
             sb.append(codes.get(i));
         }
         return sb.toString();
@@ -117,10 +117,7 @@ public class WCode implements Cloneable{
         sb.append("[");
         sb.append(this.getFreq());
         sb.append("]");
-        int size = CollectionUtils.size(codes);
-        for(int i=size-1; i>=0; i--){
-            sb.append(codes.get(i));
-        }
+        sb.append(getString());
         sb.append("-");
         sb.append(this.sumTail);
 

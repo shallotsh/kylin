@@ -86,7 +86,7 @@ var app = new Vue({
             var printCodes = [];
             for( idx in this.welfareCode){
                 code = this.welfareCode[idx];
-                code.codes.reverse();
+                // code.codes.reverse();
                 printCodes.push(code.codes.join(""));
             }
             this.wyfCodes = printCodes;
@@ -254,11 +254,11 @@ var app = new Vue({
             }
 
             var bitsArray = [];
-            bitsArray.push(this.unit);
-            bitsArray.push(this.decade);
-            bitsArray.push(this.hundred);
-            bitsArray.push(this.kilobit);
             bitsArray.push(this.myriabit);
+            bitsArray.push(this.kilobit);
+            bitsArray.push(this.hundred);
+            bitsArray.push(this.decade);
+            bitsArray.push(this.unit);
 
             var args = {
                 bits: bitsArray,

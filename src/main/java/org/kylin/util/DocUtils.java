@@ -256,7 +256,17 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
-        exportWCodes(doc, wCodeReq.getwCodes());
+        List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
+        if(!CollectionUtils.isEmpty(pairCodes)){
+            String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
+            exportWCodes(doc, pairCodes, titleString);
+        }
+
+        List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
+        if(!CollectionUtils.isEmpty(nonPairCodes)){
+            String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
+            exportWCodes(doc, nonPairCodes, titleString);
+        }
 
 
         // 保存
@@ -272,14 +282,13 @@ public class DocUtils {
         return fileName + ".docx";
     }
 
-
-    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes){
+    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString){
 
         XWPFParagraph paragraph = doc.createParagraph();
         XWPFRun title = paragraph.createRun();
         title.setFontSize(18);
         title.setBold(true);
-        title.setText(toUTF8("排列5码"));
+        title.setText(toUTF8(titleString));
         title.addBreak();
 
         XWPFRun hr = paragraph.createRun();
