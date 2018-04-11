@@ -13,10 +13,10 @@ var global_config = {
 var app = new Vue({
     el:'#app',
     data:{
-        sequence1:'1',
-        sequence2:'2',
-        sequence3:'3',
-        sequence4:'4',
+        sequence1:'',
+        sequence2:'',
+        sequence3:'',
+        sequence4:'',
         sumValue:null,
         boldCode:null,
         wyfMessage:'这一行是统计数据展示区域',
