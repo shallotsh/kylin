@@ -1,6 +1,7 @@
 package org.kylin.api;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WyfDataResponse;
@@ -52,9 +53,14 @@ public class KylinPermutationFiveMethodApi {
     @ResponseBody
     @RequestMapping(value = "/sequence/process", method = {RequestMethod.POST, RequestMethod.GET})
     public WyfResponse sequenceProcess(@RequestBody WCodeReq wCodeReq, HttpServletRequest request){
-        LOGGER.info("收到串处理: wCodeReq={}", wCodeReq);
+        if(wCodeReq == null){
+            LOGGER.warn("请求参数为空");
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数为空");
+        }
+        LOGGER.info("收到串处理: wCodeReq_size={},conditions={}", CollectionUtils.size(wCodeReq.getwCodes()), wCodeReq.getConditions());
         List<WCode> wCodes = wCodeProcessService.sequenceProcess(wCodeReq);
-        LOGGER.info("串处理完成: wCodeReq={},wCodeReq={}", wCodeReq, wCodes);
+        LOGGER.info("串处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
+                CollectionUtils.size(wCodes));
         return new WyfDataResponse<>(wCodes);
     }
 
@@ -62,9 +68,14 @@ public class KylinPermutationFiveMethodApi {
     @ResponseBody
     @RequestMapping(value = "/bits/process", method = {RequestMethod.POST, RequestMethod.GET})
     public WyfResponse bitsProcess(@RequestBody WCodeReq wCodeReq){
-        LOGGER.info("收到位处理: wCodeReq={}", wCodeReq);
+        if(wCodeReq == null){
+            LOGGER.warn("请求参数为空");
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数为空");
+        }
+        LOGGER.info("收到位处理: wCodeReq_size={},conditions={}", CollectionUtils.size(wCodeReq.getwCodes()), wCodeReq.getConditions());
         List<WCode> wCodes = wCodeProcessService.bitsProcess(wCodeReq);
-        LOGGER.info("位处理完成: wCodeReq={},wCodeReq={}", wCodeReq, wCodes);
+        LOGGER.info("位处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
+                CollectionUtils.size(wCodes));
         return new WyfDataResponse<>(wCodes);
     }
 

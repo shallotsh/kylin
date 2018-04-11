@@ -59,6 +59,15 @@ public class WCodeReq {
         this.exportType = exportType;
     }
 
+    public String getConditions(){
+        return "WCodeReq{" +
+                "filterType=" + filterType +
+                ", boldCodeFive='" + boldCodeFive + '\'' +
+                ", wCodes_size=" + CollectionUtils.size(wCodes) +
+                ", bits=" + bits +
+                '}';
+    }
+
     @Override
     public String toString() {
         return "WCodeReq{" +
