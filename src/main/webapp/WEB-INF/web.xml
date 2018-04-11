@@ -40,6 +40,28 @@
   </servlet-mapping>
 
 
+
+  <!-- Gz压缩测试 start -->
+  <filter>
+    <filter-name>GzipFilter</filter-name>
+    <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>methods</param-name>
+      <param-value>GET,POST</param-value>
+    </init-param>
+    <init-param>
+      <param-name>mimeTypes</param-name>
+      <param-value>text/html,text/xml,text/plain,text/css,text/javascript,text/json,application/x-javascript,application/javascript,application/json,application/xml,application/xml+xhtml,image/svg+xml,image/gif,image/png,image/jpg</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>GzipFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- Gz压缩测试 end -->
+
+
   <!-- 避免中文乱码 -->
   <filter>
     <filter-name>encodingFilter</filter-name>
@@ -57,4 +79,5 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
 </web-app>

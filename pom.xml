@@ -207,6 +207,13 @@
           <version>23.0</version>
       </dependency>
 
+      <dependency>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-servlets</artifactId>
+          <version>9.2.0.v20140526</version>
+      </dependency>
+
+
   </dependencies>
 
   <build>
