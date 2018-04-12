@@ -31,6 +31,8 @@ public class WCodeProcessServiceImpl implements WCodeProcessService{
         }
         sequenceProcessor.init(wCodeReq);
         List<WCode> wCodes = sequenceProcessor.process();
+
+        Collections.sort(wCodes);
         return wCodes;
     }
 
@@ -43,6 +45,8 @@ public class WCodeProcessServiceImpl implements WCodeProcessService{
         Strategy< List<WCode>, WCodeReq> strategy = StrategyFactory.constructBitFilterStrategy();
 
         List<WCode> wCodes = strategy.execute(wCodeReq);
+
+        Collections.sort(wCodes);
 
         return wCodes;
     }

@@ -4,6 +4,7 @@ package org.kylin.util;
 import java.io.*;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -258,12 +259,14 @@ public class DocUtils {
 
         List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(pairCodes)){
+            Collections.sort(pairCodes);
             String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
             exportWCodes(doc, pairCodes, titleString);
         }
 
         List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(nonPairCodes)){
+            Collections.sort(nonPairCodes);
             String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
             exportWCodes(doc, nonPairCodes, titleString);
         }

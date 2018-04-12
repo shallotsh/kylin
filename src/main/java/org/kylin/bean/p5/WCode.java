@@ -9,7 +9,7 @@ import java.util.*;
  * @author huangyawu
  * @date 2017/6/30 上午1:42.
  */
-public class WCode implements Cloneable{
+public class WCode implements Cloneable,Comparable{
     private List<Integer> codes;
     private int dim;
     private int freq;
@@ -207,5 +207,21 @@ public class WCode implements Cloneable{
 
     public boolean validate(){
         return dim == CollectionUtils.size(this.getCodes());
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(o == null || !(o instanceof WCode)){
+            return 1;
+        }
+        WCode obj = (WCode) o;
+        for(int i=0; i<this.dim; i++){
+            if(this.getCodes().get(i) > obj.getCodes().get(i)){
+                return 1;
+            }else if(this.getCodes().get(i) < obj.getCodes().get(i)){
+                return -1;
+            }
+        }
+        return 0;
     }
 }

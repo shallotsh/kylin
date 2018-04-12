@@ -71,7 +71,7 @@ public class WCodeUtils {
                 permutationFiveCodes.add(pCode);
             }
         }
-
+        Collections.sort(permutationFiveCodes);
         return permutationFiveCodes;
     }
 
