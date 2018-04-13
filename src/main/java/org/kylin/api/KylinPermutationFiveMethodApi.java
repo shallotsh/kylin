@@ -49,7 +49,9 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> permutations = WCodeUtils.transferToPermutationFiveCodes(wCodes);
         LOGGER.info("排列5码 ori_size={},size={}", CollectionUtils.size(wCodes), CollectionUtils.size(permutations));
 
-        return new WyfDataResponse<>(WCodeUtils.construct(permutations));
+        WCodeSummarise wCodeSummarise = WCodeUtils.construct(permutations);
+        LOGGER.info("构造完成 size={}", CollectionUtils.size(w3DCodes));
+        return new WyfDataResponse<>(wCodeSummarise);
     }
 
 
