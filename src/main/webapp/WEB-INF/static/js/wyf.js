@@ -82,7 +82,7 @@ var app = new Vue({
 
         handleFiveCodeResponse: function (data, msg) {
             this.config.isP5 = true;
-            this.welfareCode = data;
+            this.welfareCode = data.wCodes;
             var printCodes = [];
             for( idx in this.welfareCode){
                 code = this.welfareCode[idx];
@@ -90,7 +90,7 @@ var app = new Vue({
                 printCodes.push(code.codes.join(""));
             }
             this.wyfCodes = printCodes;
-            this.wyfMessage = "排5 " + msg + " 生成: "  + this.wyfCodes.length + " 注";
+            this.wyfMessage = "排5 " + msg + " 生成: "  + this.wyfCodes.length + " 注" + '(对子: ' + data.pairCodes + ' 注, 非对子: ' + data.nonPairCodes + ' 注)';
         },
 
         handleDownload: function(data) {
@@ -211,7 +211,8 @@ var app = new Vue({
                 }
             }).then(function(response) {
                 app.handleFiveCodeResponse(response.data.data, "杀码");
-                app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注.";
+                app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注."
+                    + '(对子: ' + response.data.data.pairCodes + ' 注, 非对子: ' + response.data.data.nonPairCodes + ' 注)';
             }).catch(function(reason) {
                 console.log(reason);
                 app.handleException("杀码请求失败!");
@@ -241,7 +242,8 @@ var app = new Vue({
                 }
             }).then(function(response) {
                 app.handleFiveCodeResponse(response.data.data, "含X码杀");
-                app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注.";
+                app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注."
+                    + '(对子: ' + response.data.data.pairCodes + ' 注, 非对子: ' + response.data.data.nonPairCodes + ' 注)';
             }).catch(function(reason) {
                 console.log(reason);
                 app.handleException("杀码请求失败!");
@@ -278,7 +280,8 @@ var app = new Vue({
                 }
             }).then(function(response) {
                 app.handleFiveCodeResponse(response.data.data, "位杀");
-                app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注.";
+                app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注."
+                    + '(对子: ' + response.data.data.pairCodes + ' 注, 非对子: ' + response.data.data.nonPairCodes + ' 注)';
             }).catch(function(reason) {
                 console.log(reason);
                 app.handleException("位杀请求失败!");

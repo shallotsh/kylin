@@ -9,6 +9,7 @@ import org.kylin.bean.WyfErrorResponse;
 import org.kylin.bean.WyfResponse;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
+import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.service.pfive.WCodeProcessService;
 import org.kylin.util.DocUtils;
 import org.kylin.util.WCodeUtils;
@@ -48,7 +49,7 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> permutations = WCodeUtils.transferToPermutationFiveCodes(wCodes);
         LOGGER.info("排列5码 ori_size={},size={}", CollectionUtils.size(wCodes), CollectionUtils.size(permutations));
 
-        return new WyfDataResponse<>(permutations);
+        return new WyfDataResponse<>(WCodeUtils.construct(permutations));
     }
 
 
@@ -63,7 +64,7 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> wCodes = wCodeProcessService.sequenceProcess(wCodeReq);
         LOGGER.info("串处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
                 CollectionUtils.size(wCodes));
-        return new WyfDataResponse<>(wCodes);
+        return new WyfDataResponse<>(WCodeUtils.construct(wCodes));
     }
 
 
@@ -78,7 +79,8 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> wCodes = wCodeProcessService.bitsProcess(wCodeReq);
         LOGGER.info("位处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
                 CollectionUtils.size(wCodes));
-        return new WyfDataResponse<>(wCodes);
+
+        return new WyfDataResponse<>(WCodeUtils.construct(wCodes));
     }
 
 

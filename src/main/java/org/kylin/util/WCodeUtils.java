@@ -3,12 +3,10 @@ package org.kylin.util;
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.p5.WCode;
+import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.constant.BitConstant;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WCodeUtils {
@@ -125,12 +123,49 @@ public class WCodeUtils {
         return wCodes.stream().filter(wCode -> isPair(wCode)).collect(Collectors.toList());
     }
 
+    public static Integer getPairCodeCount(List<WCode> wCodes){
+        return CollectionUtils.size(filterPairCodes(wCodes));
+    }
+
+    public static Integer getNonPairCodeCount(List<WCode> wCodes){
+        return CollectionUtils.size(filterNonPairCodes(wCodes));
+    }
+
+    public static WCodeSummarise construct(List<WCode> wCodes){
+        return new WCodeSummarise()
+                .setwCodes(wCodes)
+                .setPairCodes(WCodeUtils.getPairCodeCount(wCodes))
+                .setNonPairCodes(WCodeUtils.getNonPairCodeCount(wCodes));
+    }
+
     public static List<WCode> filterNonPairCodes(List<WCode> wCodes){
         if(CollectionUtils.isEmpty(wCodes)){
             return Collections.emptyList();
         }
 
         return wCodes.stream().filter(wCode -> !isPair(wCode)).collect(Collectors.toList());
+    }
+
+
+    public static List<WCode> getRandomList(List<WCode> wCodes, Integer count){
+        if(CollectionUtils.isEmpty(wCodes) || CollectionUtils.size(wCodes) < count){
+            return wCodes;
+        }
+
+        List<WCode> ret = new ArrayList<>();
+        Set<Integer> isSelected = new HashSet<>();
+        Integer size = wCodes.size();
+
+        for(int i=0; i<count && i<size; i++){
+            int index = new Random().nextInt(size);
+            if(isSelected.contains(i)){
+                continue;
+            }
+            ret.add(wCodes.get(i));
+            isSelected.add(i);
+        }
+
+        return ret;
     }
 
 }

@@ -257,11 +257,15 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
+        int randPairCount = 0;
+        int nonRandPairCount = 0;
+
         List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(pairCodes)){
             Collections.sort(pairCodes);
             String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
             exportWCodes(doc, pairCodes, titleString);
+            randPairCount = pairCodes.size() > 250? 50: (int) (pairCodes.size() * 0.2);
         }
 
         List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
@@ -269,8 +273,28 @@ public class DocUtils {
             Collections.sort(nonPairCodes);
             String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
             exportWCodes(doc, nonPairCodes, titleString);
+            nonRandPairCount = nonPairCodes.size() > 250? 50: (int) (nonPairCodes.size() * 0.2);
         }
 
+        XWPFParagraph sep = doc.createParagraph();
+        XWPFRun hr3 = header.createRun();
+        hr3.setText(" ");
+        hr3.addBreak();
+
+        List<WCode> randPairCodes = WCodeUtils.getRandomList(pairCodes, randPairCount);
+        List<WCode> nonRandPairCodes = WCodeUtils.getRandomList(nonPairCodes, nonRandPairCount);
+
+        if(!CollectionUtils.isEmpty(randPairCodes)){
+            Collections.sort(randPairCodes);
+            String titleString = String.format("排列5码随机·对子( %d 注)", randPairCodes.size());
+            exportWCodes(doc, randPairCodes, titleString);
+        }
+
+        if(!CollectionUtils.isEmpty(nonRandPairCodes)){
+            Collections.sort(nonRandPairCodes);
+            String titleString = String.format("排列5码随机·非对子( %d 注)", nonRandPairCodes.size());
+            exportWCodes(doc, nonRandPairCodes, titleString);
+        }
 
         // 保存
         StringBuilder sb = new StringBuilder();
