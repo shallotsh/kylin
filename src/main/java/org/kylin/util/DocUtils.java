@@ -296,6 +296,15 @@ public class DocUtils {
             exportWCodes(doc, nonRandPairCodes, titleString);
         }
 
+        List<WCode> firstAndlastNRowsInPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(pairCodes,6, 22, 2);
+        List<WCode> firstAndlastNRowsInNonPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(nonPairCodes,6, 22, 2);
+
+        String firstAndLastRowsExport = String.format("排列5码首尾行( %d 注)",
+                (CollectionUtils.size(firstAndlastNRowsInNonPairCodes) + CollectionUtils.size(firstAndlastNRowsInPairCodes)));
+        exportWCodes(doc, firstAndlastNRowsInPairCodes, firstAndLastRowsExport);
+        exportWCodes(doc, firstAndlastNRowsInNonPairCodes, null);
+
+
         // 保存
         StringBuilder sb = new StringBuilder();
         sb.append(targetDirName);
@@ -311,12 +320,18 @@ public class DocUtils {
 
     private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString){
 
+        if(CollectionUtils.isEmpty(wCodes)){
+            return;
+        }
+
         XWPFParagraph paragraph = doc.createParagraph();
-        XWPFRun title = paragraph.createRun();
-        title.setFontSize(18);
-        title.setBold(true);
-        title.setText(toUTF8(titleString));
-        title.addBreak();
+        if(!StringUtils.isBlank(titleString)){
+            XWPFRun title = paragraph.createRun();
+            title.setFontSize(18);
+            title.setBold(true);
+            title.setText(toUTF8(titleString));
+            title.addBreak();
+        }
 
         XWPFRun hr = paragraph.createRun();
         hr.setFontSize(10);

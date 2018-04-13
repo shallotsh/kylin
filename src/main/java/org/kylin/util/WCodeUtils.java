@@ -1,5 +1,6 @@
 package org.kylin.util;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.p5.WCode;
@@ -147,12 +148,12 @@ public class WCodeUtils {
     }
 
 
-    public static List<WCode> getRandomList(List<WCode> wCodes, Integer count){
+    public static<T> List<T> getRandomList(List<T> wCodes, Integer count){
         if(CollectionUtils.isEmpty(wCodes) || CollectionUtils.size(wCodes) < count){
             return wCodes;
         }
 
-        List<WCode> ret = new ArrayList<>();
+        List<T> ret = new ArrayList<>();
         Set<Integer> isSelected = new HashSet<>();
         Integer size = wCodes.size();
 
@@ -163,6 +164,35 @@ public class WCodeUtils {
             }
             ret.add(wCodes.get(index));
             isSelected.add(i);
+        }
+
+        return ret;
+    }
+
+
+    public static<T> List<T> getFirstNRowsAndLastRowsInEveryPage(List<T> codes, Integer colNumInPage, Integer rowNumInPage, Integer count){
+        if(CollectionUtils.isEmpty(codes) || count < 1){
+            return Collections.emptyList();
+        }
+
+        if(count > codes.size()){
+            return codes;
+        }
+
+        List<List<T>> codesArray = Lists.partition(codes, colNumInPage);
+        List<List<List<T>>> codesPage = Lists.partition(codesArray, rowNumInPage);
+
+        List<T> ret = new ArrayList<>();
+        for(List<List<T>> codeArray: codesPage){
+            if(CollectionUtils.size(codeArray) < count * 2 && CollectionUtils.size(codeArray) > 0){
+                codeArray.forEach(list -> ret.addAll(ret));
+                continue;
+            }
+
+            for(int i=0; i<count; i++){
+                ret.addAll(codeArray.get(i));
+                ret.addAll(codeArray.get(codeArray.size()-1 - i));
+            }
         }
 
         return ret;
