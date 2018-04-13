@@ -161,7 +161,7 @@ public class WCodeUtils {
             if(isSelected.contains(i)){
                 continue;
             }
-            ret.add(wCodes.get(i));
+            ret.add(wCodes.get(index));
             isSelected.add(i);
         }
 
