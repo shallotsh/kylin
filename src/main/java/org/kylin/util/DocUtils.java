@@ -296,13 +296,13 @@ public class DocUtils {
             exportWCodes(doc, nonRandPairCodes, titleString);
         }
 
-        List<WCode> firstAndlastNRowsInPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(pairCodes,6, 22, 2);
-        List<WCode> firstAndlastNRowsInNonPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(nonPairCodes,6, 22, 2);
-
-        String firstAndLastRowsExport = String.format("排列5码首尾行( %d 注)",
-                (CollectionUtils.size(firstAndlastNRowsInNonPairCodes) + CollectionUtils.size(firstAndlastNRowsInPairCodes)));
-        exportWCodes(doc, firstAndlastNRowsInPairCodes, firstAndLastRowsExport);
-        exportWCodes(doc, firstAndlastNRowsInNonPairCodes, null);
+//        List<WCode> firstAndlastNRowsInPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(pairCodes,6, 22, 2);
+//        List<WCode> firstAndlastNRowsInNonPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(nonPairCodes,6, 22, 2);
+//
+//        String firstAndLastRowsExport = String.format("排列5码首尾行( %d 注)",
+//                (CollectionUtils.size(firstAndlastNRowsInNonPairCodes) + CollectionUtils.size(firstAndlastNRowsInPairCodes)));
+//        exportWCodes(doc, firstAndlastNRowsInPairCodes, firstAndLastRowsExport);
+//        exportWCodes(doc, firstAndlastNRowsInNonPairCodes, null);
 
 
         // 保存
