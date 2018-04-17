@@ -19,6 +19,8 @@ var app = new Vue({
         sequence4:'',
         sumValue:null,
         boldCode:null,
+        rangeCode:null,
+        gossipCode:null,
         wyfMessage:'这一行是统计数据展示区域',
         codesCount: 0,
         wyfCodes:[],
@@ -141,7 +143,9 @@ var app = new Vue({
             var args = {
                 "welfareCode": this.welfareCode,
                 "sumValue": this.sumValue,
-                "boldCode": this.boldCode
+                "boldCode": this.boldCode,
+                "gossip": this.gossipCode,
+                "range": this.rangeCode
             };
 
             var count = this.wyfCodes.length;
@@ -166,6 +170,11 @@ var app = new Vue({
         doPermutationFive: function () {
             if(!this.config.isPredict){
                 this.handleException("请先完成排三组码");
+                return;
+            }
+
+            if(this.config.isP5){
+                this.handleException("已经执行过排5，如需重新排列，请先完成排三组码！")
                 return;
             }
 

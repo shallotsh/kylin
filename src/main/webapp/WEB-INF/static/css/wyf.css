@@ -111,3 +111,8 @@
     margin: 10px 10px;
     line-height: 40px;
 }
+
+.form-inline {
+    padding-left: 5px;
+    padding-right: 5px;
+}
