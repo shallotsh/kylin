@@ -26,6 +26,8 @@ public class StrategyFactory {
                 return new ContainFiveProcessor();
             case EXTREMUM_FILTER:
                 return new ExtremumProcessor();
+            case FISH_MAN_FILTER:
+                return new FishManProcessor();
                 default:
                     return null;
         }

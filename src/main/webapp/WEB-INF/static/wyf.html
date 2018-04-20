@@ -146,7 +146,7 @@
                         <div class="row">
                             <div class=" form-inline col-sm-12">
                                 <label for="bold_code" class="control-label">胆杀码</label>
-                                <input type="text" v-model="boldCodeFive" size="16" class="form-control fill_parent_50" id="bold_code_five" placeholder="5码胆">
+                                <input type="text" v-model="boldCodeFive" class="form-control fill_parent" id="bold_code_five" placeholder="码胆或者钓叟(#,/等分割)">
                             </div>
                         </div>
                         <div class="row">
@@ -176,6 +176,9 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <button type="button" @click="constProcess(7)" class="btn btn-info fill_parent"> 杀全大全小 </button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" @click="boldProcess(8)" class="btn btn-info fill_parent"> 钓叟杀码 </button>
                             </div>
 
                         </div>

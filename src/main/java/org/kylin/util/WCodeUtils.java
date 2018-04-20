@@ -92,6 +92,21 @@ public class WCodeUtils {
         return CollectionUtils.size(codes);
     }
 
+    public static boolean isInFishCode(WCode wCode, List<Set<Integer>> fishManList){
+        if(CollectionUtils.isEmpty(fishManList) || wCode == null || CollectionUtils.size(wCode.getCodes()) < 2){
+            return true;
+        }
+
+        int dim = wCode.getDim();
+        for (Set<Integer> fishMain : fishManList){
+            if(fishMain.contains(wCode.getCodes().get(dim -1)) &&
+                    fishMain.contains(wCode.getCodes().get(dim - 2))){
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public static boolean isExtremumCodes(WCode wCode){
         if(wCode == null ){
