@@ -265,7 +265,7 @@ public class DocUtils {
             Collections.sort(pairCodes);
             String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
             exportWCodes(doc, pairCodes, titleString);
-            randPairCount = pairCodes.size() > 250? 50: (int) (pairCodes.size() * 0.2);
+            randPairCount = pairCodes.size() > 10? 10: pairCodes.size();
         }
 
         List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
@@ -273,7 +273,7 @@ public class DocUtils {
             Collections.sort(nonPairCodes);
             String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
             exportWCodes(doc, nonPairCodes, titleString);
-            nonRandPairCount = nonPairCodes.size() > 500? 100: (int) (nonPairCodes.size() * 0.2);
+            nonRandPairCount = nonPairCodes.size() > 10? 10 : nonPairCodes.size();
         }
 
         XWPFParagraph sep = doc.createParagraph();
