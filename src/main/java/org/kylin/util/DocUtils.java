@@ -282,6 +282,7 @@ public class DocUtils {
         hr3.addBreak();
 
         List<WCode> nonRandPairCodes = WCodeUtils.getRandomList(nonPairCodes, nonRandPairCount);
+        List<WCode> nCountRandPairCodes = WCodeUtils.getRandomList(wCodeReq.getwCodes(), 5);
 //        List<WCode> randPairCodes = WCodeUtils.getRandomList(pairCodes, randPairCount);
 
 //        if(!CollectionUtils.isEmpty(randPairCodes)){
@@ -294,6 +295,12 @@ public class DocUtils {
             Collections.sort(nonRandPairCodes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonRandPairCodes.size());
             exportWCodes(doc, nonRandPairCodes, titleString);
+        }
+
+        if(!CollectionUtils.isEmpty(nCountRandPairCodes)){
+            Collections.sort(nCountRandPairCodes);
+            String titleString = String.format("排列5码随机·全部( %d 注)", nCountRandPairCodes.size());
+            exportWCodes(doc, nCountRandPairCodes, titleString);
         }
 
 //        List<WCode> firstAndlastNRowsInPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(pairCodes,6, 22, 2);
@@ -353,6 +360,65 @@ public class DocUtils {
 
         XWPFRun sep = paragraph.createRun();
         sep.setTextPosition(50);
+    }
+
+    public static String saveWCodesHalf(WCodeReq wCodeReq) throws IOException {
+        if(wCodeReq == null || CollectionUtils.isEmpty(wCodeReq.getwCodes())){
+            return "";
+        }
+
+        String fileName = CommonUtils.getCurrentTimeString();
+        String subDirectory = fileName.substring(0,6);
+        String targetDirName = BASE_PATH + subDirectory;
+
+        if(!createDirIfNotExist(targetDirName)){
+            LOGGER.info("save-wCodes-create-directory-error targetDirName={}", targetDirName);
+            throw new IOException("directory create error");
+        }
+
+        XWPFDocument doc = new XWPFDocument();
+
+        XWPFParagraph header = doc.createParagraph();
+        header.setVerticalAlignment(TextAlignment.TOP);
+        header.setWordWrap(true);
+        header.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun hr1 = header.createRun();
+        hr1.setText(toUTF8("《我要发·排列5》福彩3D预测报表(半页)"));
+        hr1.setBold(true);
+        hr1.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
+        hr1.setTextPosition(20);
+        hr1.setFontSize(26);
+        hr1.addBreak();
+
+        XWPFRun hr2 = header.createRun();
+
+        hr2.setText(toUTF8("共计" + wCodeReq.getwCodes().size() + "注排列5码!!!     时间："
+                + CommonUtils.getCurrentDateString() ));
+        hr2.setTextPosition(10);
+        hr2.setFontSize(16);
+
+        List<WCode> halfPageCodes = WyfCollectionUtils.getSubList(wCodeReq.getwCodes(), 8, 4);
+        if(!CollectionUtils.isEmpty(halfPageCodes)){
+            Collections.sort(halfPageCodes);
+            String titleString = String.format("排列5码·半页码( %d 注)", halfPageCodes.size());
+            exportWCodes(doc, halfPageCodes, titleString);
+        }
+
+        // 保存
+        String prefix = "Half-";
+        StringBuilder sb = new StringBuilder();
+        sb.append(targetDirName);
+        sb.append(File.separator);
+        sb.append(prefix);
+        sb.append(fileName);
+        sb.append(".docx");
+        FileOutputStream out = new FileOutputStream(sb.toString());
+        doc.write(out);
+        out.close();
+
+        LOGGER.info("导出文件名: {}", sb.toString());
+
+        return  prefix + fileName + ".docx";
     }
 
 

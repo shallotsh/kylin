@@ -323,6 +323,32 @@ var app = new Vue({
             });
         },
 
+        exportCodesHalfPage: function(){
+            if(!this.config.isP5){
+                this.handleException("请先完成排5");
+                return;
+            }
+
+            var args = {
+                wCodes: this.welfareCode
+            };
+
+            // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
+            axios({
+                method:"POST",
+                url:"/api/p5/codes/export/half",
+                data: JSON.stringify(args),
+                headers:{
+                    "Content-Type": "application/json; charset=UTF-8"
+                }
+            }).then(function(response) {
+                app.handleDownload(response.data.data);
+            }).catch(function(reason) {
+                console.log(reason);
+                app.handleException("导出请求失败!");
+            });
+        },
+
         handleException: function (msg) {
             alert(msg);
         }

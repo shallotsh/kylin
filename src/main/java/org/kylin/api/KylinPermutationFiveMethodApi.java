@@ -102,6 +102,20 @@ public class KylinPermutationFiveMethodApi {
         }
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/codes/export/half",  method = RequestMethod.POST)
+    public WyfResponse exportCodesHalf(@RequestBody WCodeReq wCodeReq){
+        if(wCodeReq == null){
+            return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "导出数据错误");
+        }
 
+        try {
+            String fileName = DocUtils.saveWCodesHalf(wCodeReq);
+            return  new WyfDataResponse<>(fileName);
+        } catch (IOException e) {
+            LOGGER.error("export-codes-half-error wCodeReq={}", JSON.toJSONString(wCodeReq), e);
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误");
+        }
+    }
 
 }
