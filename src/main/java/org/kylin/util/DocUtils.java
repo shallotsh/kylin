@@ -282,7 +282,7 @@ public class DocUtils {
         hr3.addBreak();
 
         List<WCode> nonRandPairCodes = WCodeUtils.getRandomList(nonPairCodes, nonRandPairCount);
-        List<WCode> nCountRandPairCodes = WCodeUtils.getRandomList(wCodeReq.getwCodes(), 5);
+        List<WCode> nCountRandPairCodes = WCodeUtils.getRandomList(nonPairCodes, 5);
 //        List<WCode> randPairCodes = WCodeUtils.getRandomList(pairCodes, randPairCount);
 
 //        if(!CollectionUtils.isEmpty(randPairCodes)){
@@ -299,7 +299,7 @@ public class DocUtils {
 
         if(!CollectionUtils.isEmpty(nCountRandPairCodes)){
             Collections.sort(nCountRandPairCodes);
-            String titleString = String.format("排列5码随机·全部( %d 注)", nCountRandPairCodes.size());
+            String titleString = String.format("排列5码随机·非对子( %d 注)", nCountRandPairCodes.size());
             exportWCodes(doc, nCountRandPairCodes, titleString);
         }
 
@@ -397,10 +397,12 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(16);
 
-        List<WCode> halfPageCodes = WyfCollectionUtils.getSubList(wCodeReq.getwCodes(), 8, 4);
+        List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
+
+        List<WCode> halfPageCodes = WyfCollectionUtils.getSubList(nonPairCodes, 8, 4);
         if(!CollectionUtils.isEmpty(halfPageCodes)){
             Collections.sort(halfPageCodes);
-            String titleString = String.format("排列5码·半页码( %d 注)", halfPageCodes.size());
+            String titleString = String.format("排列5码·半页码(非对子 %d 注)", halfPageCodes.size());
             exportWCodes(doc, halfPageCodes, titleString);
         }
 
