@@ -31,7 +31,8 @@ var app = new Vue({
         kilobit: null,
         hundred: null,
         decade:null,
-        unit:null
+        unit:null,
+        p3Code:null
     },
     methods:{
         doPermutate: function () {
@@ -127,6 +128,7 @@ var app = new Vue({
                 console.log("转码成功返回");
                 app.handleThreeCodeResponse(response.data.data);
                 console.log("转码完成");
+                app.p3Code = app.welfareCode.w3DCodes;
                 app.wyfMessage = "转码成功, 共计 " + app.welfareCode.w3DCodes.length + " 注.";
             }).catch(function(error){
                 console.log("resp:" + JSON.stringify(error, null, 2));
@@ -206,6 +208,10 @@ var app = new Vue({
                 filterType: processorId,
                 wCodes: this.welfareCode
             };
+
+            if(processorId == 9){
+                args.p3Code = JSON.stringify(this.p3Code);
+            }
 
             // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
             console.log(JSON.stringify(args, null ,2));

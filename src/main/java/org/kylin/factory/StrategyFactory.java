@@ -24,10 +24,16 @@ public class StrategyFactory {
                 return new ContainFourProcessor();
             case CONTAIN_FIVE_FILTER:
                 return new ContainFiveProcessor();
-            case EXTREMUM_FILTER:
+            case EXTREMA_FILTER:
                 return new ExtremumProcessor();
-            case FISH_MAN_FILTER:
-                return new FishManProcessor();
+            case UNORDERED_FISH_MAN_FILTER:
+                return new UnorderedFishManProcessor();
+            case ORDERED_FISH_MAN_FILTER:
+                return new OrderedFishManProcessor();
+            case NON_REPEAT_FILTER:
+                return new NonRepeatCodeProcessor();
+            case SINK_FILTER:
+                return new SinkCodeProcessor();
                 default:
                     return null;
         }

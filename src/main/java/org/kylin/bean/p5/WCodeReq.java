@@ -10,6 +10,7 @@ public class WCodeReq {
     private List<WCode> wCodes;
     private List<String> bits;
     private Integer exportType;
+    private String p3Code;
 
     public Integer getFilterType() {
         return filterType;
@@ -57,6 +58,15 @@ public class WCodeReq {
 
     public void setExportType(Integer exportType) {
         this.exportType = exportType;
+    }
+
+    public String getP3Code() {
+        return p3Code;
+    }
+
+    public WCodeReq setP3Code(String p3Code) {
+        this.p3Code = p3Code;
+        return this;
     }
 
     public String getConditions(){

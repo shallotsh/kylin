@@ -209,6 +209,20 @@ public class WCode implements Cloneable,Comparable{
         return dim == CollectionUtils.size(this.getCodes());
     }
 
+
+    public boolean containsRepeatNumber(){
+        Set<Integer> set = new HashSet<>();
+        for(Integer e: codes){
+            if(set.contains(e)){
+                return true;
+            }else{
+                set.add(e);
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public int compareTo(Object o) {
         if(o == null || !(o instanceof WCode)){

@@ -92,7 +92,24 @@ public class WCodeUtils {
         return CollectionUtils.size(codes);
     }
 
-    public static boolean isInFishCode(WCode wCode, List<Set<Integer>> fishManList){
+
+    public static boolean isInHistoryotteryAtLeastOneBit(WCode wCode, List<Integer> list){
+        if(wCode == null || CollectionUtils.isEmpty(wCode.getCodes()) || CollectionUtils.isEmpty(list)){
+            return false;
+        }
+
+        int size = CollectionUtils.size(wCode.getCodes()) > list.size() ? list.size(): CollectionUtils.size(wCode.getCodes());
+
+        for(int i=0; i<size; i++){
+            if(wCode.getCodes().get(i) == list.get(i)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean isInFishCodeWithoutOrder(WCode wCode, List<Set<Integer>> fishManList){
         if(CollectionUtils.isEmpty(fishManList) || wCode == null || CollectionUtils.size(wCode.getCodes()) < 2){
             return true;
         }
@@ -101,6 +118,28 @@ public class WCodeUtils {
         for (Set<Integer> fishMain : fishManList){
             if(fishMain.contains(wCode.getCodes().get(dim -1)) &&
                     fishMain.contains(wCode.getCodes().get(dim - 2))){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean isInFishCodeWithOrder(WCode wCode, List<List<Integer>> fishManList){
+        if(CollectionUtils.isEmpty(fishManList) || wCode == null || CollectionUtils.size(wCode.getCodes()) < 2){
+            return true;
+        }
+
+        for (List<Integer> fishMain : fishManList){
+            if(!fishMain.contains(wCode.getCodes().get(0))
+                    || !fishMain.contains(wCode.getCodes().get(1))){
+                continue;
+            }
+
+            int p1 = fishMain.indexOf(wCode.getCodes().get(0));
+            int p2 = fishMain.indexOf(wCode.getCodes().get(1));
+
+            if(p1 != -1 && p1 <= p2){
                 return true;
             }
         }

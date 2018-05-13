@@ -8,19 +8,22 @@ import org.kylin.util.TransferUtil;
 import org.kylin.util.WCodeUtils;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-public class FishManProcessor implements SequenceProcessor {
+/**
+ * 下沉比对：即与上次开奖号码比对，如在万千百十个位至少有一个数字下沉，则保留之
+ # 比如前天开奖号18079，昨天开奖号为82002，百位下沉
+ */
+public class SinkCodeProcessor implements SequenceProcessor {
     private List<WCode> wCodes;
-    private List<Set<Integer>> boldCodes;
+    private List<Integer> boldCodes;
 
 
     @Override
     public SequenceProcessor init(WCodeReq wCodeReq) {
         if(wCodeReq != null){
            wCodes = wCodeReq.getWCodes();
-           boldCodes = TransferUtil.parseList(wCodeReq.getBoldCodeFive());
+           boldCodes = TransferUtil.toIntegerList(wCodeReq.getBoldCodeFive());
         }
         return this;
     }
@@ -31,7 +34,7 @@ public class FishManProcessor implements SequenceProcessor {
             return wCodes;
         }
 
-        List<WCode> ret = wCodes.stream().filter(wCode -> WCodeUtils.isInFishCode(wCode, boldCodes)).collect(Collectors.toList());
+        List<WCode> ret = wCodes.stream().filter(wCode -> WCodeUtils.isInHistoryotteryAtLeastOneBit(wCode, boldCodes)).collect(Collectors.toList());
 
         return ret;
     }

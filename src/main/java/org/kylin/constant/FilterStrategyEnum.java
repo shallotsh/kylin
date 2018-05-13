@@ -7,8 +7,12 @@ public enum FilterStrategyEnum {
     CONTAIN_THREE_FILTER(4, "含三过滤器"),
     CONTAIN_FOUR_FILTER(5, "含四过滤器"),
     CONTAIN_FIVE_FILTER(6, "含五过滤器"),
-    EXTREMUM_FILTER(7, "极值过滤器,全大全小过滤"),
-    FISH_MAN_FILTER(8, "钓叟杀码")
+    EXTREMA_FILTER(7, "极值过滤器,全大全小过滤"),
+    UNORDERED_FISH_MAN_FILTER(8, "无序钓叟"),
+    TAIL_THREE_FILTER(9, "尾三杀码"),
+    ORDERED_FISH_MAN_FILTER(10, "有序钓叟"),
+    NON_REPEAT_FILTER(11, "非重码杀"),
+    SINK_FILTER(12, "下沉比对"),
     ;
     private Integer id;
     private String desc;

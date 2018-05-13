@@ -36,6 +36,42 @@ public class TransferUtil {
         return gossips;
     }
 
+
+    public static List<List<Integer>> parseLists(String seq){
+        if(StringUtils.isBlank(seq) || seq.length() < 2){
+            return Collections.emptyList();
+        }
+
+        List<List<Integer>> ret = new ArrayList<>();
+        String[] gosArr = seq.split("#|$|@|,|/| ");
+        for(String gos : gosArr){
+            List<Integer> list = toIntegerList(gos);
+
+            if(!CollectionUtils.isEmpty(list)){
+                ret.add(list);
+            }
+        }
+
+        return ret;
+    }
+
+
+    public static List<Integer> toIntegerList(String seq){
+        if(StringUtils.isBlank(seq)){
+            return Collections.emptyList();
+        }
+
+        List<Integer> list = new ArrayList<>();
+
+        for(char ch: seq.toCharArray()){
+            if(ch >= '0' && ch <= '9'){
+                list.add(ch - '0');
+            }
+        }
+
+        return list;
+    }
+
     public static Set<Integer> toIntegerSet(String seq){
         if(StringUtils.isBlank(seq)){
             return Collections.emptySet();

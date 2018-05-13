@@ -126,6 +126,8 @@ public class DocUtils {
         }
 
 
+
+
         // 保存
         StringBuilder sb = new StringBuilder();
         sb.append(targetDirName);
@@ -160,6 +162,17 @@ public class DocUtils {
         List<W3DCode> repeatNonPairCodes = TransferUtil.getNonPairCodes(repeatCodes);
         title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));
         writeCodes(doc.createParagraph(), repeatNonPairCodes, toUTF8(title));
+
+        if(welfareCode.getCodeTypeEnum() == CodeTypeEnum.DIRECT) {
+
+            List<W3DCode> randomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 10);
+            title = String.format("直选非对子随机 10 注", nonPairCodes.size());
+            writeCodes(doc.createParagraph(), randomTenCodes, toUTF8(title));
+
+            List<W3DCode> randomFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
+            title = String.format("直选非对子随机 5 注", nonPairCodes.size());
+            writeCodes(doc.createParagraph(), randomFiveCodes, toUTF8(title));
+        }
 
 
         // 输出组选
