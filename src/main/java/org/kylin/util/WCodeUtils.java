@@ -147,6 +147,36 @@ public class WCodeUtils {
         return false;
     }
 
+
+    public static boolean compareTailThreeBit(List<W3DCode> w3DCodes, WCode wCode){
+        if(CollectionUtils.isEmpty(w3DCodes) || wCode == null){
+            return true;
+        }
+
+        if(CollectionUtils.size(wCode.getCodes()) < 3){
+            return false;
+        }
+
+        int dim = wCode.getDim();
+
+        for (W3DCode w3DCode : w3DCodes){
+            Integer[] codes = w3DCode.getCodes();
+            if(codes.length < 3 || codes[BitConstant.HUNDRED] == null){
+                continue;
+            }
+
+            if(codes[BitConstant.UNIT] == wCode.getCodes().get(dim - 1)
+                    && codes[BitConstant.DECADE] == wCode.getCodes().get(dim - 2)
+                    && codes[BitConstant.HUNDRED] == wCode.getCodes().get(dim - 3)){
+                return true;
+            }
+
+        }
+
+        return false;
+
+    }
+
     public static boolean isExtremumCodes(WCode wCode){
         if(wCode == null ){
             return false;

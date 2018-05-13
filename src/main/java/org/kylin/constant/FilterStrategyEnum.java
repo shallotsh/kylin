@@ -13,6 +13,7 @@ public enum FilterStrategyEnum {
     ORDERED_FISH_MAN_FILTER(10, "有序钓叟"),
     NON_REPEAT_FILTER(11, "非重码杀"),
     SINK_FILTER(12, "下沉比对"),
+    SUM_TAIL_FILTER(13, "和值尾"),
     ;
     private Integer id;
     private String desc;

@@ -34,6 +34,10 @@ public class StrategyFactory {
                 return new NonRepeatCodeProcessor();
             case SINK_FILTER:
                 return new SinkCodeProcessor();
+            case TAIL_THREE_FILTER:
+                return new TailThreeCompareProcessor();
+            case SUM_TAIL_FILTER:
+                return new SumTailProcessor();
                 default:
                     return null;
         }
