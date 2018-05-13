@@ -297,7 +297,7 @@ public class DocUtils {
         List<WCode> nonPairRandomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, randomTenCodes);
         List<WCode> nonPairRandFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
 
-        List<List<WCode>> fragmentWCodes = WyfCollectionUtils.getRandomLists(wCodeReq.getwCodes(), 20, 5);
+        List<List<WCode>> fragmentWCodes = WyfCollectionUtils.getRandomLists(nonPairCodes, 20, 5);
 //        List<WCode> randPairCodes = WCodeUtils.getRandomList(pairCodes, randPairCount);
 
 //        if(!CollectionUtils.isEmpty(randPairCodes)){
