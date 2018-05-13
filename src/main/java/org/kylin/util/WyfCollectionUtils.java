@@ -6,9 +6,7 @@ import org.kylin.bean.W3DCode;
 import org.kylin.bean.p5.WCode;
 import org.kylin.constant.CodeTypeEnum;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author huangyawu
@@ -85,6 +83,47 @@ public class WyfCollectionUtils {
                 ret.addAll(codes.subList(codes.size()/2,codes.size()));
             }else{
                 ret.addAll(codes.subList(startPosInPage, codes.size()));
+            }
+        }
+
+        return ret;
+    }
+
+    public static<T> List<T> getRandomList(List<T> wCodes, Integer count){
+        if(CollectionUtils.isEmpty(wCodes) || CollectionUtils.size(wCodes) < count){
+            return wCodes;
+        }
+
+        List<T> ret = new ArrayList<>();
+        Set<Integer> isSelected = new HashSet<>();
+        Integer size = wCodes.size();
+
+        for(int i=0; i<count && i<size; i++){
+            int index = new Random().nextInt(size);
+            if(isSelected.contains(i)){
+                continue;
+            }
+            ret.add(wCodes.get(index));
+            isSelected.add(i);
+        }
+
+        return ret;
+    }
+
+    public static<T> List<List<T>> getRandomLists(List<T> wCodes, int randomCount, int randomSize){
+        if(randomCount < 1){
+            return Collections.emptyList();
+        }
+        if(CollectionUtils.isEmpty(wCodes) || randomSize > wCodes.size()){
+            return Arrays.asList(wCodes);
+        }
+
+        List<List<T>> ret = new ArrayList<>();
+
+        for(int i=0; i< randomCount; i++){
+            List<T> randomList = getRandomList(wCodes, randomSize);
+            if(!CollectionUtils.isEmpty(randomList)){
+                ret.add(randomList);
             }
         }
 

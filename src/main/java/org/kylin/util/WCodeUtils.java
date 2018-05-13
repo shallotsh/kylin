@@ -163,27 +163,6 @@ public class WCodeUtils {
     }
 
 
-    public static<T> List<T> getRandomList(List<T> wCodes, Integer count){
-        if(CollectionUtils.isEmpty(wCodes) || CollectionUtils.size(wCodes) < count){
-            return wCodes;
-        }
-
-        List<T> ret = new ArrayList<>();
-        Set<Integer> isSelected = new HashSet<>();
-        Integer size = wCodes.size();
-
-        for(int i=0; i<count && i<size; i++){
-            int index = new Random().nextInt(size);
-            if(isSelected.contains(i)){
-                continue;
-            }
-            ret.add(wCodes.get(index));
-            isSelected.add(i);
-        }
-
-        return ret;
-    }
-
 
     public static<T> List<T> getFirstNRowsAndLastRowsInEveryPage(List<T> codes, Integer colNumInPage, Integer rowNumInPage, Integer count){
         if(CollectionUtils.isEmpty(codes) || count < 1){

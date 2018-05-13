@@ -258,7 +258,7 @@ public class DocUtils {
         hr2.setFontSize(18);
 
         int randPairCount = 0;
-        int nonRandPairCount = 0;
+        int randomTenCodes = 0;
 
         List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(pairCodes)){
@@ -273,7 +273,7 @@ public class DocUtils {
             Collections.sort(nonPairCodes);
             String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
             exportWCodes(doc, nonPairCodes, titleString);
-            nonRandPairCount = nonPairCodes.size() > 10? 10 : nonPairCodes.size();
+            randomTenCodes = nonPairCodes.size() > 10? 10 : nonPairCodes.size();
         }
 
         XWPFParagraph sep = doc.createParagraph();
@@ -281,8 +281,10 @@ public class DocUtils {
         hr3.setText(" ");
         hr3.addBreak();
 
-        List<WCode> nonRandPairCodes = WCodeUtils.getRandomList(nonPairCodes, nonRandPairCount);
-        List<WCode> nCountRandPairCodes = WCodeUtils.getRandomList(nonPairCodes, 5);
+        List<WCode> nonPairRandomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, randomTenCodes);
+        List<WCode> nonPairRandFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
+
+        List<List<WCode>> fragmentWCodes = WyfCollectionUtils.getRandomLists(wCodeReq.getwCodes(), 20, 5);
 //        List<WCode> randPairCodes = WCodeUtils.getRandomList(pairCodes, randPairCount);
 
 //        if(!CollectionUtils.isEmpty(randPairCodes)){
@@ -291,17 +293,24 @@ public class DocUtils {
 //            exportWCodes(doc, randPairCodes, titleString);
 //        }
 
-        if(!CollectionUtils.isEmpty(nonRandPairCodes)){
-            Collections.sort(nonRandPairCodes);
-            String titleString = String.format("排列5码随机·非对子( %d 注)", nonRandPairCodes.size());
-            exportWCodes(doc, nonRandPairCodes, titleString);
+        if(!CollectionUtils.isEmpty(nonPairRandomTenCodes)){
+            Collections.sort(nonPairRandomTenCodes);
+            String titleString = String.format("排列10码随机·非对子( %d 注)", nonPairRandomTenCodes.size());
+            exportWCodes(doc, nonPairRandomTenCodes, titleString);
         }
 
-        if(!CollectionUtils.isEmpty(nCountRandPairCodes)){
-            Collections.sort(nCountRandPairCodes);
-            String titleString = String.format("排列5码随机·非对子( %d 注)", nCountRandPairCodes.size());
-            exportWCodes(doc, nCountRandPairCodes, titleString);
+        if(!CollectionUtils.isEmpty(nonPairRandFiveCodes)){
+            Collections.sort(nonPairRandFiveCodes);
+            String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRandFiveCodes.size());
+            exportWCodes(doc, nonPairRandFiveCodes, titleString);
         }
+
+        if(!CollectionUtils.isEmpty(fragmentWCodes)){
+            String titleString = String.format("%d组排列5码随机", fragmentWCodes.size());
+            exportWCodesArray(doc, fragmentWCodes, titleString);
+        }
+
+
 
 //        List<WCode> firstAndlastNRowsInPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(pairCodes,6, 22, 2);
 //        List<WCode> firstAndlastNRowsInNonPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(nonPairCodes,6, 22, 2);
@@ -353,6 +362,48 @@ public class DocUtils {
 
         for(WCode w3DCode : wCodes) {
             content.setText(w3DCode.getString() + "     ");
+        }
+
+        content.addBreak();
+        content.setTextPosition(20);
+
+        XWPFRun sep = paragraph.createRun();
+        sep.setTextPosition(50);
+    }
+
+
+    private static void exportWCodesArray(XWPFDocument doc, List<List<WCode>> wCodes, String titleString){
+
+        if(CollectionUtils.isEmpty(wCodes)){
+            return;
+        }
+
+        XWPFParagraph paragraph = doc.createParagraph();
+        if(!StringUtils.isBlank(titleString)){
+            XWPFRun title = paragraph.createRun();
+            title.setFontSize(18);
+            title.setBold(true);
+            title.setText(toUTF8(titleString));
+            title.addBreak();
+        }
+
+        XWPFRun hr = paragraph.createRun();
+        hr.setFontSize(10);
+        hr.setText("----------------------------------------");
+        hr.addBreak();
+
+        XWPFRun content = paragraph.createRun();
+        content.setFontSize(14);
+
+
+        for(int i=0; i < wCodes.size(); i++) {
+            List<WCode> wCodeList = wCodes.get(i);
+            Collections.sort(wCodeList);
+            content.setText(toUTF8("第 " + (i+1) + " 组: "));
+            for (WCode w3DCode : wCodeList) {
+                content.setText(w3DCode.getString() + "     ");
+            }
+            content.addBreak();
         }
 
         content.addBreak();
