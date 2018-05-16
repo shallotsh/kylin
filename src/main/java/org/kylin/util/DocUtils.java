@@ -297,7 +297,6 @@ public class DocUtils {
         List<WCode> nonPairRandomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, randomTenCodes);
         List<WCode> nonPairRandFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
 
-        List<List<WCode>> fragmentWCodes = WyfCollectionUtils.getRandomLists(nonPairCodes, 20, 5);
 //        List<WCode> randPairCodes = WCodeUtils.getRandomList(pairCodes, randPairCount);
 
 //        if(!CollectionUtils.isEmpty(randPairCodes)){
@@ -316,11 +315,6 @@ public class DocUtils {
             Collections.sort(nonPairRandFiveCodes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRandFiveCodes.size());
             exportWCodes(doc, nonPairRandFiveCodes, titleString);
-        }
-
-        if(!CollectionUtils.isEmpty(fragmentWCodes)){
-            String titleString = String.format("%d组排列5码随机", fragmentWCodes.size());
-            exportWCodesArray(doc, fragmentWCodes, titleString);
         }
 
 
