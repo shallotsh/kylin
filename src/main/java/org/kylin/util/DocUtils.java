@@ -270,23 +270,20 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
-        int randPairCount = 0;
-        int randomTenCodes = 0;
-
         List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
 
         XWPFRun hr3 = header.createRun();
         hr3.setText(" ");
         hr3.addBreak();
 
-        List<WCode> nonPairRandomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, randomTenCodes);
+        List<WCode> nonPairRandomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 10);
         List<WCode> nonPairRandFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
         List<WCode> nonPairRand200Codes = WyfCollectionUtils.getRandomList(nonPairCodes, 200);
         List<WCode> nonPairRand400Codes = WyfCollectionUtils.getRandomList(nonPairCodes, 400);
 
         if(!CollectionUtils.isEmpty(nonPairRandomTenCodes)){
             Collections.sort(nonPairRandomTenCodes);
-            String titleString = String.format("排列10码随机·非对子( %d 注)", nonPairRandomTenCodes.size());
+            String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRandomTenCodes.size());
             exportWCodes(doc, nonPairRandomTenCodes, titleString);
         }
 
