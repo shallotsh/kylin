@@ -182,7 +182,7 @@ public class WCodeUtils {
             return false;
         }
 
-        List<Integer> codes = wCode.getCodes().stream().filter(e -> e >= 5).collect(Collectors.toList());
+        List<Integer> codes = wCode.getCodes().stream().filter(e -> e > 5 || e == 0).collect(Collectors.toList());
         if(CollectionUtils.size(codes) == 5 || CollectionUtils.size(codes) == 0){
             return true;
         }

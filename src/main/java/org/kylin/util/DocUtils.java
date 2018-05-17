@@ -273,14 +273,6 @@ public class DocUtils {
         int randPairCount = 0;
         int randomTenCodes = 0;
 
-        List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
-        if(!CollectionUtils.isEmpty(pairCodes)){
-            Collections.sort(pairCodes);
-            String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
-            exportWCodes(doc, pairCodes, titleString);
-            randPairCount = pairCodes.size() > 10? 10: pairCodes.size();
-        }
-
         List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(nonPairCodes)){
             Collections.sort(nonPairCodes);
@@ -289,21 +281,14 @@ public class DocUtils {
             randomTenCodes = nonPairCodes.size() > 10? 10 : nonPairCodes.size();
         }
 
-        XWPFParagraph sep = doc.createParagraph();
         XWPFRun hr3 = header.createRun();
         hr3.setText(" ");
         hr3.addBreak();
 
         List<WCode> nonPairRandomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, randomTenCodes);
         List<WCode> nonPairRandFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
-
-//        List<WCode> randPairCodes = WCodeUtils.getRandomList(pairCodes, randPairCount);
-
-//        if(!CollectionUtils.isEmpty(randPairCodes)){
-//            Collections.sort(randPairCodes);
-//            String titleString = String.format("排列5码随机·对子( %d 注)", randPairCodes.size());
-//            exportWCodes(doc, randPairCodes, titleString);
-//        }
+        List<WCode> nonPairRand200Codes = WyfCollectionUtils.getRandomList(nonPairCodes, 200);
+        List<WCode> nonPairRand400Codes = WyfCollectionUtils.getRandomList(nonPairCodes, 400);
 
         if(!CollectionUtils.isEmpty(nonPairRandomTenCodes)){
             Collections.sort(nonPairRandomTenCodes);
@@ -318,15 +303,26 @@ public class DocUtils {
         }
 
 
+        if(!CollectionUtils.isEmpty(nonPairRand200Codes)){
+            Collections.sort(nonPairRand200Codes);
+            String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand200Codes.size());
+            exportWCodes(doc, nonPairRand200Codes, titleString);
+        }
 
-//        List<WCode> firstAndlastNRowsInPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(pairCodes,6, 22, 2);
-//        List<WCode> firstAndlastNRowsInNonPairCodes = WCodeUtils.getFirstNRowsAndLastRowsInEveryPage(nonPairCodes,6, 22, 2);
-//
-//        String firstAndLastRowsExport = String.format("排列5码首尾行( %d 注)",
-//                (CollectionUtils.size(firstAndlastNRowsInNonPairCodes) + CollectionUtils.size(firstAndlastNRowsInPairCodes)));
-//        exportWCodes(doc, firstAndlastNRowsInPairCodes, firstAndLastRowsExport);
-//        exportWCodes(doc, firstAndlastNRowsInNonPairCodes, null);
+        if(!CollectionUtils.isEmpty(nonPairRand400Codes)){
+            Collections.sort(nonPairRand400Codes);
+            String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand400Codes.size());
+            exportWCodes(doc, nonPairRand400Codes, titleString);
+        }
 
+
+        List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
+        if(!CollectionUtils.isEmpty(pairCodes)){
+            Collections.sort(pairCodes);
+            String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
+            exportWCodes(doc, pairCodes, titleString);
+            randPairCount = pairCodes.size() > 10? 10: pairCodes.size();
+        }
 
         // 保存
         StringBuilder sb = new StringBuilder();
