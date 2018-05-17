@@ -274,12 +274,6 @@ public class DocUtils {
         int randomTenCodes = 0;
 
         List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
-        if(!CollectionUtils.isEmpty(nonPairCodes)){
-            Collections.sort(nonPairCodes);
-            String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
-            exportWCodes(doc, nonPairCodes, titleString);
-            randomTenCodes = nonPairCodes.size() > 10? 10 : nonPairCodes.size();
-        }
 
         XWPFRun hr3 = header.createRun();
         hr3.setText(" ");
@@ -321,8 +315,14 @@ public class DocUtils {
             Collections.sort(pairCodes);
             String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
             exportWCodes(doc, pairCodes, titleString);
-            randPairCount = pairCodes.size() > 10? 10: pairCodes.size();
         }
+
+        if(!CollectionUtils.isEmpty(nonPairCodes)){
+            Collections.sort(nonPairCodes);
+            String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
+            exportWCodes(doc, nonPairCodes, titleString);
+        }
+
 
         // 保存
         StringBuilder sb = new StringBuilder();
