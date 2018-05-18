@@ -246,6 +246,10 @@ var app = new Vue({
                 boldCodeFive: this.boldCodeFive
             };
 
+            if(processorId == 14 ){
+                args.randomCount = this.boldCodeFive;
+            }
+
             var count = this.wyfCodes.length;
             this.wyfMessage = "正在进行胆码杀...";
             axios({
@@ -310,7 +314,8 @@ var app = new Vue({
             }
 
             var args = {
-                wCodes: this.welfareCode
+                wCodes: this.welfareCode ,
+                randomCount: this.boldCodeFive
             };
 
             // console.log(JSON.stringify($rootScope.welfareCode, null, 2));

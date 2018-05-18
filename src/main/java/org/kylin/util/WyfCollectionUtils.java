@@ -129,4 +129,14 @@ public class WyfCollectionUtils {
 
         return ret;
     }
+
+    public static<T> void reduceRandomCount(List<T> wCodes, int randomCount){
+
+        while(randomCount > 0 || CollectionUtils.size(wCodes) == 0){
+            int randomSize = wCodes.size();
+            int index = new Random().nextInt(randomSize);
+            wCodes.remove(index);
+            randomCount -= 1;
+        }
+    }
 }

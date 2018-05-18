@@ -14,6 +14,7 @@ public enum FilterStrategyEnum {
     NON_REPEAT_FILTER(11, "非重码杀"),
     SINK_FILTER(12, "下沉比对"),
     SUM_TAIL_FILTER(13, "和值尾"),
+    RANDOM_FILTER(14, "随机杀"),
     ;
     private Integer id;
     private String desc;

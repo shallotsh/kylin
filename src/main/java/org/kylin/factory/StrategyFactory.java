@@ -38,6 +38,8 @@ public class StrategyFactory {
                 return new TailThreeCompareProcessor();
             case SUM_TAIL_FILTER:
                 return new SumTailProcessor();
+            case RANDOM_FILTER:
+                return new RandomProcessor();
                 default:
                     return null;
         }

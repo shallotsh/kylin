@@ -11,6 +11,7 @@ public class WCodeReq {
     private List<String> bits;
     private Integer exportType;
     private String p3Code;
+    private String randomCount;
 
     public Integer getFilterType() {
         return filterType;
@@ -64,6 +65,15 @@ public class WCodeReq {
         return p3Code;
     }
 
+    public String getRandomCount() {
+        return randomCount;
+    }
+
+    public WCodeReq setRandomCount(String randomCount) {
+        this.randomCount = randomCount;
+        return this;
+    }
+
     public WCodeReq setP3Code(String p3Code) {
         this.p3Code = p3Code;
         return this;
@@ -85,6 +95,9 @@ public class WCodeReq {
                 ", boldCodeFive='" + boldCodeFive + '\'' +
                 ", wCodes=" + wCodes +
                 ", bits=" + bits +
+                ", exportType=" + exportType +
+                ", p3Code='" + p3Code + '\'' +
+                ", randomCount='" + randomCount + '\'' +
                 '}';
     }
 }

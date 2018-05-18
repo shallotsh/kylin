@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import freemarker.template.utility.StringUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.xwpf.usermodel.Borders;
 import org.apache.poi.xwpf.usermodel.BreakClear;
 import org.apache.poi.xwpf.usermodel.BreakType;
@@ -276,10 +277,15 @@ public class DocUtils {
         hr3.setText(" ");
         hr3.addBreak();
 
+        int customRandomCount = 200;
+        if(StringUtils.isNumeric(wCodeReq.getRandomCount()) && NumberUtils.toInt(wCodeReq.getRandomCount()) > 0
+                && NumberUtils.toInt(wCodeReq.getRandomCount()) < 1000 ){
+            customRandomCount = NumberUtils.toInt(wCodeReq.getRandomCount());
+        }
+
         List<WCode> nonPairRandomTenCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 10);
         List<WCode> nonPairRandFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
-        List<WCode> nonPairRand200Codes = WyfCollectionUtils.getRandomList(nonPairCodes, 200);
-        List<WCode> nonPairRand400Codes = WyfCollectionUtils.getRandomList(nonPairCodes, 400);
+        List<WCode> nonPairRand200Codes = WyfCollectionUtils.getRandomList(nonPairCodes, customRandomCount);
 
         if(!CollectionUtils.isEmpty(nonPairRandomTenCodes)){
             Collections.sort(nonPairRandomTenCodes);
@@ -294,17 +300,17 @@ public class DocUtils {
         }
 
 
-        if(!CollectionUtils.isEmpty(nonPairRand200Codes)){
+        if(!CollectionUtils.isEmpty(nonPairRand200Codes) && nonPairRand200Codes.size() < CollectionUtils.size(nonPairCodes)){
             Collections.sort(nonPairRand200Codes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand200Codes.size());
             exportWCodes(doc, nonPairRand200Codes, titleString);
         }
 
-        if(!CollectionUtils.isEmpty(nonPairRand400Codes)){
-            Collections.sort(nonPairRand400Codes);
-            String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand400Codes.size());
-            exportWCodes(doc, nonPairRand400Codes, titleString);
-        }
+//        if(!CollectionUtils.isEmpty(nonPairRand400Codes)){
+//            Collections.sort(nonPairRand400Codes);
+//            String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand400Codes.size());
+//            exportWCodes(doc, nonPairRand400Codes, titleString);
+//        }
 
 
         List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
