@@ -28,7 +28,7 @@ public class LitttleSumProcessor implements SequenceProcessor {
         if(!validate()){
             return wCodes;
         }
-        List<WCode> ret = wCodes.stream().filter(wCode -> wCode != null && wCode.sum() >= 20).collect(Collectors.toList());
+        List<WCode> ret = wCodes.stream().filter(wCode -> wCode != null && wCode.sum() >= 18).collect(Collectors.toList());
         return ret;
     }
 

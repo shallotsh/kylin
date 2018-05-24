@@ -28,7 +28,7 @@ public class BigSumProcessor implements SequenceProcessor {
         if(!validate()){
             return wCodes;
         }
-        List<WCode> ret = wCodes.stream().filter(wCode -> wCode != null && wCode.sum() <= 30).collect(Collectors.toList());
+        List<WCode> ret = wCodes.stream().filter(wCode -> wCode != null && wCode.sum() <= 36).collect(Collectors.toList());
         return ret;
     }
 
