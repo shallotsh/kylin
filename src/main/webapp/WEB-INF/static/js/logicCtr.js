@@ -102,6 +102,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             "range": $scope.wyf_range,
             "ternaryLocation": $scope.wyf_locate_three,
             "fishMan":$scope.wyf_fish_man,
+            "orderFishMan":$scope.order_fish_man,
             "huBits":$scope.wyf_bit_hu,
             "hBits":$scope.wyf_bit_h,
             "dBits":$scope.wyf_bit_d,
@@ -169,6 +170,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $scope.wyf_range = undefined;
         $scope.wyf_locate_three = undefined;
         $scope.wyf_fish_man = undefined;
+        $scope.order_fish_man = undefined;
         $scope.wyf_bit_hu = undefined;
         $scope.wyf_bit_h = undefined;
         $scope.wyf_bit_d = undefined;

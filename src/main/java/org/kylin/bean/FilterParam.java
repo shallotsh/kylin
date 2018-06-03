@@ -14,6 +14,7 @@ public class FilterParam {
     private String range;
     private String ternaryLocation;
     private String fishMan;
+    private String orderFishMan;
     private String huBits;
     private String hBits;
     private String dBits;
@@ -78,6 +79,15 @@ public class FilterParam {
 
     public void setFishMan(String fishMan) {
         this.fishMan = fishMan;
+    }
+
+    public String getOrderFishMan() {
+        return orderFishMan;
+    }
+
+    public FilterParam setOrderFishMan(String orderFishMan) {
+        this.orderFishMan = orderFishMan;
+        return this;
     }
 
     public String getHuBits() {
@@ -213,6 +223,7 @@ public class FilterParam {
                 ", range='" + range + '\'' +
                 ", ternaryLocation='" + ternaryLocation + '\'' +
                 ", fishMan='" + fishMan + '\'' +
+                ", orderFishMan='" + orderFishMan + '\'' +
                 ", huBits='" + huBits + '\'' +
                 ", hBits='" + hBits + '\'' +
                 ", dBits='" + dBits + '\'' +
