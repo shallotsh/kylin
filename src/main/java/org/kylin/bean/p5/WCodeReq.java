@@ -12,6 +12,7 @@ public class WCodeReq {
     private Integer exportType;
     private String p3Code;
     private String randomCount;
+    private boolean randomKill;
 
     public Integer getFilterType() {
         return filterType;
@@ -69,6 +70,15 @@ public class WCodeReq {
         return randomCount;
     }
 
+    public boolean isRandomKill() {
+        return randomKill;
+    }
+
+    public WCodeReq setRandomKill(boolean randomKill) {
+        this.randomKill = randomKill;
+        return this;
+    }
+
     public WCodeReq setRandomCount(String randomCount) {
         this.randomCount = randomCount;
         return this;
@@ -93,11 +103,11 @@ public class WCodeReq {
         return "WCodeReq{" +
                 "filterType=" + filterType +
                 ", boldCodeFive='" + boldCodeFive + '\'' +
-                ", wCodes=" + wCodes +
                 ", bits=" + bits +
                 ", exportType=" + exportType +
                 ", p3Code='" + p3Code + '\'' +
                 ", randomCount='" + randomCount + '\'' +
+                ", randomKill=" + randomKill +
                 '}';
     }
 }

@@ -130,12 +130,17 @@ public class WyfCollectionUtils {
         return ret;
     }
 
-    public static<T> void reduceRandomCount(List<T> wCodes, int randomCount){
+    public static<T extends WCode> void markRandomDeletedByCount(List<T> wCodes, int randomCount){
 
-        while(randomCount > 0 || CollectionUtils.size(wCodes) == 0){
+        int count = 0;
+        while(randomCount > 0 && CollectionUtils.size(wCodes) > count){
             int randomSize = wCodes.size();
             int index = new Random().nextInt(randomSize);
-            wCodes.remove(index);
+            if(wCodes.get(index).isDeleted()){
+                count ++;
+                continue;
+            }
+            wCodes.get(index).setDeleted(true);
             randomCount -= 1;
         }
     }

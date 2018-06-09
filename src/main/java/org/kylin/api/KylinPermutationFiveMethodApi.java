@@ -10,6 +10,7 @@ import org.kylin.bean.WyfResponse;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
 import org.kylin.bean.p5.WCodeSummarise;
+import org.kylin.constant.FilterStrategyEnum;
 import org.kylin.service.pfive.WCodeProcessService;
 import org.kylin.util.DocUtils;
 import org.kylin.util.WCodeUtils;
@@ -66,7 +67,12 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> wCodes = wCodeProcessService.sequenceProcess(wCodeReq);
         LOGGER.info("串处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
                 CollectionUtils.size(wCodes));
-        return new WyfDataResponse<>(WCodeUtils.construct(wCodes));
+        WCodeSummarise wCodeSummarise = WCodeUtils.construct(wCodes);
+        if(wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.RANDOM_FILTER.getId()){
+            wCodeSummarise.setRandomKill(true);
+        }
+
+        return new WyfDataResponse<>(wCodeSummarise);
     }
 
 

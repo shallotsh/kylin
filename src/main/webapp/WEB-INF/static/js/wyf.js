@@ -32,7 +32,9 @@ var app = new Vue({
         hundred: null,
         decade:null,
         unit:null,
-        p3Code:null
+        p3Code:null,
+        isRandomKill:null,
+        randomKillCodes:null
     },
     methods:{
         doPermutate: function () {
@@ -83,14 +85,23 @@ var app = new Vue({
             }
         },
 
-        handleFiveCodeResponse: function (data, msg) {
+        handleFiveCodeResponse: function (data, msg, processId) {
             this.config.isP5 = true;
             this.welfareCode = data.wCodes;
+            console.log('返回值:' + JSON.stringify(data.isRandomKill, null, 2));
+            if(data.randomKill) {
+                this.isRandomKill = data.randomKill;
+            }
+
             var printCodes = [];
             for( idx in this.welfareCode){
                 code = this.welfareCode[idx];
                 // code.codes.reverse();
-                printCodes.push(code.codes.join(""));
+                var codeString = code.codes.join("");
+                if(this.isRandomKill){
+                    codeString = '[' + code.freq + ']' + codeString;
+                }
+                printCodes.push(codeString);
             }
             this.wyfCodes = printCodes;
             this.wyfMessage = "排5 " + msg + " 生成: "  + this.wyfCodes.length + " 注" + '(对子: ' + data.pairCodes + ' 注, 非对子: ' + data.nonPairCodes + ' 注)';
@@ -192,7 +203,7 @@ var app = new Vue({
 
             axios(requestConfig).then(function (resp) {
                 console.log(JSON.stringify(resp));
-                app.handleFiveCodeResponse(resp.data.data, "预测");
+                app.handleFiveCodeResponse(resp.data.data, "预测", null);
 
             }).catch(function (reason) {
                 console.log(reason);
@@ -225,7 +236,7 @@ var app = new Vue({
                     "Content-Type": "application/json; charset=UTF-8"
                 }
             }).then(function(response) {
-                app.handleFiveCodeResponse(response.data.data, "杀码");
+                app.handleFiveCodeResponse(response.data.data, "杀码", processorId);
                 app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注."
                     + '(对子: ' + response.data.data.pairCodes + ' 注, 非对子: ' + response.data.data.nonPairCodes + ' 注)';
             }).catch(function(reason) {
@@ -248,7 +259,13 @@ var app = new Vue({
 
             if(processorId == 14 ){
                 args.randomCount = this.boldCodeFive;
+                if(!this.boldCodeFive){
+                    this.handleException("请输入随机杀注数!");
+                    return;
+                }
             }
+
+            console.log("ddddd:" + JSON.stringify(args, null, 2));
 
             var count = this.wyfCodes.length;
             this.wyfMessage = "正在进行胆码杀...";
@@ -260,7 +277,8 @@ var app = new Vue({
                     "Content-Type": "application/json; charset=UTF-8"
                 }
             }).then(function(response) {
-                app.handleFiveCodeResponse(response.data.data, "含X码杀");
+                console.log('收到返回:' + JSON.stringify(response.data.data, null ,2));
+                app.handleFiveCodeResponse(response.data.data, "含X码杀", processorId);
                 app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注."
                     + '(对子: ' + response.data.data.pairCodes + ' 注, 非对子: ' + response.data.data.nonPairCodes + ' 注)';
             }).catch(function(reason) {
@@ -315,10 +333,11 @@ var app = new Vue({
 
             var args = {
                 wCodes: this.welfareCode ,
-                randomCount: this.boldCodeFive
+                randomCount: this.boldCodeFive,
+                randomKill: this.isRandomKill
             };
 
-            // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
+            console.log('canshu:' + JSON.stringify(args, null, 2));
             axios({
                 method:"POST",
                 url:"/api/p5/codes/export",

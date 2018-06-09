@@ -271,11 +271,88 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
-        List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
-
         XWPFRun hr3 = header.createRun();
         hr3.setText(" ");
         hr3.addBreak();
+
+        if(wCodeReq.isRandomKill()){
+            randomExport(wCodeReq, doc);
+        }else{
+            normalExport(wCodeReq, doc);
+        }
+
+
+        // 保存
+        StringBuilder sb = new StringBuilder();
+        sb.append(targetDirName);
+        sb.append(File.separator);
+        sb.append(fileName);
+        sb.append(".docx");
+        FileOutputStream out = new FileOutputStream(sb.toString());
+        doc.write(out);
+        out.close();
+
+        LOGGER.info("导出文件名: {}", sb.toString());
+
+        return fileName + ".docx";
+    }
+
+
+    private static void randomExport(WCodeReq wCodeReq, XWPFDocument doc){
+        if(wCodeReq == null || CollectionUtils.isEmpty(wCodeReq.getwCodes()) || doc == null){
+            return;
+        }
+
+        List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
+        String title = "对子( " + CollectionUtils.size(pairCodes) +" 注)";
+        exportRandomByType(pairCodes, doc, title);
+
+        List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
+        title = "非对子( " + CollectionUtils.size(nonPairCodes) +" 注)";
+        exportRandomByType(nonPairCodes, doc, title);
+
+
+    }
+
+    private static void exportRandomByType(List<WCode> wCodes, XWPFDocument doc, String title){
+        if(CollectionUtils.isEmpty(wCodes) || doc == null){
+            return;
+        }
+        int highestFreq = WCodeUtils.getHighestFreq(wCodes);
+
+        XWPFParagraph header = doc.createParagraph();
+        header.setVerticalAlignment(TextAlignment.TOP);
+        header.setWordWrap(true);
+        header.setAlignment(ParagraphAlignment.LEFT);
+        XWPFRun hr1 = header.createRun();
+        hr1.setText(toUTF8(title));
+        hr1.setBold(true);
+        hr1.setFontSize(20);
+        hr1.addBreak();
+
+        for(int i=2; i <= highestFreq; i++){
+            int freq = i;
+            List<WCode> exportRandomCodes = wCodes.stream().filter(wCode -> wCode.getFreq() == freq).collect(Collectors.toList());
+            String exportTitle = "频度" + freq + "(注数" + CollectionUtils.size(exportRandomCodes) + ")";
+            exportWCodes(doc, exportRandomCodes, exportTitle);
+        }
+
+        XWPFParagraph headerEnd = doc.createParagraph();
+        header.setVerticalAlignment(TextAlignment.TOP);
+        header.setWordWrap(true);
+        header.setAlignment(ParagraphAlignment.LEFT);
+        XWPFRun hrEnd = headerEnd.createRun();
+        hrEnd.setBold(true);
+        hrEnd.setFontSize(20);
+        hrEnd.addBreak();
+
+    }
+
+
+
+    private static void normalExport(WCodeReq wCodeReq, XWPFDocument doc){
+
+        List<WCode> nonPairCodes = WCodeUtils.filterNonPairCodes(wCodeReq.getwCodes());
 
         int customRandomCount = 200;
         if(StringUtils.isNumeric(wCodeReq.getRandomCount()) && NumberUtils.toInt(wCodeReq.getRandomCount()) > 0
@@ -306,13 +383,6 @@ public class DocUtils {
             exportWCodes(doc, nonPairRand200Codes, titleString);
         }
 
-//        if(!CollectionUtils.isEmpty(nonPairRand400Codes)){
-//            Collections.sort(nonPairRand400Codes);
-//            String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand400Codes.size());
-//            exportWCodes(doc, nonPairRand400Codes, titleString);
-//        }
-
-
         List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(pairCodes)){
             Collections.sort(pairCodes);
@@ -325,22 +395,8 @@ public class DocUtils {
             String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
             exportWCodes(doc, nonPairCodes, titleString);
         }
-
-
-        // 保存
-        StringBuilder sb = new StringBuilder();
-        sb.append(targetDirName);
-        sb.append(File.separator);
-        sb.append(fileName);
-        sb.append(".docx");
-        FileOutputStream out = new FileOutputStream(sb.toString());
-        doc.write(out);
-        out.close();
-
-        LOGGER.info("导出文件名: {}", sb.toString());
-
-        return fileName + ".docx";
     }
+
 
     private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString){
 
@@ -351,6 +407,7 @@ public class DocUtils {
         XWPFParagraph paragraph = doc.createParagraph();
         if(!StringUtils.isBlank(titleString)){
             XWPFRun title = paragraph.createRun();
+            paragraph.setAlignment(ParagraphAlignment.LEFT);
             title.setFontSize(18);
             title.setBold(true);
             title.setText(toUTF8(titleString));

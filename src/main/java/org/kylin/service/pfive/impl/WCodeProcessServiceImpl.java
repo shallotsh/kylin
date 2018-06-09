@@ -7,6 +7,7 @@ import org.kylin.bean.p5.WCodeReq;
 import org.kylin.constant.FilterStrategyEnum;
 import org.kylin.factory.StrategyFactory;
 import org.kylin.service.pfive.WCodeProcessService;
+import org.kylin.util.WCodeUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,17 +23,22 @@ public class WCodeProcessServiceImpl implements WCodeProcessService{
         }
         FilterStrategyEnum filterStrategyEnum = FilterStrategyEnum.getById(wCodeReq.getFilterType());
         if(filterStrategyEnum == null){
-            return wCodeReq.getWCodes();
+            return Collections.emptyList();
         }
 
         SequenceProcessor sequenceProcessor = StrategyFactory.createProcessor(filterStrategyEnum);
         if(sequenceProcessor == null){
-            return wCodeReq.getWCodes();
+            return Collections.emptyList();
         }
         sequenceProcessor.init(wCodeReq);
         List<WCode> wCodes = sequenceProcessor.process();
 
         Collections.sort(wCodes);
+
+        if(filterStrategyEnum == FilterStrategyEnum.RANDOM_FILTER){
+            WCodeUtils.plusFreq(wCodes);
+        }
+
         return wCodes;
     }
 

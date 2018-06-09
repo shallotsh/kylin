@@ -15,6 +15,7 @@ public class WCode implements Cloneable,Comparable{
     private int freq;
     private int  sumTail;
     private int classify;
+    private boolean deleted;
 
     public WCode() {
     }
@@ -97,6 +98,15 @@ public class WCode implements Cloneable,Comparable{
 
     public void addFreq(int count){
         this.freq += count;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public WCode setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
     }
 
     public String getString(){
@@ -223,12 +233,24 @@ public class WCode implements Cloneable,Comparable{
         return false;
     }
 
+    public int increaseFreq(){
+        this.freq++;
+        return this.freq;
+    }
+
     @Override
     public int compareTo(Object o) {
         if(o == null || !(o instanceof WCode)){
             return 1;
         }
         WCode obj = (WCode) o;
+
+        if(this.getFreq() > obj.getFreq()){
+            return -1;
+        }else if(this.getFreq() < obj.getFreq()){
+            return 1;
+        }
+
         for(int i=0; i<this.dim; i++){
             if(this.getCodes().get(i) > obj.getCodes().get(i)){
                 return 1;

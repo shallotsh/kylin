@@ -261,4 +261,33 @@ public class WCodeUtils {
         return ret;
     }
 
+
+    public static void plusFreq(List<WCode> baseWCodes){
+        if(CollectionUtils.isEmpty(baseWCodes)){
+            return;
+        }
+
+        for(WCode baseWCode : baseWCodes){
+            if(!baseWCode.isDeleted()){
+                baseWCode.increaseFreq();
+            }
+        }
+    }
+
+    public static int getHighestFreq(List<WCode> wCodes){
+        if(CollectionUtils.isEmpty(wCodes)){
+            return 0;
+        }
+
+        int freq = 0;
+        for(WCode wCode: wCodes){
+            if(wCode.getFreq() > freq){
+                freq = wCode.getFreq();
+            }
+        }
+
+        return freq;
+
+    }
+
 }
