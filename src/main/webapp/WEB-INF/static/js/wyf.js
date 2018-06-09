@@ -88,7 +88,7 @@ var app = new Vue({
         handleFiveCodeResponse: function (data, msg, processId) {
             this.config.isP5 = true;
             this.welfareCode = data.wCodes;
-            console.log('返回值:' + JSON.stringify(data.isRandomKill, null, 2));
+            // console.log('返回值:' + JSON.stringify(data.isRandomKill, null, 2));
             if(data.randomKill) {
                 this.isRandomKill = data.randomKill;
             }
@@ -265,7 +265,7 @@ var app = new Vue({
                 }
             }
 
-            console.log("ddddd:" + JSON.stringify(args, null, 2));
+            // console.log("ddddd:" + JSON.stringify(args, null, 2));
 
             var count = this.wyfCodes.length;
             this.wyfMessage = "正在进行胆码杀...";
@@ -277,7 +277,7 @@ var app = new Vue({
                     "Content-Type": "application/json; charset=UTF-8"
                 }
             }).then(function(response) {
-                console.log('收到返回:' + JSON.stringify(response.data.data, null ,2));
+                // console.log('收到返回:' + JSON.stringify(response.data.data, null ,2));
                 app.handleFiveCodeResponse(response.data.data, "含X码杀", processorId);
                 if(processorId == 14){
                     app.wyfMessage = "总计 " + count + " 注, 随机杀码 " + args.randomCount + " 注, 已增加频度."
