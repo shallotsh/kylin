@@ -280,7 +280,7 @@ var app = new Vue({
                 // console.log('收到返回:' + JSON.stringify(response.data.data, null ,2));
                 app.handleFiveCodeResponse(response.data.data, "含X码杀", processorId);
                 if(processorId == 14){
-                    app.wyfMessage = "总计 " + count + " 注, 随机杀码 " + args.randomCount + " 注, 已增加频度."
+                    app.wyfMessage = "总计 " + count + " 注, 随机杀码 " + args.randomCount + " 注, 保留码 " + response.data.data.remainedCodesCount + " 注 已增加频度."
                         + '(对子: ' + response.data.data.pairCodes + ' 注, 非对子: ' + response.data.data.nonPairCodes + ' 注)';
                 }else {
                     app.wyfMessage = "总计 " + count + " 注, 杀码 " + (count - app.wyfCodes.length) + " 注, 余 " + app.wyfCodes.length + " 注."

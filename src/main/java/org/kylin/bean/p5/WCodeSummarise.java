@@ -8,6 +8,7 @@ public class WCodeSummarise {
     private Integer pairCodes;
     private Integer nonPairCodes;
     private boolean isRandomKill;
+    private Integer remainedCodesCount;
 
     public List<WCode> getRandomKillCodes() {
         return randomKillCodes;
@@ -51,6 +52,15 @@ public class WCodeSummarise {
 
     public WCodeSummarise setRandomKill(boolean randomKill) {
         isRandomKill = randomKill;
+        return this;
+    }
+
+    public Integer getRemainedCodesCount() {
+        return remainedCodesCount;
+    }
+
+    public WCodeSummarise setRemainedCodesCount(Integer remainedCodesCount) {
+        this.remainedCodesCount = remainedCodesCount;
         return this;
     }
 }

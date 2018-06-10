@@ -70,6 +70,7 @@ public class KylinPermutationFiveMethodApi {
         WCodeSummarise wCodeSummarise = WCodeUtils.construct(wCodes);
         if(wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.RANDOM_FILTER.getId()){
             wCodeSummarise.setRandomKill(true);
+            wCodeSummarise.setRemainedCodesCount(WCodeUtils.getRemainedCodes(wCodes));
         }
 
         return new WyfDataResponse<>(wCodeSummarise);

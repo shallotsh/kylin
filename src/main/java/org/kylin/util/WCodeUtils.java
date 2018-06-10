@@ -290,4 +290,15 @@ public class WCodeUtils {
 
     }
 
+
+    public static int getRemainedCodes(List<WCode> wCodes){
+        if(CollectionUtils.isEmpty(wCodes)){
+            return 0;
+        }
+
+        List<WCode> remainedCodes = wCodes.stream().filter(wCode -> !wCode.isDeleted()).collect(Collectors.toList());
+
+        return CollectionUtils.size(remainedCodes);
+    }
+
 }
