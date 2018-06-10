@@ -208,6 +208,14 @@ public class WCodeUtils {
         return wCodes.stream().filter(wCode -> isPair(wCode)).collect(Collectors.toList());
     }
 
+    public static List<WCode> filterNonPairCodes(List<WCode> wCodes){
+        if(CollectionUtils.isEmpty(wCodes)){
+            return Collections.emptyList();
+        }
+
+        return wCodes.stream().filter(wCode -> !isPair(wCode)).collect(Collectors.toList());
+    }
+
     public static Integer getPairCodeCount(List<WCode> wCodes){
         return CollectionUtils.size(filterPairCodes(wCodes));
     }
@@ -216,19 +224,40 @@ public class WCodeUtils {
         return CollectionUtils.size(filterNonPairCodes(wCodes));
     }
 
-    public static WCodeSummarise construct(List<WCode> wCodes){
-        return new WCodeSummarise()
-                .setwCodes(wCodes)
-                .setPairCodes(WCodeUtils.getPairCodeCount(wCodes))
-                .setNonPairCodes(WCodeUtils.getNonPairCodeCount(wCodes));
+    public static Integer getPairCodeCountRemained(List<WCode> wCodes){
+        List<WCode> pairCodes = filterPairCodes(wCodes);
+        if(CollectionUtils.isEmpty(pairCodes)){
+            return 0;
+        }
+        List<WCode> remainedCodes = pairCodes.stream().filter(wCode -> !wCode.isDeleted()).collect(Collectors.toList());
+        return CollectionUtils.size(remainedCodes);
     }
 
-    public static List<WCode> filterNonPairCodes(List<WCode> wCodes){
-        if(CollectionUtils.isEmpty(wCodes)){
-            return Collections.emptyList();
+    public static Integer getNonPairCodeCountRemained(List<WCode> wCodes){
+        List<WCode> nonPairCodes = filterNonPairCodes(wCodes);
+        if(CollectionUtils.isEmpty(nonPairCodes)){
+            return 0;
         }
 
-        return wCodes.stream().filter(wCode -> !isPair(wCode)).collect(Collectors.toList());
+        List<WCode> remainedCodes = nonPairCodes.stream().filter(wCode -> !wCode.isDeleted()).collect(Collectors.toList());
+        return CollectionUtils.size(remainedCodes);
+    }
+
+
+    public static WCodeSummarise construct(List<WCode> wCodes, Boolean isRandomKill){
+        WCodeSummarise wCodeSummarise =  new WCodeSummarise()
+                .setwCodes(wCodes);
+        if(isRandomKill != null && isRandomKill){
+            wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCountRemained(wCodes))
+                    .setNonPairCodes(WCodeUtils.getNonPairCodeCountRemained(wCodes))
+                    .setRemainedCodesCount(WCodeUtils.getRemainedCodes(wCodes))
+                    .setRandomKill(isRandomKill);
+        }else {
+            wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCount(wCodes))
+                    .setNonPairCodes(WCodeUtils.getNonPairCodeCount(wCodes));
+        }
+
+        return wCodeSummarise;
     }
 
 

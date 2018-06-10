@@ -50,7 +50,7 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> permutations = WCodeUtils.transferToPermutationFiveCodes(wCodes);
         LOGGER.info("排列5码 ori_size={},size={}", CollectionUtils.size(wCodes), CollectionUtils.size(permutations));
 
-        WCodeSummarise wCodeSummarise = WCodeUtils.construct(permutations);
+        WCodeSummarise wCodeSummarise = WCodeUtils.construct(permutations, false);
         LOGGER.info("构造完成 size={}", CollectionUtils.size(w3DCodes));
         return new WyfDataResponse<>(wCodeSummarise);
     }
@@ -67,13 +67,8 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> wCodes = wCodeProcessService.sequenceProcess(wCodeReq);
         LOGGER.info("串处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
                 CollectionUtils.size(wCodes));
-        WCodeSummarise wCodeSummarise = WCodeUtils.construct(wCodes);
-        if(wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.RANDOM_FILTER.getId()){
-            wCodeSummarise.setRandomKill(true);
-            wCodeSummarise.setRemainedCodesCount(WCodeUtils.getRemainedCodes(wCodes));
-        }
-
-        return new WyfDataResponse<>(wCodeSummarise);
+        Boolean isRandomKill = wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.RANDOM_FILTER.getId();
+        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, isRandomKill));
     }
 
 
@@ -89,7 +84,7 @@ public class KylinPermutationFiveMethodApi {
         LOGGER.info("位处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
                 CollectionUtils.size(wCodes));
 
-        return new WyfDataResponse<>(WCodeUtils.construct(wCodes));
+        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, false));
     }
 
 
