@@ -22,6 +22,9 @@ public class WelfareCode implements Serializable{
     private List<W3DCode> w3DCodes;
     private List<String> codes;
     private Integer pairCount;
+    private Integer nonDeletedPairCount;
+    private Boolean randomKilled;
+    private Integer randomKilledCount;
 
     public CodeTypeEnum getCodeTypeEnum() {
         return codeTypeEnum;
@@ -63,16 +66,50 @@ public class WelfareCode implements Serializable{
         this.pairCount = pairCount;
     }
 
+    public Integer getNonDeletedPairCount() {
+        return nonDeletedPairCount;
+    }
+
+    public WelfareCode setNonDeletedPairCount(Integer nonDeletedPairCount) {
+        this.nonDeletedPairCount = nonDeletedPairCount;
+        return this;
+    }
+
+    public Boolean getRandomKilled() {
+        return randomKilled;
+    }
+
+    public WelfareCode setRandomKilled(Boolean randomKilled) {
+        this.randomKilled = randomKilled;
+        return this;
+    }
+
+    public Integer getRandomKilledCount() {
+        return randomKilledCount;
+    }
+
+    public WelfareCode setRandomKilledCount(Integer randomKilledCount) {
+        this.randomKilledCount = randomKilledCount;
+        return this;
+    }
+
     public WelfareCode() {
+        this.randomKilled = false;
+        this.nonDeletedPairCount = 0;
+        this.randomKilledCount = 0;
     }
 
     public WelfareCode(WelfareCode code) {
         if(code == null){
             return;
         }
+
         this.setCodeTypeEnum(code.getCodeTypeEnum());
         this.setCodeTypeId(code.getCodeTypeId());
         this.setPairCount(code.getPairCount());
+        this.setNonDeletedPairCount(code.getNonDeletedPairCount());
+        this.setRandomKilled(code.getRandomKilled());
+        this.setRandomKilledCount(code.getRandomKilledCount());
         if(!CollectionUtils.isEmpty(code.getW3DCodes())){
             List<W3DCode> w3DCodes = new ArrayList<>();
             code.getW3DCodes().forEach(o ->{
@@ -129,6 +166,8 @@ public class WelfareCode implements Serializable{
 
         this.setCodes(w3DStrings);
         this.setPairCount(CollectionUtils.size(TransferUtil.getPairCodes(this.getW3DCodes())));
+
+        this.setRandomKilledCount(TransferUtil.getDeletedCodeCount(this.getW3DCodes()));
 
         return this;
     }

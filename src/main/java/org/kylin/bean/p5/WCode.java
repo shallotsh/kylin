@@ -3,13 +3,15 @@ package org.kylin.bean.p5;
 
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
+import org.kylin.algorithm.RandomKill;
+
 import java.util.*;
 
 /**
  * @author huangyawu
  * @date 2017/6/30 上午1:42.
  */
-public class WCode implements Cloneable,Comparable{
+public class WCode implements Cloneable,Comparable,RandomKill{
     private List<Integer> codes;
     private int dim;
     private int freq;
@@ -259,5 +261,21 @@ public class WCode implements Cloneable,Comparable{
             }
         }
         return 0;
+    }
+
+
+    @Override
+    public int getRandomKillCount() {
+        return 0;
+    }
+
+    @Override
+    public void setBeDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @Override
+    public boolean isBeDeleted() {
+        return deleted;
     }
 }

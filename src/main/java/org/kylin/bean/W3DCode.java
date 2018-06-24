@@ -5,17 +5,20 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.Set;
+
+import org.kylin.algorithm.RandomKill;
 import org.kylin.constant.BitConstant;
 
 /**
  * @author huangyawu
  * @date 2017/6/30 上午1:42.
  */
-public class W3DCode implements Cloneable{
+public class W3DCode implements RandomKill,Cloneable{
     private Integer[] codes = new Integer[3];
     private int freq;
     private int  sumTail;
     private int classify;
+    private boolean deleted;
 
     public W3DCode() {
     }
@@ -68,6 +71,30 @@ public class W3DCode implements Cloneable{
 
     public void addFreq(int count){
         this.freq += count;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public W3DCode setDeleted(boolean deleted) {
+        this.deleted = deleted;
+        return this;
+    }
+
+    @Override
+    public int getRandomKillCount() {
+        return 0;
+    }
+
+    @Override
+    public void setBeDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    @Override
+    public boolean isBeDeleted() {
+        return this.deleted;
     }
 
     @Override

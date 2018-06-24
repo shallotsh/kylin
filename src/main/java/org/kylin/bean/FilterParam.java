@@ -33,6 +33,9 @@ public class FilterParam {
 
     private WelfareCode welfareCode;
 
+    private Integer randomKillCount;
+    private Boolean randomKilled;
+
     public String getSumValue() {
         return sumValue;
     }
@@ -214,6 +217,24 @@ public class FilterParam {
         this.welfareCode = welfareCode;
     }
 
+    public Integer getRandomKillCount() {
+        return randomKillCount;
+    }
+
+    public FilterParam setRandomKillCount(Integer randomKillCount) {
+        this.randomKillCount = randomKillCount;
+        return this;
+    }
+
+    public Boolean getRandomKilled() {
+        return randomKilled;
+    }
+
+    public FilterParam setRandomKilled(Boolean randomKilled) {
+        this.randomKilled = randomKilled;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "FilterParam{" +
@@ -237,7 +258,8 @@ public class FilterParam {
                 ", isKillAllOddEven=" + isKillAllOddEven +
                 ", oddEven=" + oddEven +
                 ", freqs='" + freqs + '\'' +
-                ", welfareCode=" + welfareCode +
+                ", randomKillCount=" + randomKillCount +
+                ", randomKilled=" + randomKilled +
                 '}';
     }
 }

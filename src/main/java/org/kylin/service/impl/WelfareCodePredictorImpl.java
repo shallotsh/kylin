@@ -1,6 +1,8 @@
 package org.kylin.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.kylin.algorithm.filter.CodeFilter;
 import org.kylin.bean.FilterParam;
 import org.kylin.bean.PolyParam;
@@ -11,11 +13,11 @@ import org.kylin.constant.WelfareConfig;
 import org.kylin.service.WelfareCodePredictor;
 import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
+import org.kylin.util.WyfCollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.kylin.service.encode.WyfEncodeService;
 
 import javax.annotation.Resource;
@@ -80,9 +82,17 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
         WelfareCode welfareCode = filterParam.getWelfareCode();
         filterParam.setWelfareCode(null);
 
-        Map<String, CodeFilter> codeFilterMap = applicationContext.getBeansOfType(CodeFilter.class);
-        if(!CollectionUtils.isEmpty(codeFilterMap)){
-            codeFilterMap.forEach((k, filter) -> welfareCode.filter(filter, filterParam));
+        if(filterParam.getRandomKilled() != null && filterParam.getRandomKilled() && filterParam.getRandomKillCount() != null && filterParam.getRandomKillCount() > 0){
+            LOGGER.info("执行P3随机杀码 count={}", filterParam.getRandomKillCount());
+            WyfCollectionUtils.markRandomDeletedByCount(welfareCode.getW3DCodes(), filterParam.getRandomKillCount());
+            welfareCode.setRandomKilled(true);
+            welfareCode.setNonDeletedPairCount(CollectionUtils.size(TransferUtil.getNonDeletedPairCodes(welfareCode.getW3DCodes())));
+            TransferUtil.plusOneFreqs(welfareCode.getW3DCodes());
+        }else {
+            Map<String, CodeFilter> codeFilterMap = applicationContext.getBeansOfType(CodeFilter.class);
+            if (!MapUtils.isEmpty(codeFilterMap)) {
+                codeFilterMap.forEach((k, filter) -> welfareCode.filter(filter, filterParam));
+            }
         }
 
         welfareCode.distinct().sort(WelfareCode::freqSort).generate();

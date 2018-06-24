@@ -1,14 +1,13 @@
 package org.kylin.util;
 
-import javafx.util.Pair;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
+import org.kylin.bean.p5.WCode;
 import org.kylin.constant.CodeTypeEnum;
-import org.springframework.util.CollectionUtils;
 
-import javax.xml.bind.annotation.W3CDomHandler;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -274,6 +273,22 @@ public class TransferUtil {
         return ret;
     }
 
+
+    public static List<W3DCode> getNonDeletedPairCodes(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        List<W3DCode> ret = new ArrayList<>();
+        w3DCodes.forEach(w3DCode -> {
+            if(isPairCode(w3DCode) && !w3DCode.isBeDeleted()){
+                ret.add(w3DCode);
+            }
+        });
+
+        return ret;
+    }
+
     public static List<W3DCode> getNonPairCodes(List<W3DCode> w3DCodes){
         if(CollectionUtils.isEmpty(w3DCodes)){
             return Collections.emptyList();
@@ -287,6 +302,28 @@ public class TransferUtil {
         });
 
         return ret;
+    }
+
+    public static int getDeletedCodeCount(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return 0;
+        }
+
+        List<W3DCode> ret = w3DCodes.stream().filter(w3DCode -> w3DCode.isBeDeleted()).collect(Collectors.toList());
+
+        return CollectionUtils.size(ret);
+    }
+
+    public static void plusOneFreqs(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return;
+        }
+
+        w3DCodes.forEach(w3DCode -> {
+            if(!w3DCode.isBeDeleted()){
+                w3DCode.addFreq(1);
+            }
+        });
     }
 
     /**
@@ -324,6 +361,22 @@ public class TransferUtil {
         Collections.sort(ret, WelfareCode::freqSort);
 
         return ret;
+    }
+
+    public static int getHighestFreq(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return 0;
+        }
+
+        int freq = 0;
+        for(W3DCode code: w3DCodes){
+            if(code.getFreq() > freq){
+                freq = code.getFreq();
+            }
+        }
+
+        return freq;
+
     }
 
     /**

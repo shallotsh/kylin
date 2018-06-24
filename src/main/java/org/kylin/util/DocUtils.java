@@ -120,7 +120,10 @@ public class DocUtils {
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
-        if(welfareCode.getW3DCodes().get(0).getClassify() != 0){
+        if(welfareCode.getRandomKilled() != null && welfareCode.getRandomKilled()){
+            // 随机杀导出
+            exportRandom(doc, welfareCode);
+        }else if(welfareCode.getW3DCodes().get(0).getClassify() != 0){
             exportOneKeyStrategy(doc, welfareCode);
         }else{
             exportNormal(doc, welfareCode);
@@ -141,6 +144,52 @@ public class DocUtils {
 
         return fileName + ".docx";
     }
+
+    private static void exportRandom(XWPFDocument doc, WelfareCode welfareCode){
+        List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
+        String title = String.format("对子 %d 注", pairCodes.size());
+        exportW3DCodeRandomByType(pairCodes, doc, title);
+
+        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
+        title = String.format("非对子 %d 注", nonPairCodes.size());
+        exportW3DCodeRandomByType(nonPairCodes, doc, title);
+    }
+
+
+    private static void exportW3DCodeRandomByType(List<W3DCode> w3DCodes, XWPFDocument doc, String title){
+        if(CollectionUtils.isEmpty(w3DCodes) || doc == null){
+            return;
+        }
+        int highestFreq = TransferUtil.getHighestFreq(w3DCodes);
+
+        XWPFParagraph header = doc.createParagraph();
+        header.setVerticalAlignment(TextAlignment.TOP);
+        header.setWordWrap(true);
+        header.setAlignment(ParagraphAlignment.LEFT);
+        XWPFRun hr1 = header.createRun();
+        hr1.setText(toUTF8(title));
+        hr1.setBold(true);
+        hr1.setFontSize(20);
+        hr1.addBreak();
+
+        for(int i=2; i <= highestFreq; i++){
+            int freq = i;
+            List<W3DCode> exportRandomCodes = w3DCodes.stream().filter(w3DCode -> w3DCode.getFreq() == freq).collect(Collectors.toList());
+            String exportTitle = "频度" + freq + "(注数" + CollectionUtils.size(exportRandomCodes) + ")";
+            writeCodes(doc.createParagraph(), exportRandomCodes, exportTitle);
+        }
+
+        XWPFParagraph headerEnd = doc.createParagraph();
+        header.setVerticalAlignment(TextAlignment.TOP);
+        header.setWordWrap(true);
+        header.setAlignment(ParagraphAlignment.LEFT);
+        XWPFRun hrEnd = headerEnd.createRun();
+        hrEnd.setBold(true);
+        hrEnd.setFontSize(20);
+        hrEnd.addBreak();
+
+    }
+
 
     private static void exportNormal(XWPFDocument doc, WelfareCode welfareCode){
         List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
@@ -544,6 +593,7 @@ public class DocUtils {
             return;
         }
 
+        paragraph.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun title = paragraph.createRun();
         title.setFontSize(18);
         title.setBold(true);
@@ -557,7 +607,7 @@ public class DocUtils {
 
         XWPFRun content = paragraph.createRun();
         content.setFontSize(14);
-
+        paragraph.setAlignment(ParagraphAlignment.LEFT);
 
         for(W3DCode w3DCode : w3DCodes) {
             content.setText(w3DCode.toString() + "     ");

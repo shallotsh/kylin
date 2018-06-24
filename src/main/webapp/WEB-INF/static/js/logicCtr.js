@@ -88,7 +88,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
     }
 
     // 杀码
-    $scope.killCode = function () {
+    $scope.killCode = function (processId) {
         if(!$rootScope.isPredict){
             handleException("请先完成预测");
             return;
@@ -113,8 +113,13 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             "oddEven": $scope.wyf_all_odd_even ? 1 : 0
         };
 
+        if(processId == 14 ) {
+            args.randomKillCount = $scope.wyf_random_kill_count;
+            args.randomKilled = true;
+        }
+
         // console.log(JSON.stringify($rootScope.welfareCode, null, 2));
-        console.log(JSON.stringify(args, null ,2));
+        console.log('参数:' + JSON.stringify(args, null ,2));
         var count = $rootScope.wyfCodes.length;
 
         $http({
@@ -126,7 +131,11 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
-            $rootScope.wyfMessage = filterFormat(count, $rootScope.wyfCodes.length);
+            if(processId == 14){
+                $rootScope.wyfMessage = filterFormat(count, count - response.data.data.randomKilledCount, true, args.randomKillCount, response.data.data.nonDeletedPairCount);
+            }else {
+                $rootScope.wyfMessage = filterFormat(count, $rootScope.wyfCodes.length);
+            }
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("杀码请求失败!");
@@ -376,7 +385,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
     }
 
 
-    function handleResponse (response){
+    function handleResponse (response, processId){
         $rootScope.welfareCode=response.data.data;
         // console.log("resp:" + JSON.stringify($rootScope.welfareCode, null, 2));
         $rootScope.wyfCodes = $rootScope.welfareCode.codes;
@@ -422,6 +431,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.cache.isCache = false;
         $rootScope.cache.welfareCode = {};
         $rootScope.wyf_statistics = false;
+        $rootScope.wyf_random_kill_count = 0;
     }
 
     function deepCopy(source) {
@@ -460,8 +470,14 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         // console.log(JSON.stringify(obj, null, 2));
     }
 
-    function filterFormat(total, remainder) {
-        return "总计 " + total + " 注, 杀码 " + (total - remainder) + " 注, 余 " + remainder + " 注.";
+    function filterFormat(total, remainder, isRandomKilled, count, nonDeletedPairCount) {
+        if(isRandomKilled){
+            console.log("随机杀码");
+            var nonPairCount = remainder - nonDeletedPairCount;
+            return "总计 " + total + " 注, 本次随机杀码 " + count + " 注, 余 " + remainder + " 注.(对子:" + nonDeletedPairCount + " 注, 非对子:" + nonPairCount+ " 注)";
+        }else {
+            return "总计 " + total + " 注, 杀码 " + (total - remainder) + " 注, 余 " + remainder + " 注.";
+        }
     }
 
     function oneKeyFormat(total){

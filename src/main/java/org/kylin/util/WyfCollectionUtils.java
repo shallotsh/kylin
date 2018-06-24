@@ -2,6 +2,7 @@ package org.kylin.util;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
+import org.kylin.algorithm.RandomKill;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.p5.WCode;
 import org.kylin.constant.CodeTypeEnum;
@@ -130,17 +131,17 @@ public class WyfCollectionUtils {
         return ret;
     }
 
-    public static<T extends WCode> void markRandomDeletedByCount(List<T> wCodes, int randomCount){
+    public static<T extends RandomKill> void markRandomDeletedByCount(List<T> wCodes, int randomCount){
 
         int count = 0;
         while(randomCount > 0 && CollectionUtils.size(wCodes) > count){
             int randomSize = wCodes.size();
             int index = new Random().nextInt(randomSize);
-            if(wCodes.get(index).isDeleted()){
+            if(wCodes.get(index).isBeDeleted()){
                 count ++;
                 continue;
             }
-            wCodes.get(index).setDeleted(true);
+            wCodes.get(index).setBeDeleted(true);
             randomCount -= 1;
         }
     }

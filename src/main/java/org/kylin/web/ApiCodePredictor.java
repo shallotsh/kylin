@@ -141,8 +141,9 @@ public class ApiCodePredictor {
 
     @ResponseBody
     @RequestMapping(value = "/codes/export",  method = RequestMethod.POST)
-    public WyfResponse exportCodes(@RequestBody WelfareCode welfareCode,
+    public WyfResponse exportCodes(@RequestBody String codeString,
                               HttpServletResponse response) throws IOException{
+        WelfareCode welfareCode = JSON.parseObject(codeString, WelfareCode.class);
         if(welfareCode == null){
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数错误");
         }
