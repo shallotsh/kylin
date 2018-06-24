@@ -50,8 +50,11 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> permutations = WCodeUtils.transferToPermutationFiveCodes(wCodes);
         LOGGER.info("排列5码 ori_size={},size={}", CollectionUtils.size(wCodes), CollectionUtils.size(permutations));
 
-        WCodeSummarise wCodeSummarise = WCodeUtils.construct(permutations, false);
-        LOGGER.info("构造完成 size={}", CollectionUtils.size(w3DCodes));
+        // 过滤掉和值小于10的预测码
+        List<WCode> ret = WCodeUtils.filterLowSumCodes(permutations);
+
+        WCodeSummarise wCodeSummarise = WCodeUtils.construct(ret, false);
+        LOGGER.info("构造完成 size={}", CollectionUtils.size(ret));
         return new WyfDataResponse<>(wCodeSummarise);
     }
 

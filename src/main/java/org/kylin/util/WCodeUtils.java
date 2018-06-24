@@ -74,6 +74,18 @@ public class WCodeUtils {
         return permutationFiveCodes;
     }
 
+
+    public static List<WCode> filterLowSumCodes(List<WCode> wCodes){
+        if(CollectionUtils.isEmpty(wCodes) || !validateCodes(wCodes)){
+            return Collections.emptyList();
+        }
+
+        List<WCode> ret = wCodes.stream().filter(wCode -> wCode.sum() > 10).collect(Collectors.toList());
+
+        return ret;
+
+    }
+
     public static boolean isAllEvenOrOdd(WCode wCode){
         if(wCode == null || CollectionUtils.isEmpty(wCode.getCodes())){
             return false;
