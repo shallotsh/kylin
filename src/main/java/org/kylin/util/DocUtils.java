@@ -148,11 +148,13 @@ public class DocUtils {
     private static void exportRandom(XWPFDocument doc, WelfareCode welfareCode){
         List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
         String title = String.format("对子 %d 注", pairCodes.size());
-        exportW3DCodeRandomByType(pairCodes, doc, title);
+//        exportW3DCodeRandomByType(pairCodes, doc, title);
+        writeCodes(doc.createParagraph(), pairCodes, title);
 
         List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
         title = String.format("非对子 %d 注", nonPairCodes.size());
-        exportW3DCodeRandomByType(nonPairCodes, doc, title);
+//        exportW3DCodeRandomByType(nonPairCodes, doc, title);
+        writeCodes(doc.createParagraph(), nonPairCodes, title);
     }
 
 
@@ -175,8 +177,8 @@ public class DocUtils {
         for(int i=2; i <= highestFreq; i++){
             int freq = i;
             List<W3DCode> exportRandomCodes = w3DCodes.stream().filter(w3DCode -> w3DCode.getFreq() == freq).collect(Collectors.toList());
-            String exportTitle = "频度" + freq + "(注数" + CollectionUtils.size(exportRandomCodes) + ")";
-            writeCodes(doc.createParagraph(), exportRandomCodes, exportTitle);
+//            String exportTitle = "频度" + freq + "(注数" + CollectionUtils.size(exportRandomCodes) + ")";
+            writeCodes(doc.createParagraph(), exportRandomCodes, null);
         }
 
         XWPFParagraph headerEnd = doc.createParagraph();
@@ -593,12 +595,14 @@ public class DocUtils {
             return;
         }
 
-        paragraph.setAlignment(ParagraphAlignment.LEFT);
-        XWPFRun title = paragraph.createRun();
-        title.setFontSize(18);
-        title.setBold(true);
-        title.setText(titleString);
-        title.addBreak();
+        if(StringUtils.isNotBlank(titleString)) {
+            paragraph.setAlignment(ParagraphAlignment.LEFT);
+            XWPFRun title = paragraph.createRun();
+            title.setFontSize(18);
+            title.setBold(true);
+            title.setText(titleString);
+            title.addBreak();
+        }
 
         XWPFRun hr = paragraph.createRun();
         hr.setFontSize(10);
