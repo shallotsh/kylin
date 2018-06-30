@@ -2,24 +2,18 @@ package org.kylin.util;
 
 
 import java.io.*;
-import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import freemarker.template.utility.StringUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.poi.xwpf.usermodel.Borders;
-import org.apache.poi.xwpf.usermodel.BreakClear;
-import org.apache.poi.xwpf.usermodel.BreakType;
-import org.apache.poi.xwpf.usermodel.LineSpacingRule;
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.TextAlignment;
 import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
-import org.apache.poi.xwpf.usermodel.VerticalAlign;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
@@ -157,42 +151,6 @@ public class DocUtils {
         writeCodes(doc.createParagraph(), nonPairCodes, title);
     }
 
-
-    private static void exportW3DCodeRandomByType(List<W3DCode> w3DCodes, XWPFDocument doc, String title){
-        if(CollectionUtils.isEmpty(w3DCodes) || doc == null){
-            return;
-        }
-        int highestFreq = TransferUtil.getHighestFreq(w3DCodes);
-
-        XWPFParagraph header = doc.createParagraph();
-        header.setVerticalAlignment(TextAlignment.TOP);
-        header.setWordWrap(true);
-        header.setAlignment(ParagraphAlignment.LEFT);
-        XWPFRun hr1 = header.createRun();
-        hr1.setText(toUTF8(title));
-        hr1.setBold(true);
-        hr1.setFontSize(20);
-        hr1.addBreak();
-
-        for(int i=2; i <= highestFreq; i++){
-            int freq = i;
-            List<W3DCode> exportRandomCodes = w3DCodes.stream().filter(w3DCode -> w3DCode.getFreq() == freq).collect(Collectors.toList());
-//            String exportTitle = "频度" + freq + "(注数" + CollectionUtils.size(exportRandomCodes) + ")";
-            writeCodes(doc.createParagraph(), exportRandomCodes, null);
-        }
-
-        XWPFParagraph headerEnd = doc.createParagraph();
-        header.setVerticalAlignment(TextAlignment.TOP);
-        header.setWordWrap(true);
-        header.setAlignment(ParagraphAlignment.LEFT);
-        XWPFRun hrEnd = headerEnd.createRun();
-        hrEnd.setBold(true);
-        hrEnd.setFontSize(20);
-        hrEnd.addBreak();
-
-    }
-
-
     private static void exportNormal(XWPFDocument doc, WelfareCode welfareCode){
         List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
         List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(w3DCodes);
@@ -249,17 +207,9 @@ public class DocUtils {
     private static void exportOneKeyStrategy(XWPFDocument doc, WelfareCode welfareCode){
         List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
 
-//        List<W3DCode> pairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
-//        String title = String.format("对子不重叠部分 %d 注", pairCodes.size());
-//        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
-
         List<W3DCode> repeatPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.PAIR_OVERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
         String title = String.format("对子重叠部分 %d 注", CollectionUtils.size(repeatPairCodes));
         writeCodes(doc.createParagraph(), repeatPairCodes, toUTF8(title));
-
-//        List<W3DCode> nonPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.NON_PAIR_UNDERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
-//        title = String.format("非对子不重叠共计 %d 注", nonPairCodes.size());
-//        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
 
         List<W3DCode> repeatNonPairCodes = w3DCodes.stream().filter(w3DCode -> ClassifyEnum.NON_PAIR_OVERLAP.getIndex() == w3DCode.getClassify()).collect(Collectors.toList());
         title = String.format("非对子重叠部分 %d 注", CollectionUtils.size(repeatNonPairCodes));
@@ -385,7 +335,7 @@ public class DocUtils {
             int freq = i;
             List<WCode> exportRandomCodes = wCodes.stream().filter(wCode -> wCode.getFreq() == freq).collect(Collectors.toList());
             String exportTitle = "频度" + freq + "(注数" + CollectionUtils.size(exportRandomCodes) + ")";
-            exportWCodes(doc, exportRandomCodes, exportTitle);
+            exportWCodes(doc, exportRandomCodes, exportTitle, null);
         }
 
         XWPFParagraph headerEnd = doc.createParagraph();
@@ -415,41 +365,43 @@ public class DocUtils {
         List<WCode> nonPairRandFiveCodes = WyfCollectionUtils.getRandomList(nonPairCodes, 5);
         List<WCode> nonPairRand200Codes = WyfCollectionUtils.getRandomList(nonPairCodes, customRandomCount);
 
+        String separator = "※※※";
+
         if(!CollectionUtils.isEmpty(nonPairRandomTenCodes)){
             Collections.sort(nonPairRandomTenCodes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRandomTenCodes.size());
-            exportWCodes(doc, nonPairRandomTenCodes, titleString);
+            exportWCodes(doc, nonPairRandomTenCodes, titleString, null);
         }
 
         if(!CollectionUtils.isEmpty(nonPairRandFiveCodes)){
             Collections.sort(nonPairRandFiveCodes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRandFiveCodes.size());
-            exportWCodes(doc, nonPairRandFiveCodes, titleString);
+            exportWCodes(doc, nonPairRandFiveCodes, titleString, null);
         }
 
 
         if(!CollectionUtils.isEmpty(nonPairRand200Codes) && nonPairRand200Codes.size() < CollectionUtils.size(nonPairCodes)){
             Collections.sort(nonPairRand200Codes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand200Codes.size());
-            exportWCodes(doc, nonPairRand200Codes, titleString);
+            exportWCodes(doc, nonPairRand200Codes, titleString, null);
         }
 
         List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(pairCodes)){
             Collections.sort(pairCodes);
             String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
-            exportWCodes(doc, pairCodes, titleString);
+            exportWCodes(doc, pairCodes, titleString, separator);
         }
 
         if(!CollectionUtils.isEmpty(nonPairCodes)){
             Collections.sort(nonPairCodes);
             String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
-            exportWCodes(doc, nonPairCodes, titleString);
+            exportWCodes(doc, nonPairCodes, titleString, separator);
         }
     }
 
 
-    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString){
+    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString, String separator){
 
         if(CollectionUtils.isEmpty(wCodes)){
             return;
@@ -473,8 +425,18 @@ public class DocUtils {
         XWPFRun content = paragraph.createRun();
         content.setFontSize(14);
 
+        boolean hasSeparotor = StringUtils.isNotBlank(separator);
+        if(hasSeparotor){
+            wCodes.sort(Comparator.comparing(WCode::sum));
+        }
 
+        int preSum = wCodes.get(0).sum();
         for(WCode w3DCode : wCodes) {
+            int currentSum = w3DCode.sum();
+            if(hasSeparotor && currentSum != preSum){
+                content.setText("(" + preSum + ")" + separator + "(" + currentSum + ")     ");
+                preSum = currentSum;
+            }
             content.setText(w3DCode.getString() + "     ");
         }
 
@@ -485,47 +447,6 @@ public class DocUtils {
         sep.setTextPosition(50);
     }
 
-
-    private static void exportWCodesArray(XWPFDocument doc, List<List<WCode>> wCodes, String titleString){
-
-        if(CollectionUtils.isEmpty(wCodes)){
-            return;
-        }
-
-        XWPFParagraph paragraph = doc.createParagraph();
-        if(!StringUtils.isBlank(titleString)){
-            XWPFRun title = paragraph.createRun();
-            title.setFontSize(18);
-            title.setBold(true);
-            title.setText(toUTF8(titleString));
-            title.addBreak();
-        }
-
-        XWPFRun hr = paragraph.createRun();
-        hr.setFontSize(10);
-        hr.setText("----------------------------------------");
-        hr.addBreak();
-
-        XWPFRun content = paragraph.createRun();
-        content.setFontSize(14);
-
-
-        for(int i=0; i < wCodes.size(); i++) {
-            List<WCode> wCodeList = wCodes.get(i);
-            Collections.sort(wCodeList);
-            content.setText(toUTF8("第 " + (i+1) + " 组: "));
-            for (WCode w3DCode : wCodeList) {
-                content.setText(w3DCode.getString() + "     ");
-            }
-            content.addBreak();
-        }
-
-        content.addBreak();
-        content.setTextPosition(20);
-
-        XWPFRun sep = paragraph.createRun();
-        sep.setTextPosition(50);
-    }
 
     public static String saveWCodesHalf(WCodeReq wCodeReq) throws IOException {
         if(wCodeReq == null || CollectionUtils.isEmpty(wCodeReq.getwCodes())){
@@ -568,7 +489,7 @@ public class DocUtils {
         if(!CollectionUtils.isEmpty(halfPageCodes)){
             Collections.sort(halfPageCodes);
             String titleString = String.format("排列5码·半页码(非对子 %d 注)", halfPageCodes.size());
-            exportWCodes(doc, halfPageCodes, titleString);
+            exportWCodes(doc, halfPageCodes, titleString, null);
         }
 
         // 保存
