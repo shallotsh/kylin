@@ -3,6 +3,7 @@ package org.kylin.util;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
 import org.kylin.bean.p5.WCode;
@@ -16,6 +17,25 @@ import java.util.stream.Collectors;
  * @date 2017/7/2 下午4:18.
  */
 public class TransferUtil {
+
+    public static Set<Integer> parseSet(String seq){
+        if(StringUtils.isBlank(seq)){
+            return Collections.emptySet();
+        }
+
+        String[] strArray = seq.split("#|$|@|,|/| ");
+        Set<Integer> sets = new HashSet<>();
+        for(String e : strArray){
+            if(StringUtils.isNumeric(e)){
+                Integer sum = NumberUtils.toInt(e, 0);
+                if("0".equals(e) || sum != 0){
+                    sets.add(sum);
+                }
+            }
+        }
+
+        return sets;
+    }
 
     public static List<Set<Integer>> parseList(String seq){
         if(StringUtils.isBlank(seq) || seq.length() < 2){

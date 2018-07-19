@@ -40,6 +40,8 @@ public class StrategyFactory {
                 return new SumTailProcessor();
             case RANDOM_FILTER:
                 return new RandomProcessor();
+            case SUM_FILTER:
+                return new SumProcessor();
                 default:
                     return null;
         }
