@@ -83,11 +83,6 @@ public class W3DCode implements RandomKill,Cloneable{
     }
 
     @Override
-    public int getRandomKillCount() {
-        return 0;
-    }
-
-    @Override
     public void setBeDeleted(boolean deleted) {
         this.deleted = deleted;
     }

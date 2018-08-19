@@ -1,6 +1,7 @@
 package org.kylin.util;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.p5.WCode;
@@ -340,6 +341,26 @@ public class WCodeUtils {
         List<WCode> remainedCodes = wCodes.stream().filter(wCode -> !wCode.isDeleted()).collect(Collectors.toList());
 
         return CollectionUtils.size(remainedCodes);
+    }
+
+
+    /**
+     *  P5 前三位与胆码比较，若有一位包含在胆码中，则返回true
+     * @param wCode             P5码
+     * @param boldCodes         胆码
+     * @return
+     */
+    public static boolean containsBoldCode(WCode wCode, Set<Integer> boldCodes){
+
+        if(wCode == null || CollectionUtils.size(wCode.getCodes()) < 3){
+            return false;
+        }
+
+        Set<Integer> codes = new HashSet<>(wCode.getCodes().subList(0,3));
+
+        Set<Integer> diff = Sets.difference(codes, boldCodes);
+        
+        return CollectionUtils.size(codes) == CollectionUtils.size(diff);
     }
 
 }

@@ -12,6 +12,9 @@ import java.util.*;
  * @date 2017/6/30 上午1:42.
  */
 public class WCode implements Cloneable,Comparable,RandomKill{
+    /**
+     * P5码容器，位顺序 万(0)千(1)百(2)十(3)个(4)
+     */
     private List<Integer> codes;
     private int dim;
     private int freq;
@@ -260,12 +263,6 @@ public class WCode implements Cloneable,Comparable,RandomKill{
                 return -1;
             }
         }
-        return 0;
-    }
-
-
-    @Override
-    public int getRandomKillCount() {
         return 0;
     }
 

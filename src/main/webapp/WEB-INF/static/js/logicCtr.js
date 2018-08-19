@@ -432,6 +432,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.cache.welfareCode = {};
         $rootScope.wyf_statistics = false;
         $rootScope.wyf_random_kill_count = 0;
+        $rootScope.wyf_sum_tail_increase_freq = undefined;
     }
 
     function deepCopy(source) {

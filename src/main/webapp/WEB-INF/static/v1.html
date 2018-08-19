@@ -286,12 +286,20 @@
 
                 <hr/>
                 <div class="row">
-                    <div class="col-sm-4 col-md-4">
+                    <div class="col-sm-3 col-md-3">
                             <input type="number" class="form-control" ng-model="wyf_random_kill_count" id="wyf_random_kill"
                                    placeholder="随机杀注数">
                     </div>
-                    <div class="col-sm-4 col-md-4">
+                    <div class="col-sm-3 col-md-3">
                         <button type="button" class="btn btn-primary" ng-click="killCode(14)" ng-model="do_random_kill">随机杀码</button>
+                    </div>
+
+                    <div class="col-sm-3 col-md-3">
+                        <input type="text" class="form-control" ng-model="wyf_sum_tail_increase_freq" id="wyf_sum_increase_freq"
+                               placeholder="和尾增频">
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-primary" ng-click="killCode(15)" ng-model="do_sum_increase_freq">和增频</button>
                     </div>
                 </div>
 
