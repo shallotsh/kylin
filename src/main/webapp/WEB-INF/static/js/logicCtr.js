@@ -316,6 +316,33 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         });
     }
 
+    $scope.increaseFreqBySumTail = function () {
+        if(!$rootScope.isPredict){
+            handleException("请先完成预测");
+            return;
+        }
+
+        var data = {
+            condition: $rootScope.wyf_sum_tail_increase_freq,
+            welfareCode: deepCopy($rootScope.welfareCode)
+        };
+
+        $http({
+            method:"POST",
+            url:"/api/welfare/codes/sum/tail/freq",
+            data: JSON.stringify(data),
+            headers:{
+                "Content-Type": "application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleResponse(response);
+            $rootScope.wyfMessage = highFreqFormat($rootScope.codesCount);
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("和增频 杀码失败!");
+        });
+    }
+
 
     $scope.oneKey = function () {
         var paramArray = [];

@@ -12,6 +12,7 @@ public class WCodeReq {
     private Integer exportType;
     private String p3Code;
     private String randomCount;
+    private Boolean freqSeted;
     private boolean randomKill;
 
     public Integer getFilterType() {
@@ -86,6 +87,15 @@ public class WCodeReq {
 
     public WCodeReq setP3Code(String p3Code) {
         this.p3Code = p3Code;
+        return this;
+    }
+
+    public Boolean getFreqSeted() {
+        return freqSeted;
+    }
+
+    public WCodeReq setFreqSeted(Boolean freqSeted) {
+        this.freqSeted = freqSeted;
         return this;
     }
 

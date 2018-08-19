@@ -114,6 +114,21 @@ public class WCode implements Cloneable,Comparable,RandomKill{
         return this;
     }
 
+    public String getString(Boolean withFreq){
+
+        if(!withFreq){
+            return getString();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[" + getFreq() + "]");
+        int size = CollectionUtils.size(codes);
+        for(int i=0; i<size; i++){
+            sb.append(codes.get(i));
+        }
+        return sb.toString();
+    }
+
     public String getString(){
         StringBuilder sb = new StringBuilder();
         int size = CollectionUtils.size(codes);

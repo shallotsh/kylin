@@ -5,8 +5,10 @@ import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.p5.WCode;
+import org.kylin.bean.p5.WCodeReq;
 import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.constant.BitConstant;
+import org.kylin.constant.FilterStrategyEnum;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -257,19 +259,26 @@ public class WCodeUtils {
     }
 
 
-    public static WCodeSummarise construct(List<WCode> wCodes, Boolean isRandomKill){
+    public static WCodeSummarise construct(List<WCode> wCodes, WCodeReq wCodeReq){
         WCodeSummarise wCodeSummarise =  new WCodeSummarise()
                 .setwCodes(wCodes);
-        if(isRandomKill != null && isRandomKill){
-            wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCountRemained(wCodes))
-                    .setNonPairCodes(WCodeUtils.getNonPairCodeCountRemained(wCodes))
-                    .setRemainedCodesCount(WCodeUtils.getRemainedCodes(wCodes))
-                    .setRandomKill(isRandomKill);
-        }else {
-            wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCount(wCodes))
-                    .setNonPairCodes(WCodeUtils.getNonPairCodeCount(wCodes));
-        }
 
+        if(wCodeReq != null) {
+            Boolean isRandomKill = wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.RANDOM_FILTER.getId();
+
+            if (isRandomKill != null && isRandomKill) {
+                wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCountRemained(wCodes))
+                        .setNonPairCodes(WCodeUtils.getNonPairCodeCountRemained(wCodes))
+                        .setRemainedCodesCount(WCodeUtils.getRemainedCodes(wCodes))
+                        .setRandomKill(isRandomKill);
+            } else {
+                wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCount(wCodes))
+                        .setNonPairCodes(WCodeUtils.getNonPairCodeCount(wCodes));
+            }
+
+            Boolean isFreqSeted = wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.BOLD_INCREASE_FREQ.getId();
+            wCodeSummarise.setFreqSeted(isFreqSeted);
+        }
         return wCodeSummarise;
     }
 

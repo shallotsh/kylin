@@ -96,6 +96,16 @@ public class ApiCodePredictor {
     }
 
     @ResponseBody
+    @RequestMapping(value = "/codes/sum/tail/freq",  method = RequestMethod.POST)
+    public WyfResponse increaseFreqBySumTail(@RequestBody P3Param p3Param){
+        LOGGER.info("P3和增频 p3Param={}", p3Param);
+        WelfareCode code = welfareCodePredictor.increaseFreqBySumTail(p3Param);
+
+        return new WyfDataResponse<>(code);
+    }
+
+
+    @ResponseBody
     @RequestMapping(value = "/codes/minus",  method = RequestMethod.POST)
     public WyfResponse minus(@RequestBody PolyParam polyParam){
 

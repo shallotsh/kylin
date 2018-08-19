@@ -335,7 +335,7 @@ public class DocUtils {
             int freq = i;
             List<WCode> exportRandomCodes = wCodes.stream().filter(wCode -> wCode.getFreq() == freq).collect(Collectors.toList());
             String exportTitle = "频度" + freq + "(注数" + CollectionUtils.size(exportRandomCodes) + ")";
-            exportWCodes(doc, exportRandomCodes, exportTitle, null);
+            exportWCodes(doc, exportRandomCodes, exportTitle, null, false);
         }
 
         XWPFParagraph headerEnd = doc.createParagraph();
@@ -370,38 +370,38 @@ public class DocUtils {
         if(!CollectionUtils.isEmpty(nonPairRandomTenCodes)){
             Collections.sort(nonPairRandomTenCodes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRandomTenCodes.size());
-            exportWCodes(doc, nonPairRandomTenCodes, titleString, null);
+            exportWCodes(doc, nonPairRandomTenCodes, titleString, null, wCodeReq.getFreqSeted());
         }
 
         if(!CollectionUtils.isEmpty(nonPairRandFiveCodes)){
             Collections.sort(nonPairRandFiveCodes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRandFiveCodes.size());
-            exportWCodes(doc, nonPairRandFiveCodes, titleString, null);
+            exportWCodes(doc, nonPairRandFiveCodes, titleString, null, wCodeReq.getFreqSeted());
         }
 
 
         if(!CollectionUtils.isEmpty(nonPairRand200Codes) && nonPairRand200Codes.size() < CollectionUtils.size(nonPairCodes)){
             Collections.sort(nonPairRand200Codes);
             String titleString = String.format("排列5码随机·非对子( %d 注)", nonPairRand200Codes.size());
-            exportWCodes(doc, nonPairRand200Codes, titleString, null);
+            exportWCodes(doc, nonPairRand200Codes, titleString, null, wCodeReq.getFreqSeted());
         }
 
         List<WCode> pairCodes = WCodeUtils.filterPairCodes(wCodeReq.getwCodes());
         if(!CollectionUtils.isEmpty(pairCodes)){
             Collections.sort(pairCodes);
             String titleString = String.format("排列5码·对子( %d 注)", pairCodes.size());
-            exportWCodes(doc, pairCodes, titleString, separator);
+            exportWCodes(doc, pairCodes, titleString, separator, wCodeReq.getFreqSeted());
         }
 
         if(!CollectionUtils.isEmpty(nonPairCodes)){
             Collections.sort(nonPairCodes);
             String titleString = String.format("排列5码·非对子( %d 注)", nonPairCodes.size());
-            exportWCodes(doc, nonPairCodes, titleString, separator);
+            exportWCodes(doc, nonPairCodes, titleString, separator, wCodeReq.getFreqSeted());
         }
     }
 
 
-    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString, String separator){
+    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString, String separator, Boolean freqSeted){
 
         if(CollectionUtils.isEmpty(wCodes)){
             return;
@@ -431,13 +431,19 @@ public class DocUtils {
         }
 
         int preSum = wCodes.get(0).sum();
+        int freq = 0;
         for(WCode w3DCode : wCodes) {
             int currentSum = w3DCode.sum();
             if(hasSeparotor && currentSum != preSum){
                 content.setText("(" + preSum + ")" + separator + "(" + currentSum + ")     ");
                 preSum = currentSum;
             }
-            content.setText(w3DCode.getString() + "     ");
+            if(w3DCode.getFreq() != freq) {
+                freq = w3DCode.getFreq();
+                content.setText(w3DCode.getString(freqSeted) + "     ");
+            }else{
+                content.setText(w3DCode.getString() + "     ");
+            }
         }
 
         content.addBreak();
@@ -489,7 +495,7 @@ public class DocUtils {
         if(!CollectionUtils.isEmpty(halfPageCodes)){
             Collections.sort(halfPageCodes);
             String titleString = String.format("排列5码·半页码(非对子 %d 注)", halfPageCodes.size());
-            exportWCodes(doc, halfPageCodes, titleString, null);
+            exportWCodes(doc, halfPageCodes, titleString, null, false);
         }
 
         // 保存

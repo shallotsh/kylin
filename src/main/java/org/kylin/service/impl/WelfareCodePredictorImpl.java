@@ -3,11 +3,9 @@ package org.kylin.service.impl;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.kylin.algorithm.filter.CodeFilter;
-import org.kylin.bean.FilterParam;
-import org.kylin.bean.PolyParam;
-import org.kylin.bean.W3DCode;
-import org.kylin.bean.WelfareCode;
+import org.kylin.bean.*;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.constant.WelfareConfig;
 import org.kylin.service.WelfareCodePredictor;
@@ -21,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.kylin.service.encode.WyfEncodeService;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -142,5 +141,35 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
         welfareCode.sort(WelfareCode::bitSort).generate();
 
         return welfareCode;
+    }
+
+    @Override
+    public WelfareCode increaseFreqBySumTail(P3Param p3Param) {
+        WelfareCode fCode = p3Param.getWelfareCode();
+        if(fCode == null){
+            return null;
+        }
+
+        String condition = p3Param.getCondition();
+        Set<Integer> sumTails = TransferUtil.toIntegerSet(condition);
+        if(CollectionUtils.isEmpty(sumTails)){
+            return p3Param.getWelfareCode();
+        }
+
+        List<W3DCode> w3DCodes = fCode.getW3DCodes();
+
+        // 和值尾增频杀码开始
+        Iterator<W3DCode> iterator = w3DCodes.iterator();
+        while(iterator.hasNext()){
+            W3DCode w3DCode = iterator.next();
+            if(!sumTails.contains(w3DCode.getSumTail())){
+                iterator.remove();
+            }
+        }
+
+        fCode.setW3DCodes(w3DCodes);
+        fCode.sort(WelfareCode::bitSort).generate();
+
+        return fCode;
     }
 }

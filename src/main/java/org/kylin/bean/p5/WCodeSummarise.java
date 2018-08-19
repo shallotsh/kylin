@@ -9,6 +9,7 @@ public class WCodeSummarise {
     private Integer nonPairCodes;
     private boolean isRandomKill;
     private Integer remainedCodesCount;
+    private boolean freqSeted;
 
     public List<WCode> getRandomKillCodes() {
         return randomKillCodes;
@@ -61,6 +62,15 @@ public class WCodeSummarise {
 
     public WCodeSummarise setRemainedCodesCount(Integer remainedCodesCount) {
         this.remainedCodesCount = remainedCodesCount;
+        return this;
+    }
+
+    public boolean isFreqSeted() {
+        return freqSeted;
+    }
+
+    public WCodeSummarise setFreqSeted(boolean freqSeted) {
+        this.freqSeted = freqSeted;
         return this;
     }
 }

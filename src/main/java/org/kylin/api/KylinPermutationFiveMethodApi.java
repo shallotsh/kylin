@@ -53,7 +53,7 @@ public class KylinPermutationFiveMethodApi {
         // 过滤掉和值小于10的预测码
         List<WCode> ret = WCodeUtils.filterLowSumCodes(permutations);
 
-        WCodeSummarise wCodeSummarise = WCodeUtils.construct(ret, false);
+        WCodeSummarise wCodeSummarise = WCodeUtils.construct(ret, null);
         LOGGER.info("构造完成 size={}", CollectionUtils.size(ret));
         return new WyfDataResponse<>(wCodeSummarise);
     }
@@ -70,8 +70,7 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> wCodes = wCodeProcessService.sequenceProcess(wCodeReq);
         LOGGER.info("串处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
                 CollectionUtils.size(wCodes));
-        Boolean isRandomKill = wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.RANDOM_FILTER.getId();
-        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, isRandomKill));
+        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, wCodeReq));
     }
 
 
@@ -87,7 +86,7 @@ public class KylinPermutationFiveMethodApi {
         LOGGER.info("位处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
                 CollectionUtils.size(wCodes));
 
-        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, false));
+        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, wCodeReq));
     }
 
 

@@ -93,12 +93,16 @@ var app = new Vue({
                 this.isRandomKill = data.randomKill;
             }
 
+            if(data.freqSeted) {
+                this.freqSeted = data.freqSeted;
+            }
+
             var printCodes = [];
             for( idx in this.welfareCode){
                 code = this.welfareCode[idx];
                 // code.codes.reverse();
                 var codeString = code.codes.join("");
-                if(this.isRandomKill){
+                if(this.isRandomKill || this.freqSeted){
                     codeString = '[' + code.freq + ']' + codeString;
                 }
                 printCodes.push(codeString);
@@ -339,7 +343,8 @@ var app = new Vue({
             var args = {
                 wCodes: this.welfareCode ,
                 randomCount: this.boldCodeFive,
-                randomKill: this.isRandomKill
+                randomKill: this.isRandomKill,
+                freqSeted : this.freqSeted
             };
 
             console.log('canshu:' + JSON.stringify(args, null, 2));

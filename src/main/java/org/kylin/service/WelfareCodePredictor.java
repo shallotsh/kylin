@@ -1,6 +1,7 @@
 package org.kylin.service;
 
 import org.kylin.bean.FilterParam;
+import org.kylin.bean.P3Param;
 import org.kylin.bean.PolyParam;
 import org.kylin.bean.WelfareCode;
 import org.kylin.constant.CodeTypeEnum;
@@ -49,4 +50,13 @@ public interface WelfareCodePredictor {
      * @return
      */
     WelfareCode highFreq(WelfareCode welfareCode);
+
+
+    /**
+     *  和值尾增频一
+     *
+     * @param p3Param
+     * @return
+     */
+    WelfareCode increaseFreqBySumTail(P3Param p3Param);
 }
