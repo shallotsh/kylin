@@ -184,6 +184,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $scope.wyf_bit_h = undefined;
         $scope.wyf_bit_d = undefined;
         $scope.wyf_bit_u = undefined;
+        $scope.wyf_sum_tail_increase_freq = undefined;
         init();
     }
 
@@ -323,7 +324,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         }
 
         var data = {
-            condition: $rootScope.wyf_sum_tail_increase_freq,
+            condition: $scope.wyf_sum_tail_increase_freq,
             welfareCode: deepCopy($rootScope.welfareCode)
         };
 
@@ -459,7 +460,6 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.cache.welfareCode = {};
         $rootScope.wyf_statistics = false;
         $rootScope.wyf_random_kill_count = 0;
-        $rootScope.wyf_sum_tail_increase_freq = undefined;
     }
 
     function deepCopy(source) {
