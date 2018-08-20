@@ -213,11 +213,11 @@
           <version>9.2.0.v20140526</version>
       </dependency>
 
-      <dependency>
-          <groupId>org.elasticsearch.client</groupId>
-          <artifactId>transport</artifactId>
-          <version>6.3.2</version>
-      </dependency>
+      <!--<dependency>-->
+          <!--<groupId>org.elasticsearch.client</groupId>-->
+          <!--<artifactId>transport</artifactId>-->
+          <!--<version>6.3.2</version>-->
+      <!--</dependency>-->
 
       <!-- generate code -->
       <dependency>
