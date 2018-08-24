@@ -430,20 +430,19 @@ public class DocUtils {
             wCodes.sort(Comparator.comparing(WCode::sum));
         }
 
-        int preSum = wCodes.get(0).sum();
-        int freq = 0;
+//        int freq = 0;
         for(WCode w3DCode : wCodes) {
-            int currentSum = w3DCode.sum();
-            if(hasSeparotor && currentSum != preSum){
-                content.setText("(" + preSum + ")" + separator + "(" + currentSum + ")     ");
-                preSum = currentSum;
-            }
-            if(w3DCode.getFreq() != freq) {
-                freq = w3DCode.getFreq();
+//            int currentSum = w3DCode.sum();
+//            if(hasSeparotor && currentSum != preSum){
+//                content.setText("(" + preSum + ")" + separator + "(" + currentSum + ")     ");
+//                preSum = currentSum;
+//            }
+//            if(w3DCode.getFreq() != freq) {
+//                freq = w3DCode.getFreq();
                 content.setText(w3DCode.getString(freqSeted) + "     ");
-            }else{
-                content.setText(w3DCode.getString() + "     ");
-            }
+//            }else{
+//                content.setText(w3DCode.getString() + "     ");
+//            }
         }
 
         content.addBreak();

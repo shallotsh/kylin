@@ -185,6 +185,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $scope.wyf_bit_d = undefined;
         $scope.wyf_bit_u = undefined;
         $scope.wyf_sum_tail_increase_freq = undefined;
+        $scope.wyf_bold_increase_freq = undefined;
         init();
     }
 
@@ -341,6 +342,34 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("和增频 杀码失败!");
+        });
+    }
+
+
+    $scope.increaseFreqByBoldCode = function () {
+        if(!$rootScope.isPredict){
+            handleException("请先完成预测");
+            return;
+        }
+
+        var data = {
+            condition: $scope.wyf_bold_increase_freq,
+            welfareCode: deepCopy($rootScope.welfareCode)
+        };
+
+        $http({
+            method:"POST",
+            url:"/api/welfare/codes/bold/freq",
+            data: JSON.stringify(data),
+            headers:{
+                "Content-Type": "application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleResponse(response);
+            $rootScope.wyfMessage = '胆增频';
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("胆增频 杀码失败!");
         });
     }
 

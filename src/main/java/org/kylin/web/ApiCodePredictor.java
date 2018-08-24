@@ -104,6 +104,15 @@ public class ApiCodePredictor {
         return new WyfDataResponse<>(code);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/codes/bold/freq",  method = RequestMethod.POST)
+    public WyfResponse increaseFreqByBoldCode(@RequestBody P3Param p3Param){
+        LOGGER.info("P3胆增频 p3Param={}", p3Param);
+        WelfareCode code = welfareCodePredictor.increaseFreqByBoldCode(p3Param);
+
+        return new WyfDataResponse<>(code);
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "/codes/minus",  method = RequestMethod.POST)

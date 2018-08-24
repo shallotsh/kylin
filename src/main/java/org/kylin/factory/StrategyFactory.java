@@ -44,6 +44,8 @@ public class StrategyFactory {
                 return new SumProcessor();
             case BOLD_INCREASE_FREQ:
                 return new BoldIncreaseFreqProcessor();
+            case SUM_INCREASE_FREQ:
+                return new SumTailIncreaseFreqProcessor();
                 default:
                     return null;
         }

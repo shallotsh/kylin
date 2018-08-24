@@ -276,7 +276,9 @@ public class WCodeUtils {
                         .setNonPairCodes(WCodeUtils.getNonPairCodeCount(wCodes));
             }
 
-            Boolean isFreqSeted = wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.BOLD_INCREASE_FREQ.getId();
+            Boolean isFreqSeted = wCodeReq.getFilterType() != null &&
+                    (FilterStrategyEnum.BOLD_INCREASE_FREQ.getId().equals(wCodeReq.getFilterType())
+                            || FilterStrategyEnum.SUM_INCREASE_FREQ.getId().equals(wCodeReq.getFilterType()));
             wCodeSummarise.setFreqSeted(isFreqSeted);
         }
         return wCodeSummarise;

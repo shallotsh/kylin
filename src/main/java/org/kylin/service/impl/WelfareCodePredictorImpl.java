@@ -172,4 +172,36 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
 
         return fCode;
     }
+
+    @Override
+    public WelfareCode increaseFreqByBoldCode(P3Param p3Param) {
+        WelfareCode fCode = p3Param.getWelfareCode();
+        if(fCode == null){
+            return null;
+        }
+
+        String condition = p3Param.getCondition();
+        Set<Integer> boldCodes = TransferUtil.toIntegerSet(condition);
+        if(CollectionUtils.isEmpty(boldCodes)){
+            return p3Param.getWelfareCode();
+        }
+
+        List<W3DCode> w3DCodes = fCode.getW3DCodes();
+
+        // 胆码增频杀码开始
+        Iterator<W3DCode> iterator = w3DCodes.iterator();
+        while(iterator.hasNext()){
+            W3DCode w3DCode = iterator.next();
+            if(boldCodes.contains(w3DCode.getCodes()[0])
+                    || boldCodes.contains(w3DCode.getCodes()[1])
+                    || boldCodes.contains(w3DCode.getCodes()[2])){
+                w3DCode.addFreq(1);
+            }
+        }
+
+        fCode.setW3DCodes(w3DCodes);
+        fCode.sort(WelfareCode::bitSort).generate();
+
+        return fCode;
+    }
 }

@@ -59,4 +59,13 @@ public interface WelfareCodePredictor {
      * @return
      */
     WelfareCode increaseFreqBySumTail(P3Param p3Param);
+
+
+    /**
+     * 胆增频
+     *
+     * @param p3Param
+     * @return
+     */
+    WelfareCode increaseFreqByBoldCode(P3Param p3Param);
 }

@@ -54,6 +54,8 @@ public class KylinPermutationFiveMethodApi {
         List<WCode> ret = WCodeUtils.filterLowSumCodes(permutations);
 
         WCodeSummarise wCodeSummarise = WCodeUtils.construct(ret, null);
+        wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCount(ret))
+                .setNonPairCodes(WCodeUtils.getNonPairCodeCount(ret));
         LOGGER.info("构造完成 size={}", CollectionUtils.size(ret));
         return new WyfDataResponse<>(wCodeSummarise);
     }
