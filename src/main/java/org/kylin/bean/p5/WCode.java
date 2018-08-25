@@ -39,7 +39,7 @@ public class WCode implements Cloneable,Comparable,RandomKill{
         codes.add(u);
         this.dim = 5;
         this.sumTail = sum() % 10;
-        this.freq = 1;
+        this.freq = 0;
     }
 
 
@@ -49,10 +49,10 @@ public class WCode implements Cloneable,Comparable,RandomKill{
         codes.add(d);
         codes.add(u);
         this.dim = dim;
-        this.freq = 1;
+        this.freq = 0;
         int sum = h + d + u;
         this.sumTail = sum % 10;
-        this.freq = 1;
+        this.freq = 0;
     }
 
     public WCode(int dim, int d, int u) {
@@ -61,11 +61,9 @@ public class WCode implements Cloneable,Comparable,RandomKill{
         codes.add(u);
         this.dim = 2;
 
-        this.freq = 1;
+        this.freq = 0;
 
         int sum = d + u;
-
-        this.freq = 1;
         this.sumTail = sum % 10;
     }
 

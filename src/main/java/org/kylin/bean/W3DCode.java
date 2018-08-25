@@ -27,21 +27,19 @@ public class W3DCode implements RandomKill,Cloneable{
         this.codes[0] = u;
         this.codes[1] = d;
         this.codes[2] = h;
-        this.freq = 1;
         int sum = h + d + u;
         this.sumTail = sum % 10;
-        this.freq = 1;
+        this.freq = 0;
     }
 
     public W3DCode(int d, int u) {
         this.codes[0] = u;
         this.codes[1] = d;
 
-        this.freq = 1;
+        this.freq = 0;
 
         int sum = d + u;
 
-        this.freq = 1;
         this.sumTail = sum % 10;
     }
 
