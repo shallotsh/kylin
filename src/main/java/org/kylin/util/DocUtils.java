@@ -424,11 +424,11 @@ public class DocUtils {
 
         XWPFRun content = paragraph.createRun();
         content.setFontSize(14);
-
-        boolean hasSeparotor = StringUtils.isNotBlank(separator);
-        if(hasSeparotor){
-            wCodes.sort(Comparator.comparing(WCode::sum));
-        }
+//
+//        boolean hasSeparotor = StringUtils.isNotBlank(separator);
+//        if(hasSeparotor){
+//            wCodes.sort(Comparator.comparing(WCode::sum));
+//        }
 
 //        int freq = 0;
         for(WCode w3DCode : wCodes) {
