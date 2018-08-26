@@ -40,44 +40,44 @@ public class DocUtils {
     private static final String BASE_PATH = "/var/attachment/";
 
 
-    public static void saveW3DCodes(WelfareCode welfareCode, OutputStream outputStream) throws IOException{
-        if(welfareCode == null || CollectionUtils.isEmpty(welfareCode.getW3DCodes())){
-            throw new IllegalArgumentException("参数错误");
-        }
-
-        XWPFDocument doc = new XWPFDocument();
-
-        XWPFParagraph header = doc.createParagraph();
-        header.setVerticalAlignment(TextAlignment.TOP);
-        header.setWordWrap(true);
-        header.setAlignment(ParagraphAlignment.CENTER);
-        XWPFRun hr1 = header.createRun();
-        hr1.setText(toUTF8("《我要发·518》福彩3D预测报表"));
-        hr1.setBold(true);
-        hr1.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
-        hr1.setTextPosition(20);
-        hr1.setFontSize(28);
-        hr1.addBreak();
-
-        XWPFRun hr2 = header.createRun();
-
-        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间："
-                + CommonUtils.getCurrentDateString() + " 编码方式:" + welfareCode.getCodeTypeEnum().getDesc()));
-        hr2.setTextPosition(10);
-        hr2.setFontSize(18);
-
-
-        List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
-        String title = String.format("对子共计 %d 注", pairCodes.size());
-        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
-
-        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
-        title = String.format("对子共计 %d 注", nonPairCodes.size());
-        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
-
-        doc.write(outputStream);
-
-    }
+//    public static void saveW3DCodes(WelfareCode welfareCode, OutputStream outputStream) throws IOException{
+//        if(welfareCode == null || CollectionUtils.isEmpty(welfareCode.getW3DCodes())){
+//            throw new IllegalArgumentException("参数错误");
+//        }
+//
+//        XWPFDocument doc = new XWPFDocument();
+//
+//        XWPFParagraph header = doc.createParagraph();
+//        header.setVerticalAlignment(TextAlignment.TOP);
+//        header.setWordWrap(true);
+//        header.setAlignment(ParagraphAlignment.CENTER);
+//        XWPFRun hr1 = header.createRun();
+//        hr1.setText(toUTF8("《我要发·518》福彩3D预测报表"));
+//        hr1.setBold(true);
+//        hr1.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
+//        hr1.setTextPosition(20);
+//        hr1.setFontSize(28);
+//        hr1.addBreak();
+//
+//        XWPFRun hr2 = header.createRun();
+//
+//        hr2.setText(toUTF8("共计" + welfareCode.getW3DCodes().size() + "注3D码!!!     时间："
+//                + CommonUtils.getCurrentDateString() + " 编码方式:" + welfareCode.getCodeTypeEnum().getDesc()));
+//        hr2.setTextPosition(10);
+//        hr2.setFontSize(18);
+//
+//
+//        List<W3DCode> pairCodes = TransferUtil.getPairCodes(welfareCode.getW3DCodes());
+//        String title = String.format("对子共计 %d 注", pairCodes.size());
+//        writeCodes(doc.createParagraph(), pairCodes, toUTF8(title));
+//
+//        List<W3DCode> nonPairCodes = TransferUtil.getNonPairCodes(welfareCode.getW3DCodes());
+//        title = String.format("对子共计 %d 注", nonPairCodes.size());
+//        writeCodes(doc.createParagraph(), nonPairCodes, toUTF8(title));
+//
+//        doc.write(outputStream);
+//
+//    }
 
     public static String saveW3DCodes(WelfareCode welfareCode) throws IOException{
         if(welfareCode == null || CollectionUtils.isEmpty(welfareCode.getW3DCodes())){
@@ -152,7 +152,7 @@ public class DocUtils {
     }
 
     private static void exportNormal(XWPFDocument doc, WelfareCode welfareCode){
-        List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::tailSort).generate().getW3DCodes();
+        List<W3DCode> w3DCodes = welfareCode.sort(WelfareCode::freqSort).generate().getW3DCodes();
         List<W3DCode> repeatCodes = TransferUtil.findAllRepeatW3DCodes(w3DCodes);
 
         List<W3DCode> nonRepeatCodes = Encoders.minus(w3DCodes, repeatCodes, CodeTypeEnum.DIRECT);
