@@ -369,9 +369,9 @@ public class WCodeUtils {
 
         Set<Integer> codes = new HashSet<>(wCode.getCodes().subList(0,3));
 
-        Set<Integer> diff = Sets.difference(codes, boldCodes);
+        Set<Integer> intersection = Sets.intersection(codes, boldCodes);
         
-        return CollectionUtils.size(codes) == CollectionUtils.size(diff);
+        return !CollectionUtils.isEmpty(intersection);
     }
 
 }
