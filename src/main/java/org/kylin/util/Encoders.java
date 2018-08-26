@@ -45,7 +45,7 @@ public class Encoders {
                             for(Integer e3: riddles.get(k)){
                                 W3DCode w3DCode = new W3DCode();
                                 w3DCode.setCodes(new Integer[]{e1, e2, e3});
-                                w3DCode.setFreq(1);
+                                w3DCode.setFreq(0);
                                 w3DCode.setSumTail((e1 + e2 + e3) % 10);
                                 w3DCodes.add(w3DCode);
                             }

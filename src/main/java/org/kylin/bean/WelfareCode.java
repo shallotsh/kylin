@@ -213,7 +213,7 @@ public class WelfareCode implements Serializable{
             return this;
         }
 
-        this.getW3DCodes().forEach(w3DCode -> w3DCode.setFreq(1));
+        this.getW3DCodes().forEach(w3DCode -> w3DCode.setFreq(0));
         return this;
     }
 
