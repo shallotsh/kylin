@@ -93,7 +93,7 @@
 
 .code-show {
     min-height: 450px;
-    max-height: 450px;
+    max-height: 600px;
     overflow-y: scroll;
     background: whitesmoke;
 }
