@@ -9,6 +9,7 @@ import org.kylin.bean.p5.WCodeReq;
 import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.constant.BitConstant;
 import org.kylin.constant.FilterStrategyEnum;
+import org.kylin.constant.WelfareConfig;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -373,5 +374,21 @@ public class WCodeUtils {
         
         return !CollectionUtils.isEmpty(intersection);
     }
+
+
+    public static boolean containsInHighFreqCodes(WCode wCode){
+        if(wCode == null || CollectionUtils.size(wCode.getCodes()) < 3){
+            return false;
+        }
+
+        String code = "" + wCode.getCodes().get(0) + wCode.getCodes().get(1) + wCode.getCodes().get(2);
+
+        if(WelfareConfig.hfcSets.contains(code)){
+            return true;
+        }
+
+        return false;
+    }
+
 
 }

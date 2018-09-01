@@ -311,7 +311,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
-            $rootScope.wyfMessage = highFreqFormat($rootScope.codesCount);
+            $rootScope.wyfMessage = messageFormat($rootScope.codesCount, "高频");
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("高频杀码失败!");
@@ -338,7 +338,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             }
         }).then(function success(response) {
             handleResponse(response);
-            $rootScope.wyfMessage = highFreqFormat($rootScope.codesCount);
+            $rootScope.wyfMessage = messageFormat($rootScope.codesCount, "和增频");
         }, function fail(response) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("和增频 杀码失败!");
@@ -549,8 +549,8 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         return "参与综合选码队列：" + queueCount + ", 共选出 " + total + " 注3D码.";
     }
 
-    function highFreqFormat(total){
-        return "高频杀码选出： " + total + " 注3D码.";
+    function messageFormat(total, content){
+        return content + "杀码选出： " + total + " 注3D码.";
     }
 
 });

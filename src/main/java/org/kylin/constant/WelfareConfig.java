@@ -1,5 +1,9 @@
 package org.kylin.constant;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author huangyawu
  * @date 2017/10/5 上午10:40.
@@ -38,4 +42,6 @@ public interface WelfareConfig {
             "911","915","918","920","921","922","926","927","931","934","936","937",
             "938","940","941","945","946","954","955","957","958","960","965","968",
             "969","970","975","977","980","982","985","986","987","992","998"};
+
+    Set<String> hfcSets = new HashSet<>(Arrays.asList(HFC));
 }

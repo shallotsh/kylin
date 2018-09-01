@@ -18,6 +18,7 @@ public enum FilterStrategyEnum {
     SUM_FILTER(15, "和值杀"),
     BOLD_INCREASE_FREQ(16, "胆增频"),
     SUM_INCREASE_FREQ(17, "和增频"),
+    HIGH_FREQ_FILTER(18, "高频杀码"),
     ;
     private Integer id;
     private String desc;
