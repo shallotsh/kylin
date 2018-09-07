@@ -34,7 +34,8 @@ public class SumTailIncreaseFreqProcessor implements SequenceProcessor {
         }
 
         for(WCode wCode : wCodes){
-            if(sumTailCodes.contains(wCode.getSumTail())){
+            int sumTail = wCode.getCodes().subList(0, 3).stream().reduce(0, Integer::sum) % 10;
+            if(sumTailCodes.contains(sumTail)){
                 wCode.increaseFreq();
             }
         }
