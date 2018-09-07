@@ -48,6 +48,8 @@ public class StrategyFactory {
                 return new SumTailIncreaseFreqProcessor();
             case HIGH_FREQ_FILTER:
                 return new HighFreqProcessor();
+            case FREQ_KILL_FILTER:
+                return new FreqKillProcessor();
                 default:
                     return null;
         }

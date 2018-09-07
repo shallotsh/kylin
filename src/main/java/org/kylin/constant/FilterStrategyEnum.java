@@ -19,6 +19,7 @@ public enum FilterStrategyEnum {
     BOLD_INCREASE_FREQ(16, "胆增频"),
     SUM_INCREASE_FREQ(17, "和增频"),
     HIGH_FREQ_FILTER(18, "高频杀码"),
+    FREQ_KILL_FILTER(19, "频度杀"),
     ;
     private Integer id;
     private String desc;
