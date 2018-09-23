@@ -7,6 +7,7 @@ import org.kylin.constant.BitConstant;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.util.Encoders;
 import org.kylin.util.TransferUtil;
+import org.kylin.util.WyfCollectionUtils;
 
 import java.io.Serializable;
 import java.util.*;
@@ -263,7 +264,11 @@ public class WelfareCode implements Serializable{
         }
 
         if(o1.getFreq() == o2.getFreq()){
-            return tailSort(o1, o2);
+            if(WyfCollectionUtils.compareTwoW3DCode(o1, o2)){
+                return 0;
+            }else {
+                return tailSort(o1, o2);
+            }
         }else {
             return o2.getFreq() > o1.getFreq() ? 1 : -1;
         }

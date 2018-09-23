@@ -4,10 +4,12 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.algorithm.RandomKill;
 import org.kylin.bean.W3DCode;
+import org.kylin.bean.WelfareCode;
 import org.kylin.bean.p5.WCode;
 import org.kylin.constant.CodeTypeEnum;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author huangyawu
@@ -144,5 +146,62 @@ public class WyfCollectionUtils {
             wCodes.get(index).setBeDeleted(true);
             randomCount -= 1;
         }
+    }
+
+
+    public static List<List<W3DCode>> splitByFreq(List<W3DCode> w3DCodes) {
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        int count = 0;
+        int freq = 0;
+        List<List<W3DCode>> w3DCodeList = new ArrayList<>();
+        while (count < w3DCodes.size()){
+            List<W3DCode> tmp = new ArrayList<>();
+
+            for(W3DCode w3DCode: w3DCodes){
+                if(w3DCode.getFreq() == freq){
+                    tmp.add(w3DCode);
+                }
+            }
+            if(CollectionUtils.isNotEmpty(tmp)){
+                w3DCodeList.add(tmp);
+            }
+            freq ++;
+            count += CollectionUtils.size(tmp);
+        }
+
+        return w3DCodeList;
+    }
+
+    public static boolean compareTwoW3DCode(W3DCode w1, W3DCode w2){
+        if(w1 == w2){
+            return true;
+        }
+        if(w1 == null || w2 == null){
+            return false;
+        }
+
+        if(w1.getCodes().length != w2.getCodes().length){
+            return false;
+        }
+
+        boolean[] flag = new boolean[w2.getCodes().length];
+        for(int i=0; i<flag.length; i++){
+            flag[i] = false;
+        }
+        int count = 0;
+
+        for(int c1: w1.getCodes()){
+            for(int i=0; i<w2.getCodes().length; i++){
+                if(c1 == w2.getCodes()[i] && !flag[i]){
+                    flag[i] = true;
+                    count++;
+                }
+            }
+        }
+
+        return count == flag.length;
     }
 }
