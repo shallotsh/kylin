@@ -1,10 +1,12 @@
-web:
-  build: .
-  image: 'registry.ap-southeast-1.aliyuncs.com/kylin_neo/kylin'
-  ports:
-    - '9090:8080'
-  restart: always
-  volumes:
-    - /var/attachment:/var/attachment
-  deploy:
-    replicas: 2
+version: "3"
+services:
+  web:
+    image: 'shallotsh/kylin'
+    # image: 'registry.ap-southeast-1.aliyuncs.com/kylin_neo/kylin'
+    ports:
+      - '9090:8080'
+    restart: always
+    # volumes:
+    #  - /var/attachment:/var/attachment
+    deploy:
+      replicas: 2

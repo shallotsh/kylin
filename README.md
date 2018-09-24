@@ -15,7 +15,12 @@
 curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
 ```
 
-命令行下切换到工程目录
+命令行下切换到工程目录, 构造`docker`镜像
+
+```aidl
+sudo docker build -t shallotsh/kylin .
+```
+
 
 ## swarm集群方式
 初始化`swarm`环境
@@ -29,6 +34,8 @@ sudo docker swarm init
 ```
 sudo docker stack deploy -c docker-compose.yml kylin
 ```
+
+如果命令执行成功，则可以通过浏览器访问：http://localhost:9090，查询首页预测页面。
 
 查看现在已经启动服务
 
