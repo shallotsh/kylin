@@ -264,11 +264,7 @@ public class WelfareCode implements Serializable{
         }
 
         if(o1.getFreq() == o2.getFreq()){
-            if(WyfCollectionUtils.compareTwoW3DCode(o1, o2)){
-                return 0;
-            }else {
-                return tailSort(o1, o2);
-            }
+            return tailSort(o1, o2);
         }else {
             return o2.getFreq() > o1.getFreq() ? 1 : -1;
         }

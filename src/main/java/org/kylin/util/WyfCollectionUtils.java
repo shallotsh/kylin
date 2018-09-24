@@ -204,4 +204,38 @@ public class WyfCollectionUtils {
 
         return count == flag.length;
     }
+
+
+    public static List<W3DCode> orderingWithGroup(List<W3DCode> w3DCodes){
+        if(CollectionUtils.isEmpty(w3DCodes)){
+            return Collections.emptyList();
+        }
+
+        List<List<W3DCode>> w3DCodeArray = new ArrayList<>();
+
+        for(W3DCode w3DCode: w3DCodes){
+            int index = -1;
+            for(int i=0; i<w3DCodeArray.size(); i++){
+                List<W3DCode> w3DCodeList = w3DCodeArray.get(i);
+                if(CollectionUtils.isNotEmpty(w3DCodeList) && compareTwoW3DCode(w3DCodeList.get(0), w3DCode)){
+                    w3DCodeList.add(w3DCode);
+                    index = i;
+                    break;
+                }
+            }
+            if(index == -1){
+                List<W3DCode> w3DCodeList = new ArrayList<>();
+                w3DCodeList.add(w3DCode);
+                w3DCodeArray.add(w3DCodeList);
+            }
+        }
+
+        List<W3DCode> ret = new ArrayList<>();
+        for(List<W3DCode> list : w3DCodeArray){
+            ret.addAll(list);
+        }
+
+        return ret;
+    }
+
 }

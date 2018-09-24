@@ -500,7 +500,15 @@ public class DocUtils {
         content.setFontSize(14);
         paragraph.setAlignment(ParagraphAlignment.LEFT);
 
-        writeW3DCodes(content, w3DCodes);
+        List<List<W3DCode>> w3DCodeArray = WyfCollectionUtils.splitByFreq(w3DCodes);
+        Collections.reverse(w3DCodeArray);
+
+        for(List<W3DCode> w3DCodeList : w3DCodeArray){
+            w3DCodeList = WyfCollectionUtils.orderingWithGroup(w3DCodeList);
+            writeW3DCodes(content, w3DCodeList);
+        }
+
+//        writeW3DCodes(content, w3DCodes);
 
         content.addBreak();
         content.setTextPosition(20);
