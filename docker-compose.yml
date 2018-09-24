@@ -1,11 +1,8 @@
-
-version: '3'
-services:
-  web:
-    build: .
-    image: shallotsh/kylin
-    ports:
-      - '9090:8080'
-    restart: always
-    deploy:
-      replicas: 2
+web:
+  build: .
+  image: shallotsh/kylin
+  ports:
+    - '9090:8080'
+  restart: always
+  deploy:
+    replicas: 2
