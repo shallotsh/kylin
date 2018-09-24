@@ -28,7 +28,7 @@ sudo docker run -tdi --name kylin -p 9090:8080 shallotsh/kylin
 ```
 
 
-## swarm集群方式
+## swarm集群部署
 初始化`swarm`环境
 
 ```
