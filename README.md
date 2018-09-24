@@ -21,6 +21,12 @@ curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compos
 sudo docker build -t shallotsh/kylin .
 ```
 
+## docker部署
+
+```aidl
+sudo docker run -tdi --name kylin -p 9090:8080 shallotsh/kylin
+```
+
 
 ## swarm集群方式
 初始化`swarm`环境
