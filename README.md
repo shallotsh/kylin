@@ -35,7 +35,7 @@ sudo docker swarm init
 sudo docker stack deploy -c docker-compose.yml kylin
 ```
 
-如果命令执行成功，则可以通过浏览器访问：http://localhost:9090，查询首页预测页面。
+如果命令执行成功，则可以通过浏览器访问：[http://localhost:9090](http://localhost:9090)，查询首页预测页面。
 
 查看现在已经启动服务
 
