@@ -1,6 +1,6 @@
 web:
   build: .
-  image: kylin_neo/kylin
+  image: 'registry.ap-southeast-1.aliyuncs.com/kylin_neo/kylin'
   ports:
     - '9090:8080'
   restart: always
