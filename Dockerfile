@@ -2,8 +2,8 @@ from tomcat:8.0-jre8
 
 MAINTAINER shallotsh shallotsh@gmail.com
 
-COPY ./target/kylin.war /usr/local/tomcat/webapps
+ADD ./dependency/server.xml /usr/local/tomcat/conf/server.xml
 
-EXPOSE 8080
+COPY ./target/kylin.war /app/
 
 CMD ["catalina.sh", "run"]
