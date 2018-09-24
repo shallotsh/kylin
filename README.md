@@ -4,27 +4,36 @@
 软件基于SpringMVC开发，在使用过程中有任何问题，欢迎通过gitcoment沟通。
 
 
-# 运行方式
+# 在Docker中运行
+
+## 安装环境
+
+如果还没有安装好`docker`环境，请前往[Docker](https://www.docker.com/) 安装。
+安装 `docker-compose` :
+
+```aidl
+curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
+```
 
 命令行下切换到工程目录
 
 ## swarm集群方式
-初始化swarm
+初始化`swarm`环境
 
 ```
 sudo docker swarm init
 ```
 
-运行服务，kylin可以更改为你喜欢的名字
+运行服务，可以将服务名`kylin`修改为你喜欢的名字
 
 ```
 sudo docker stack deploy -c docker-compose.yml kylin
 ```
 
 查看现在已经启动服务
+
 ```$xslt
 sudo docker service ls
-
 ```
 
 查看服务实例
