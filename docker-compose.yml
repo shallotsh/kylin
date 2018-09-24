@@ -1,6 +1,6 @@
 web:
   build: .
-  image: shallotsh/kylin
+  image: kylin_neo/kylin
   ports:
     - '9090:8080'
   restart: always
