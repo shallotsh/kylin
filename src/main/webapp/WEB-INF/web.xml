@@ -39,6 +39,16 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
 
+  <filter>
+    <filter-name>logTrace</filter-name>
+    <filter-class>org.kylin.filters.LogTraceFilter</filter-class>
+    <async-supported>true</async-supported>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>logTrace</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
 
   <!-- Gz压缩测试 start -->
@@ -77,7 +87,7 @@
   </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/api/*</url-pattern>
   </filter-mapping>
 
 </web-app>

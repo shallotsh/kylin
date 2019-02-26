@@ -6,7 +6,7 @@
     </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %-5p (%F:%L) - %m%n" />
+            <PatternLayout pattern="%d %-5p (%F:%L)[trace:%X{requestId}] - %m%n" />
         </Console>
 
         <RollingRandomAccessFile name="kylin-log"
