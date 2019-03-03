@@ -30,7 +30,8 @@ public class LogTraceFilter implements Filter {
     }
 
     private void recordDetailLog(ServletRequest request) {
-        log.info("request ip={},serverName={}", getIp((HttpServletRequest)request), request.getServerName());
+        log.info("request ip={},serverName={}, uri={}, authType={}", getIp((HttpServletRequest)request),
+                request.getServerName(), ((HttpServletRequest) request).getRequestURI(), ((HttpServletRequest) request).getAuthType());
     }
 
     public static String getIp(HttpServletRequest request) {
