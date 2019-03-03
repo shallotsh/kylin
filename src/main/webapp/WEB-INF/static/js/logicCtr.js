@@ -110,7 +110,13 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             "dipolar": $scope.wyf_dipolar ? 1 : 0,
             "oneEnd": $scope.wyf_one_end ? 1 : 0,
             "bigSum": $scope.wyf_big_sum ? 1 : 0,
-            "oddEven": $scope.wyf_all_odd_even ? 1 : 0
+            "oddEven": $scope.wyf_all_odd_even ? 1 : 0,
+            "abc": $scope.wyf_abc ? 1: 0,
+            "acb": $scope.wyf_acb ? 2: 0,
+            "bac": $scope.wyf_bac ? 3: 0,
+            "bca": $scope.wyf_bca ? 4: 0,
+            "cab": $scope.wyf_cab ? 5: 0,
+            "cba": $scope.wyf_cba ? 6: 0,
         };
 
         if(processId == 14 ) {

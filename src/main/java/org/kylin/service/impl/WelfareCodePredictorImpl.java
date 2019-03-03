@@ -39,6 +39,9 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
     @Resource
     private WyfEncodeService wyfEncodeService;
 
+    @Resource
+    private List<CodeFilter> codeFilters;
+
     @Override
     public WelfareCode encode(List<String> riddles, CodeTypeEnum codeTypeEnum) {
         if(CollectionUtils.isEmpty(riddles) || codeTypeEnum == null){
@@ -88,9 +91,15 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
             welfareCode.setNonDeletedPairCount(CollectionUtils.size(TransferUtil.getNonDeletedPairCodes(welfareCode.getW3DCodes())));
             TransferUtil.plusOneFreqs(welfareCode.getW3DCodes());
         }else {
-            Map<String, CodeFilter> codeFilterMap = applicationContext.getBeansOfType(CodeFilter.class);
-            if (!MapUtils.isEmpty(codeFilterMap)) {
-                codeFilterMap.forEach((k, filter) -> welfareCode.filter(filter, filterParam));
+//            Map<String, CodeFilter> codeFilterMap = applicationContext.getBeansOfType(CodeFilter.class);
+//            if (!MapUtils.isEmpty(codeFilterMap)) {
+//                codeFilterMap.forEach((k, filter) -> welfareCode.filter(filter, filterParam));
+//            }
+
+            for(CodeFilter filter: codeFilters){
+                if(filter.shouldBeFilter(filterParam)){
+                    welfareCode.filter(filter, filterParam);
+                }
             }
         }
 

@@ -39,7 +39,13 @@ public class DocUtils {
 
     private static final String BASE_PATH = "/var/attachment/";
 
-
+    /**
+     * 三码导出
+     *
+     * @param welfareCode
+     * @return
+     * @throws IOException
+     */
     public static String saveW3DCodes(WelfareCode welfareCode) throws IOException{
         if(welfareCode == null || CollectionUtils.isEmpty(welfareCode.getW3DCodes())){
             return "";
@@ -49,7 +55,7 @@ public class DocUtils {
         String subDirectory = fileName.substring(0,6);
         String targetDirName = BASE_PATH + subDirectory;
 
-        if(!createDirIfNotExist(targetDirName)){
+        if(!CommonUtils.createDirIfNotExist(targetDirName)){
             LOGGER.info("save-w3dCodes-create-directory-error targetDirName={}", targetDirName);
             throw new IOException("directory create error");
         }
@@ -207,7 +213,7 @@ public class DocUtils {
         String subDirectory = fileName.substring(0,6);
         String targetDirName = BASE_PATH + subDirectory;
 
-        if(!createDirIfNotExist(targetDirName)){
+        if(!CommonUtils.createDirIfNotExist(targetDirName)){
             LOGGER.info("save-wCodes-create-directory-error targetDirName={}", targetDirName);
             throw new IOException("directory create error");
         }
@@ -423,7 +429,7 @@ public class DocUtils {
         String subDirectory = fileName.substring(0,6);
         String targetDirName = BASE_PATH + subDirectory;
 
-        if(!createDirIfNotExist(targetDirName)){
+        if(!CommonUtils.createDirIfNotExist(targetDirName)){
             LOGGER.info("save-wCodes-create-directory-error targetDirName={}", targetDirName);
             throw new IOException("directory create error");
         }
@@ -537,24 +543,6 @@ public class DocUtils {
     }
 
 
-    public static boolean createDirIfNotExist(String destDirName) {
-        File dir = new File(destDirName);
-        if (dir.exists()) {
-            return true;
-        }
-        if (!destDirName.endsWith(File.separator)) {
-            destDirName = destDirName + File.separator;
-        }
-
-        //创建目录
-        if (dir.mkdirs()) {
-            LOGGER.info("创建目录" + destDirName + "成功！");
-            return true;
-        } else {
-            LOGGER.info("创建目录" + destDirName + "失败！");
-            return false;
-        }
-    }
     public static String toUTF8(String str){
         if(StringUtils.isBlank(str)){
             return str;

@@ -1,11 +1,13 @@
 package org.kylin.bean;
 
-import java.util.List;
+import lombok.ToString;
+
 
 /**
  * @author huangyawu
  * @date 2017/6/25 下午3:39.
  */
+@ToString
 public class FilterParam {
 
     private String sumValue;
@@ -28,6 +30,13 @@ public class FilterParam {
     private Integer bigSum;
     private Boolean isKillAllOddEven;
     private Integer oddEven;
+
+    private Integer abc;
+    private Integer acb;
+    private Integer bac;
+    private Integer bca;
+    private Integer cab;
+    private Integer cba;
 
     private String freqs;
 
@@ -235,31 +244,57 @@ public class FilterParam {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "FilterParam{" +
-                "sumValue='" + sumValue + '\'' +
-                ", boldCode='" + boldCode + '\'' +
-                ", gossip='" + gossip + '\'' +
-                ", range='" + range + '\'' +
-                ", ternaryLocation='" + ternaryLocation + '\'' +
-                ", fishMan='" + fishMan + '\'' +
-                ", orderFishMan='" + orderFishMan + '\'' +
-                ", huBits='" + huBits + '\'' +
-                ", hBits='" + hBits + '\'' +
-                ", dBits='" + dBits + '\'' +
-                ", uBits='" + uBits + '\'' +
-                ", isKillDipolar=" + isKillDipolar +
-                ", dipolar=" + dipolar +
-                ", isKillOneEnd=" + isKillOneEnd +
-                ", oneEnd=" + oneEnd +
-                ", isKillBigSum=" + isKillBigSum +
-                ", bigSum=" + bigSum +
-                ", isKillAllOddEven=" + isKillAllOddEven +
-                ", oddEven=" + oddEven +
-                ", freqs='" + freqs + '\'' +
-                ", randomKillCount=" + randomKillCount +
-                ", randomKilled=" + randomKilled +
-                '}';
+    public Integer getAbc() {
+        return abc;
+    }
+
+    public FilterParam setAbc(Integer abc) {
+        this.abc = abc;
+        return this;
+    }
+
+    public Integer getAcb() {
+        return acb;
+    }
+
+    public FilterParam setAcb(Integer acb) {
+        this.acb = acb;
+        return this;
+    }
+
+    public Integer getBac() {
+        return bac;
+    }
+
+    public FilterParam setBac(Integer bac) {
+        this.bac = bac;
+        return this;
+    }
+
+    public Integer getBca() {
+        return bca;
+    }
+
+    public FilterParam setBca(Integer bca) {
+        this.bca = bca;
+        return this;
+    }
+
+    public Integer getCab() {
+        return cab;
+    }
+
+    public FilterParam setCab(Integer cab) {
+        this.cab = cab;
+        return this;
+    }
+
+    public Integer getCba() {
+        return cba;
+    }
+
+    public FilterParam setCba(Integer cba) {
+        this.cba = cba;
+        return this;
     }
 }
