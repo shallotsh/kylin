@@ -15,6 +15,6 @@ public class StrategyProviderImpl implements StrategyProvider{
 
     @Override
     public WelfareCode encode(WyfParam param, Strategy<? super WelfareCode, ? super WyfParam> strategy) {
-        return (WelfareCode) strategy.execute(param);
+        return (WelfareCode) strategy.execute(param, null);
     }
 }

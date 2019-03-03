@@ -10,11 +10,16 @@ import org.kylin.service.pfive.WCodeProcessService;
 import org.kylin.util.WCodeUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class WCodeProcessServiceImpl implements WCodeProcessService{
+
+
+    @Resource
+    private List<Strategy< List<WCode>, WCodeReq>> bitStrategies;
 
     @Override
     public List<WCode> sequenceProcess(WCodeReq wCodeReq) {
@@ -48,9 +53,14 @@ public class WCodeProcessServiceImpl implements WCodeProcessService{
         if(wCodeReq == null){
             return Collections.emptyList();
         }
-        Strategy< List<WCode>, WCodeReq> strategy = StrategyFactory.constructBitFilterStrategy();
+//        Strategy< List<WCode>, WCodeReq> strategy = StrategyFactory.constructBitFilterStrategy();
 
-        List<WCode> wCodes = strategy.execute(wCodeReq);
+        List<WCode> wCodes = wCodeReq.getWCodes();
+        for(Strategy< List<WCode>, WCodeReq> strategy: bitStrategies) {
+            if(strategy.shouldExecute(wCodeReq)) {
+                wCodes = strategy.execute(wCodeReq, wCodes);
+            }
+        }
 
         Collections.sort(wCodes);
 

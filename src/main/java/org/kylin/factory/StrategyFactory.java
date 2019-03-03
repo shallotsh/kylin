@@ -1,13 +1,8 @@
 package org.kylin.factory;
 
 import org.kylin.algorithm.strategy.SequenceProcessor;
-import org.kylin.algorithm.strategy.Strategy;
 import org.kylin.algorithm.strategy.impl.*;
-import org.kylin.bean.p5.WCode;
-import org.kylin.bean.p5.WCodeReq;
 import org.kylin.constant.FilterStrategyEnum;
-
-import java.util.List;
 
 public class StrategyFactory {
     public static SequenceProcessor createProcessor(FilterStrategyEnum filterStrategyEnum){
@@ -55,8 +50,4 @@ public class StrategyFactory {
         }
     }
 
-
-    public static Strategy< List<WCode>,  WCodeReq> constructBitFilterStrategy(){
-        return new BitFilterStrategy();
-    }
 }

@@ -14,6 +14,7 @@ public class WCodeReq {
     private String randomCount;
     private Boolean freqSeted;
     private boolean randomKill;
+    private List<Integer> bitsSeq;
 
     public Integer getFilterType() {
         return filterType;
@@ -96,6 +97,15 @@ public class WCodeReq {
 
     public WCodeReq setFreqSeted(Boolean freqSeted) {
         this.freqSeted = freqSeted;
+        return this;
+    }
+
+    public List<Integer> getBitsSeq() {
+        return bitsSeq;
+    }
+
+    public WCodeReq setBitsSeq(List<Integer> bitsSeq) {
+        this.bitsSeq = bitsSeq;
         return this;
     }
 

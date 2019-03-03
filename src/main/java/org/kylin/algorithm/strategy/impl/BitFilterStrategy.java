@@ -5,18 +5,30 @@ import org.kylin.algorithm.strategy.Strategy;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
 import org.kylin.util.TransferUtil;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class BitFilterStrategy implements Strategy<List<WCode>, WCodeReq> {
 
     @Override
-    public List<WCode> execute(WCodeReq param) {
-        if(param == null){
-            return Collections.emptyList();
+    public boolean shouldExecute(WCodeReq param) {
+        if(!Strategy.super.shouldExecute(param)){
+            return false;
         }
+
         if(!validate(param)){
-            return param.getWCodes();
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public List<WCode> execute(WCodeReq param, List<WCode> wCodes) {
+        if(!validate(param)){
+            return wCodes;
         }
 
         List<Set<Integer>> bitsArray = new ArrayList<>();
@@ -24,8 +36,6 @@ public class BitFilterStrategy implements Strategy<List<WCode>, WCodeReq> {
             Set<Integer> set = TransferUtil.toIntegerSet(bitStr);
             bitsArray.add(set);
         }
-
-        List<WCode> wCodes = param.getWCodes();
 
         // 默认bits序列从低位开始
         int dim = 0;

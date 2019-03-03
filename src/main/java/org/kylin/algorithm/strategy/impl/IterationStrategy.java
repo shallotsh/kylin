@@ -29,7 +29,7 @@ public class IterationStrategy implements Strategy<WelfareCode, WyfParam>{
     private static final Logger LOGGER = LoggerFactory.getLogger(IterationStrategy.class);
 
     @Override
-    public WelfareCode execute(WyfParam wyfParam) {
+    public WelfareCode execute(WyfParam wyfParam, WelfareCode welfare) {
         if(!check(wyfParam)){
             throw new IllegalArgumentException("参数错误");
         }

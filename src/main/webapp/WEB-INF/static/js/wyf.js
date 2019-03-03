@@ -34,7 +34,13 @@ var app = new Vue({
         unit:null,
         p3Code:null,
         isRandomKill:null,
-        randomKillCodes:null
+        randomKillCodes:null,
+        wyf_abc:null,
+        wyf_acb:null,
+        wyf_bac:null,
+        wyf_bca:null,
+        wyf_cab:null,
+        wyf_cba:null
     },
     methods:{
         doPermutate: function () {
@@ -308,10 +314,21 @@ var app = new Vue({
             bitsArray.push(this.decade);
             bitsArray.push(this.unit);
 
+            var bitsSeqs = [];
+            bitsSeqs.push(this.wyf_abc ? 1: 0);
+            bitsSeqs.push(this.wyf_acb ? 2: 0);
+            bitsSeqs.push(this.wyf_bac ? 3: 0);
+            bitsSeqs.push(this.wyf_bca ? 4: 0);
+            bitsSeqs.push(this.wyf_cab ? 5: 0);
+            bitsSeqs.push(this.wyf_cba ? 6: 0);
+
             var args = {
                 bits: bitsArray,
-                wCodes: this.welfareCode
+                wCodes: this.welfareCode,
+                bitsSeq: bitsSeqs
             };
+
+            console.log('abc: ' + this.wyf_abc + ', acb: ' + this.wyf_acb);
 
             var count = this.wyfCodes.length;
 

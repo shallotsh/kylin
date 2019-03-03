@@ -26,6 +26,10 @@
     margin-top: 2px;
 }
 
+.fill_parent_25 {
+    width: 25%;
+}
+
 .fill_parent_50 {
     width: 50%;
 }
