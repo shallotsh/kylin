@@ -12,7 +12,7 @@
         <RollingRandomAccessFile name="kylin-log"
                                  fileName="${LOG_HOME}/${FILE_LOG_NAME}.log"
                                  filePattern="${LOG_HOME}/${FILE_LOG_NAME}.log.%d{yyyy-MM-dd}.gz">
-            <PatternLayout pattern="%d %-5p (%F:%L) - %m%n"/>
+            <PatternLayout pattern="%d %-5p (%F:%L)[trace:%X{requestId}]  - %m%n"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>
                 <SizeBasedTriggeringPolicy size="100 MB"/>
