@@ -145,7 +145,7 @@
                         <div class="row">
                             <div class=" form-inline col-sm-12">
                                 <label for="bold_code" class="control-label">P5杀输入</label>
-                                <input type="text" v-model="boldCodeFive" class="form-control fill_parent" id="bold_code_five" placeholder="码胆或者钓叟(#,/等分割)">
+                                <input type="text" v-model.trim="boldCodeFive" class="form-control fill_parent" id="bold_code_five" placeholder="码胆或者钓叟(#,/等分割)">
                             </div>
                         </div>
                         <div class="row">
@@ -250,22 +250,22 @@
                     <div class="row">
                         <label class="checkbox-inline">保留: </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox10" value="option10" v-model="wyf_abc"> abc
+                            <input type="checkbox" id="inlineCheckbox10" value="1" v-model="wyf_abc"> abc
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox11" value="option11" v-model="wyf_acb"> acb
+                            <input type="checkbox" id="inlineCheckbox11" value="2" v-model="wyf_acb"> acb
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox12" value="option12" v-model="wyf_bac"> bac
+                            <input type="checkbox" id="inlineCheckbox12" value="3" v-model="wyf_bac"> bac
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox13" value="option13" v-model="wyf_bca"> bca
+                            <input type="checkbox" id="inlineCheckbox13" value="4" v-model="wyf_bca"> bca
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox14" value="option14" v-model="wyf_cab"> cab
+                            <input type="checkbox" id="inlineCheckbox14" value="5" v-model="wyf_cab"> cab
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox15" value="option15" v-model="wyf_cba"> cba
+                            <input type="checkbox" id="inlineCheckbox15" value="6" v-model="wyf_cba"> cba
                         </label>
 
                         <label> （ a < b < c，abcxx ） </label>
