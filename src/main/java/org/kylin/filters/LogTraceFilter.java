@@ -3,6 +3,7 @@ package org.kylin.filters;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.kylin.util.CommonUtils;
 import org.slf4j.MDC;
 
 import javax.servlet.*;
@@ -30,32 +31,11 @@ public class LogTraceFilter implements Filter {
     }
 
     private void recordDetailLog(ServletRequest request) {
-        log.info("request ip={},serverName={}, uri={}, authType={}", getIp((HttpServletRequest)request),
+        log.info("request ip={},serverName={}, uri={}, authType={}", CommonUtils.getIp((HttpServletRequest)request),
                 request.getServerName(), ((HttpServletRequest) request).getRequestURI(), ((HttpServletRequest) request).getAuthType());
     }
 
-    public static String getIp(HttpServletRequest request) {
 
-        try {
-            String ip = request.getHeader("X-Real-IP");
-            if (StringUtils.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
-                return ip;
-            }
-            ip = request.getHeader("X-Forwarded-For");
-            if (StringUtils.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
-                int index = ip.indexOf(",");
-                if (index != -1) {
-                    return ip.substring(0, index);
-                } else {
-                    return ip;
-                }
-            } else {
-                return request.getRemoteAddr();
-            }
-        } catch (Exception e) {
-            return request.getRemoteAddr();
-        }
-    }
 
     @Override
     public void destroy() {

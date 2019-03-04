@@ -1,10 +1,14 @@
 package org.kylin.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author huangyawu
@@ -45,6 +49,49 @@ public class CommonUtils {
             log.debug("创建目录" + destDirName + "失败！");
             return false;
         }
+    }
+
+    public static String getIp(HttpServletRequest request) {
+
+        try {
+            String ip = request.getHeader("X-Real-IP");
+            if (StringUtils.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
+                return ip;
+            }
+            ip = request.getHeader("X-Forwarded-For");
+            if (StringUtils.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
+                int index = ip.indexOf(",");
+                if (index != -1) {
+                    return ip.substring(0, index);
+                } else {
+                    return ip;
+                }
+            } else {
+                return request.getRemoteAddr();
+            }
+        } catch (Exception e) {
+            return request.getRemoteAddr();
+        }
+    }
+
+
+    public static Optional<String> getAgent(HttpServletRequest request){
+        if(Objects.isNull(request)){
+            return Optional.empty();
+        }
+
+        String agent = request.getHeader("user-agent");
+        log.info("user-agent={}", agent);
+
+        return Optional.of(agent);
+    }
+
+    public static boolean isGoogleBrowser(HttpServletRequest request){
+        Optional<String> agentOpt = getAgent(request);
+        if(agentOpt.isPresent()){
+            return agentOpt.get().contains("Chrome");
+        }
+        return false;
     }
 
 }

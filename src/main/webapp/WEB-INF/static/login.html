@@ -4,25 +4,25 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title></title>
-	<link rel="stylesheet" href="css/reset.css" />
-	<link rel="stylesheet" href="css/login.css" />
+	<link rel="stylesheet" href="/css/reset.css" />
+	<link rel="stylesheet" href="/css/login.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <script type="text/javascript" src="js/login.js"></script>
+        <script type="text/javascript" src="/js/login.js"></script>
 </head>
 <body>
 <div class="page" id="login">
 	<div class="loginwarrp">
-		<div class="logo">管理员登陆</div>
+		<div class="logo">登 录</div>
         <div class="login_form">
-                <form @submit.prevent="login">
+                <form action="/login/auth" method="post">
 				<li class="login-item">
 					<span>用户名：</span>
-					<input type="text" id="username" v-model="user.userName" class="login_input" >
+					<input type="text" id="username" name="userName" v-model="user.userName" class="login_input" >
                                         <span id="count-msg" class="error"></span>
 				</li>
 				<li class="login-item">
 					<span>密　码：</span>
-					<input type="password" id="password" v-model=user.password" class="login_input" >
+					<input type="password" id="password" name="password" v-model=user.password" class="login_input" >
                                         <span id="password-msg" class="error"></span>
 				</li>
 
@@ -59,6 +59,6 @@
 			CanvasParticle(config);
 		}
 	</script>
-	<script type="text/javascript" src="js/canvas-particle.js"></script>
+	<script type="text/javascript" src="/js/canvas-particle.js"></script>
 </body>
 </html>
