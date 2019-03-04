@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 public enum BitSeqEnum {
-    ABC(1, "a<b<c"){
+    ABC(1, "abc"){
         @Override
         public boolean seqEqual(Integer[] target) {
             if(ArrayUtils.getLength(target) < 3){
@@ -30,7 +30,7 @@ public enum BitSeqEnum {
         }
     },
 
-    ACB(2, "a<c<b"){
+    ACB(2, "acb"){
         @Override
         public boolean seqEqual(Integer[] target) {
             if(ArrayUtils.getLength(target) < 3){
@@ -48,7 +48,7 @@ public enum BitSeqEnum {
             return target.get(0)<target.get(2) ? (target.get(2) < target.get(1)) : false;
         }
     },
-    BAC(3, "b<a<c"){
+    BAC(3, "bac"){
         @Override
         public boolean seqEqual(Integer[] target) {
             if(ArrayUtils.getLength(target) < 3){
@@ -66,13 +66,13 @@ public enum BitSeqEnum {
             return target.get(1)<target.get(0) ? (target.get(0) < target.get(2)) : false;
         }
     },
-    BCA(4, "b<c<a"){
+    BCA(4, "bca"){
         @Override
         public boolean seqEqual(Integer[] target) {
             if(ArrayUtils.getLength(target) < 3){
                 return false;
             }
-            return target[BitConstant.HUNDRED] > target[BitConstant.UNIT] ? (target[BitConstant.UNIT] > target[BitConstant.DECADE]) : false;
+            return target[BitConstant.DECADE] > target[BitConstant.HUNDRED] ? (target[BitConstant.HUNDRED] > target[BitConstant.UNIT]) : false;
         }
 
         @Override
@@ -80,17 +80,17 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(1)<target.get(2) ? (target.get(2) < target.get(0)) : false;
+            return target.get(1)>target.get(0) ? (target.get(0) < target.get(2)) : false;
         }
     },
-    CAB(5, "c<a<b"){
+    CAB(5, "cab"){
         @Override
         public boolean seqEqual(Integer[] target) {
             if(ArrayUtils.getLength(target) < 3){
                 return false;
             }
-            return target[BitConstant.DECADE] > target[BitConstant.HUNDRED]
-                    ? (target[BitConstant.HUNDRED] > target[BitConstant.UNIT]) : false;
+            return target[BitConstant.HUNDRED] > target[BitConstant.UNIT]
+                    ? (target[BitConstant.UNIT] > target[BitConstant.DECADE]) : false;
         }
 
         @Override
@@ -98,10 +98,10 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(2)<target.get(0) ? (target.get(0) < target.get(1)) : false;
+            return target.get(0)>target.get(2) ? (target.get(2) < target.get(1)) : false;
         }
     },
-    CBA(6, "c<b<a"){
+    CBA(6, "cba"){
         @Override
         public boolean seqEqual(Integer[] target) {
             if(ArrayUtils.getLength(target) < 3){
