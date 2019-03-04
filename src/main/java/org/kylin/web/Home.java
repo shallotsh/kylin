@@ -58,7 +58,7 @@ public class Home {
             session.setMaxInactiveInterval(7 * 24 * 60 * 60);
 
             Object prePage = session.getAttribute("prePage");
-            if(Objects.isNull(prePage)) {
+            if(Objects.isNull(prePage) || prePage.toString().endsWith("login")) {
                 return "redirect:/";
             }else{
                 return "redirect:" + prePage.toString();
