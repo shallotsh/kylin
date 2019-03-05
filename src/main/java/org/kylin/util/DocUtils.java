@@ -502,6 +502,8 @@ public class DocUtils {
         hr.setText("----------------------------------------");
         hr.addBreak();
 
+        paragraph.setWordWrap(true);
+
         XWPFRun content = paragraph.createRun();
         content.setFontSize(14);
         paragraph.setAlignment(ParagraphAlignment.LEFT);
