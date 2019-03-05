@@ -525,8 +525,16 @@ public class DocUtils {
 
 
     public static void writeW3DCodes(XWPFRun context, List<W3DCode> w3DCodes){
+
+        List<W3DCode> codes = w3DCodes.stream().filter(w3DCode -> w3DCode.getFreq()!=0).collect(Collectors.toList());
+        boolean printFreq = !CollectionUtils.isEmpty(codes);
+
         for(W3DCode w3DCode : w3DCodes) {
-            context.setText(w3DCode.toString() + "     ");
+            if(printFreq) {
+                context.setText(w3DCode.toString() + "     ");
+            }else{
+                context.setText(w3DCode.toString().substring(3) + "     ");
+            }
         }
     }
 
