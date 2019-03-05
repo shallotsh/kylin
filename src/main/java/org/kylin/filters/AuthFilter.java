@@ -6,6 +6,7 @@ import org.kylin.util.CommonUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -41,7 +42,9 @@ public class AuthFilter implements Filter {
 
 
         log.warn("非登录访问 client:{},server:{},uri:{}", CommonUtils.getIp(req), req.getServerName(), req.getRequestURI());
-        req.getRequestDispatcher("/login").forward(request, response);
+        HttpServletResponse resp = (HttpServletResponse) response;
+        resp.sendRedirect("/login?origin=" + servletPath);
+//        req.getRequestDispatcher("/login").forward(request, response);
     }
 
     @Override

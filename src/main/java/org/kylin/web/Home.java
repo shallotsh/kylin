@@ -1,6 +1,7 @@
 package org.kylin.web;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.User;
 import org.kylin.constant.Constants;
 import org.springframework.stereotype.Controller;
@@ -30,11 +31,16 @@ public class Home {
     }
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request){
+    public String login(String origin, HttpServletRequest request){
 
         HttpSession session = request.getSession();
         session.removeAttribute(Constants.LOGIN_STATUS_KEY);
-        String prePage = request.getHeader("Referer");
+        String prePage;
+        if(StringUtils.isNotEmpty(origin) && origin.startsWith("/")){
+            prePage = origin;
+        }else {
+            prePage = request.getHeader("Referer");
+        }
         session.setAttribute("prePage", prePage);
         log.info("prePage={}", prePage);
 
