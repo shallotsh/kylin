@@ -53,6 +53,7 @@
   <filter>
     <filter-name>authFilter</filter-name>
     <filter-class>org.kylin.filters.AuthFilter</filter-class>
+    <async-supported>true</async-supported>
   </filter>
 
   <filter-mapping>
@@ -104,6 +105,7 @@
       <param-name>forceEncoding</param-name>
       <param-value>true</param-value>
     </init-param>
+    <async-supported>true</async-supported>
   </filter>
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>

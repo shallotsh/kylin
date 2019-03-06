@@ -31,10 +31,10 @@
         <logger name="org.springframework.web" level="info">
         </logger>
 
-        <root level="info" includeLocation="true">
-            <appender-ref ref="kylin-log"/>
-            <appender-ref ref="Console"/>
-        </root>
+        <AsyncRoot level="info" includeLocation="true">
+            <AppenderRef ref="kylin-log"/>
+            <AppenderRef ref="Console"/>
+        </AsyncRoot>
     </Loggers>
 
 </Configuration>
