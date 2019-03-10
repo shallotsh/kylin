@@ -26,7 +26,7 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(0)<target.get(1) ? (target.get(1) < target.get(2)) : false;
+            return target.get(2)>target.get(1) ? (target.get(1) > target.get(0)) : false;
         }
     },
 
@@ -45,7 +45,7 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(0)<target.get(2) ? (target.get(2) < target.get(1)) : false;
+            return target.get(1)>target.get(2) ? (target.get(2) > target.get(0)) : false;
         }
     },
     BAC(3, "bac"){
@@ -63,7 +63,7 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(1)<target.get(0) ? (target.get(0) < target.get(2)) : false;
+            return target.get(2)>target.get(0) ? (target.get(0) > target.get(1)) : false;
         }
     },
     BCA(4, "bca"){
@@ -80,7 +80,7 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(1)>target.get(0) ? (target.get(0) < target.get(2)) : false;
+            return target.get(1)>target.get(0) ? (target.get(0) > target.get(2)) : false;
         }
     },
     CAB(5, "cab"){
@@ -98,7 +98,7 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(0)>target.get(2) ? (target.get(2) < target.get(1)) : false;
+            return target.get(0)>target.get(2) ? (target.get(2) > target.get(1)) : false;
         }
     },
     CBA(6, "cba"){
@@ -116,7 +116,7 @@ public enum BitSeqEnum {
             if(CollectionUtils.size(target) < 3){
                 return false;
             }
-            return target.get(2)<target.get(1) ? (target.get(1) < target.get(0)) : false;
+            return target.get(0)>target.get(1) ? (target.get(1) > target.get(2)) : false;
         }
     },
     ;
