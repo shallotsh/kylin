@@ -29,7 +29,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发v1.1.4 </strong></a>
+            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发v1.1.5 </strong></a>
 
             <div id="sideNav" href="">
                 <i class="fa fa-bars icon"></i>
@@ -316,12 +316,25 @@
                         <div class="col-sm-8 div-margin-bottom-clear">
                             <span style="line-height: 40px">{{wyfMessage}}</span>
                         </div>
+
+                        <div class="col-sm-2">
+                            <select v-model="export_format" class="form-control" v-show="config.isP5">
+                                <option :value="0" selected="selected">常规导出</option>
+                                <option :value="2">大和杀导出</option>
+                                <option :value="5">含四杀导出</option>
+                                <option :value="6">含五杀导出</option>
+                                <option :value="100">半页导出</option>
+                            </select>
+                        </div>
+
                         <div class="col-sm-2">
                             <button type="button" @click="exportCodes" v-show="config.isP5" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 导出 </button>
                         </div>
-                        <div class="col-sm-2">
-                            <button type="button" @click="exportCodesHalfPage" v-show="config.isP5" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 半页导出 </button>
-                        </div>
+                        <!--<div class="col-sm-2">-->
+                            <!--<button type="button" @click="exportCodesHalfPage" v-show="config.isP5" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 半页导出 </button>-->
+                        <!--</div>-->
+
+
                     </div>
                     <div class="row right-div-padding div-margin-top-clear">
                         <div class="border-solid code-show">
@@ -363,7 +376,7 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="js/wyf.js"></script>
+<script src="js/wyf.js?v=6"></script>
 
 
 </body>

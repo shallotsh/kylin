@@ -9,7 +9,6 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * 胆增频 ，即输入一组胆abcde与现有p5的前三位比较，如前三位中至少有一个与abcde相符，则P5频度加一
@@ -30,7 +29,7 @@ public class BoldIncreaseFreqProcessor implements SequenceProcessor {
     }
 
     @Override
-    public List<WCode> process() {
+    public List<WCode> process(List<WCode> deletedCodes) {
         if(!validate()){
             return wCodes;
         }

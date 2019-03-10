@@ -24,7 +24,7 @@ public class RandomProcessor implements SequenceProcessor {
     }
 
     @Override
-    public List<WCode> process() {
+    public List<WCode> process(List<WCode> deletedCodes) {
         if(!validate()){
             return wCodes;
         }

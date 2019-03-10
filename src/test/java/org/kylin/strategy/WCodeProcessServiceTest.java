@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.junit.Test;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
+import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.constant.FilterStrategyEnum;
 import org.kylin.service.pfive.impl.WCodeProcessServiceImpl;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class WCodeProcessServiceTest {
 
@@ -32,8 +34,8 @@ public class WCodeProcessServiceTest {
 
         wCodeReq.setFilterType(FilterStrategyEnum.LITTLE_SUM_FILTER.getId());
 
-        List<WCode> wCodes = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
-        LOGGER.info("wCodes={}", JSON.toJSONString(wCodes));
+        Optional<WCodeSummarise> optSms = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
+        LOGGER.info("wCodes={}", JSON.toJSONString(optSms.get().getwCodes()));
     }
 
 
@@ -53,8 +55,8 @@ public class WCodeProcessServiceTest {
 
         wCodeReq.setFilterType(FilterStrategyEnum.BIG_SUM_FILTER.getId());
 
-        List<WCode> wCodes = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
-        LOGGER.info("wCodes={}", JSON.toJSONString(wCodes));
+        Optional<WCodeSummarise> optSms = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
+        LOGGER.info("wCodes={}", JSON.toJSONString(optSms.get().getwCodes()));
     }
 
 
@@ -74,8 +76,8 @@ public class WCodeProcessServiceTest {
 
         wCodeReq.setFilterType(FilterStrategyEnum.ODD_EVEN_FILTER.getId());
 
-        List<WCode> wCodes = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
-        LOGGER.info("wCodes={}", JSON.toJSONString(wCodes));
+        Optional<WCodeSummarise> optSms = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
+        LOGGER.info("wCodes={}", JSON.toJSONString(optSms.get().getwCodes()));
     }
 
 
@@ -96,8 +98,8 @@ public class WCodeProcessServiceTest {
 
         wCodeReq.setFilterType(FilterStrategyEnum.CONTAIN_THREE_FILTER.getId());
 
-        List<WCode> wCodes = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
-        LOGGER.info("wCodes={}", JSON.toJSONString(wCodes));
+        Optional<WCodeSummarise> optSms = new WCodeProcessServiceImpl().sequenceProcess(wCodeReq);
+        LOGGER.info("wCodes={}", JSON.toJSONString(optSms.get().getwCodes()));
     }
 
 }

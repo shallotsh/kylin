@@ -18,7 +18,7 @@ abstract public class AbstractSequenceProcessor implements SequenceProcessor{
     }
 
     @Override
-    abstract public List<WCode> process();
+    abstract public List<WCode> process(List<WCode> deletedCodes);
 
     @Override
     public boolean validate() {

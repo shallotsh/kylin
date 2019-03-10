@@ -3,6 +3,7 @@ package org.kylin.util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
@@ -260,10 +261,29 @@ public class WCodeUtils {
     }
 
 
-    public static WCodeSummarise construct(List<WCode> wCodes, WCodeReq wCodeReq){
+    public static WCodeSummarise construct(List<WCode> wCodes, String key, List<WCode> deletedCodes, WCodeReq wCodeReq){
         WCodeSummarise wCodeSummarise =  new WCodeSummarise()
                 .setwCodes(wCodes);
 
+        if(Objects.isNull(wCodeReq)){
+            return wCodeSummarise;
+        }
+
+        // process deleted codes
+        Map<String, List<WCode>> delMaps = wCodeReq.getDeletedCodesPair();
+        if(delMaps == null){
+            delMaps = new HashMap<>();
+        }
+
+        if(StringUtils.isNotEmpty(key) && !CollectionUtils.isEmpty(deletedCodes)){
+            List<WCode> codes = delMaps.getOrDefault(key, new ArrayList<>());
+            codes.addAll(deletedCodes);
+            delMaps.put(key, codes);
+        }
+
+        wCodeSummarise.setDeletedCodesPair(delMaps);
+
+        // process random kill
         if(wCodeReq != null) {
             Boolean isRandomKill = wCodeReq.getFilterType() != null && wCodeReq.getFilterType() == FilterStrategyEnum.RANDOM_FILTER.getId();
 

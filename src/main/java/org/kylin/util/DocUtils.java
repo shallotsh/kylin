@@ -368,7 +368,7 @@ public class DocUtils {
     }
 
 
-    private static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString, String separator, Boolean freqSeted){
+    public static void exportWCodes(XWPFDocument doc, List<WCode> wCodes, String titleString, String separator, Boolean freqSeted){
 
         if(CollectionUtils.isEmpty(wCodes)){
             return;

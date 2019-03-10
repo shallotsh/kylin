@@ -26,7 +26,7 @@ public class ContainThreeProcessor implements SequenceProcessor {
     }
 
     @Override
-    public List<WCode> process() {
+    public List<WCode> process(List<WCode> deletedCodes) {
         if(!validate()){
             return wCodes;
         }

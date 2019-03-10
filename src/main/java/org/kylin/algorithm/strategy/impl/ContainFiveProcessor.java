@@ -7,6 +7,7 @@ import org.kylin.bean.p5.WCodeReq;
 import org.kylin.util.TransferUtil;
 import org.kylin.util.WCodeUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,12 +27,22 @@ public class ContainFiveProcessor implements SequenceProcessor {
     }
 
     @Override
-    public List<WCode> process() {
+    public List<WCode> process(List<WCode> deletedCodes) {
         if(!validate()){
             return wCodes;
         }
 
-        List<WCode> ret = wCodes.stream().filter(wCode -> WCodeUtils.containInSet(wCode, boldCodes) >= 5).collect(Collectors.toList());
+        List<WCode> ret = new ArrayList<>();
+
+        for(WCode wCode : wCodes){
+            if(WCodeUtils.containInSet(wCode, boldCodes) >= 5){
+                ret.add(wCode);
+            }else if(deletedCodes != null){
+                deletedCodes.add(wCode);
+            }
+        }
+
+//         wCodes.stream().filter(wCode -> WCodeUtils.containInSet(wCode, boldCodes) >= 5).collect(Collectors.toList());
 
         return ret;
     }

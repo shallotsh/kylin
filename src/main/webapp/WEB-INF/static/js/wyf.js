@@ -40,7 +40,11 @@ var app = new Vue({
         wyf_bac:null,
         wyf_bca:null,
         wyf_cab:null,
-        wyf_cba:null
+        wyf_cba:null,
+        export_format: null
+    },
+    created: function(){
+        this.export_format = 0;
     },
     methods:{
         doPermutate: function () {
@@ -94,7 +98,8 @@ var app = new Vue({
         handleFiveCodeResponse: function (data, msg, processId) {
             this.config.isP5 = true;
             this.welfareCode = data.wCodes;
-            // console.log('返回值:' + JSON.stringify(data.isRandomKill, null, 2));
+            this.deletedCodesPair = data.deletedCodesPair;
+            console.log('返回值:' + JSON.stringify(data.deletedCodesPair, null, 2));
             if(data.randomKill) {
                 this.isRandomKill = data.randomKill;
             }
@@ -227,7 +232,8 @@ var app = new Vue({
 
             var args = {
                 filterType: processorId,
-                wCodes: this.welfareCode
+                wCodes: this.welfareCode,
+                deletedCodesPair: this.deletedCodesPair
             };
 
             if(processorId == 9){
@@ -264,6 +270,7 @@ var app = new Vue({
             var args = {
                 filterType: processorId,
                 wCodes: this.welfareCode,
+                deletedCodesPair: this.deletedCodesPair,
                 boldCodeFive: this.boldCodeFive
             };
 
@@ -361,10 +368,12 @@ var app = new Vue({
                 wCodes: this.welfareCode ,
                 randomCount: this.boldCodeFive,
                 randomKill: this.isRandomKill,
-                freqSeted : this.freqSeted
+                freqSeted : this.freqSeted,
+                exportFormat: this.export_format,
+                deletedCodesPair: this.deletedCodesPair
             };
 
-            console.log('canshu:' + JSON.stringify(args, null, 2));
+            // console.log('canshu:' + JSON.stringify(args, null, 2));
             axios({
                 method:"POST",
                 url:"/api/p5/codes/export",

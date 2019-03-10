@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class HighFreqProcessor extends AbstractSequenceProcessor {
 
     @Override
-    public List<WCode> process() {
+    public List<WCode> process(List<WCode> deletedCodes) {
         if(!validate()){
             return this.wCodes;
         }

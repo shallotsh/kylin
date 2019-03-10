@@ -10,7 +10,6 @@ import org.kylin.bean.WyfResponse;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
 import org.kylin.bean.p5.WCodeSummarise;
-import org.kylin.constant.FilterStrategyEnum;
 import org.kylin.service.pfive.WCodeProcessService;
 import org.kylin.util.DocUtils;
 import org.kylin.util.WCodeUtils;
@@ -24,6 +23,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/api/p5")
@@ -53,7 +53,7 @@ public class KylinPermutationFiveMethodApi {
         // 过滤掉和值小于10的预测码
         List<WCode> ret = WCodeUtils.filterLowSumCodes(permutations);
 
-        WCodeSummarise wCodeSummarise = WCodeUtils.construct(ret, null);
+        WCodeSummarise wCodeSummarise = WCodeUtils.construct(ret, null, null , null);
         wCodeSummarise.setPairCodes(WCodeUtils.getPairCodeCount(ret))
                 .setNonPairCodes(WCodeUtils.getNonPairCodeCount(ret));
         LOGGER.info("构造完成 size={}", CollectionUtils.size(ret));
@@ -69,10 +69,15 @@ public class KylinPermutationFiveMethodApi {
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数为空");
         }
         LOGGER.info("收到串处理: wCodeReq_size={},conditions={}", CollectionUtils.size(wCodeReq.getwCodes()), wCodeReq.getConditions());
-        List<WCode> wCodes = wCodeProcessService.sequenceProcess(wCodeReq);
-        LOGGER.info("串处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
-                CollectionUtils.size(wCodes));
-        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, wCodeReq));
+        Optional<WCodeSummarise> optSms = wCodeProcessService.sequenceProcess(wCodeReq);
+
+        if(optSms.isPresent()) {
+            LOGGER.info("串处理完成: wCodes_size={}", CollectionUtils.size(optSms.get().getwCodes()));
+            return new WyfDataResponse<>(optSms.get());
+        }else{
+            LOGGER.warn("处理失败");
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "内部处理错误");
+        }
     }
 
 
@@ -84,11 +89,14 @@ public class KylinPermutationFiveMethodApi {
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "参数为空");
         }
         LOGGER.info("收到位处理: wCodeReq_size={},conditions={}", CollectionUtils.size(wCodeReq.getwCodes()), wCodeReq.getConditions());
-        List<WCode> wCodes = wCodeProcessService.bitsProcess(wCodeReq);
-        LOGGER.info("位处理完成: wCodeReq_size={},wCodes_size={}", (wCodeReq==null)? 0: CollectionUtils.size(wCodeReq.getwCodes()),
-                CollectionUtils.size(wCodes));
-
-        return new WyfDataResponse<>(WCodeUtils.construct(wCodes, wCodeReq));
+        Optional<WCodeSummarise> optSms = wCodeProcessService.bitsProcess(wCodeReq);
+        if(optSms.isPresent()){
+            LOGGER.info("位处理完成: wCodes_size={}", CollectionUtils.size(optSms.get().getwCodes()));
+            return new WyfDataResponse<>(optSms.get());
+        }else{
+            LOGGER.warn("内部处理错误");
+            return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "内部处理错误");
+        }
     }
 
 
@@ -99,10 +107,10 @@ public class KylinPermutationFiveMethodApi {
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "导出数据错误");
         }
 
-        try {
-            String fileName = DocUtils.saveWCodes(wCodeReq);
-            return  new WyfDataResponse<>(fileName);
-        } catch (IOException e) {
+        Optional<String> optFile = wCodeProcessService.exportWCodeToFile(wCodeReq);
+        if(optFile.isPresent()){
+            return new WyfDataResponse<>(optFile.get());
+        }else{
             LOGGER.error("export-codes-error wCodeReq={}", JSON.toJSONString(wCodeReq));
             return new WyfErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误");
         }

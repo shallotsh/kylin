@@ -3,11 +3,13 @@ package org.kylin.bean.p5;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 
 public class WCodeReq {
     private Integer filterType;
     private String boldCodeFive;
     private List<WCode> wCodes;
+    private Map<String, List<WCode>> deletedCodesPair;
     private List<String> bits;
     private Integer exportType;
     private String p3Code;
@@ -15,6 +17,7 @@ public class WCodeReq {
     private Boolean freqSeted;
     private boolean randomKill;
     private List<Integer> bitsSeq;
+    private Integer exportFormat;
 
     public Integer getFilterType() {
         return filterType;
@@ -54,6 +57,15 @@ public class WCodeReq {
 
     public void setwCodes(List<WCode> wCodes) {
         this.wCodes = wCodes;
+    }
+
+    public Map<String, List<WCode>> getDeletedCodesPair() {
+        return deletedCodesPair;
+    }
+
+    public WCodeReq setDeletedCodesPair(Map<String, List<WCode>> deletedCodesPair) {
+        this.deletedCodesPair = deletedCodesPair;
+        return this;
     }
 
     public Integer getExportType() {
@@ -106,6 +118,15 @@ public class WCodeReq {
 
     public WCodeReq setBitsSeq(List<Integer> bitsSeq) {
         this.bitsSeq = bitsSeq;
+        return this;
+    }
+
+    public Integer getExportFormat() {
+        return exportFormat;
+    }
+
+    public WCodeReq setExportFormat(Integer exportFormat) {
+        this.exportFormat = exportFormat;
         return this;
     }
 

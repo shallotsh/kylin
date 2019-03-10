@@ -5,7 +5,6 @@ import org.kylin.algorithm.strategy.SequenceProcessor;
 import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
 import org.kylin.util.TransferUtil;
-import org.kylin.util.WCodeUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -26,7 +25,7 @@ public class SumTailProcessor implements SequenceProcessor {
     }
 
     @Override
-    public List<WCode> process() {
+    public List<WCode> process(List<WCode> deletedCodes) {
         if(!validate()){
             return wCodes;
         }

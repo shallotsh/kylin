@@ -1,10 +1,12 @@
 package org.kylin.bean.p5;
 
 import java.util.List;
+import java.util.Map;
 
 public class WCodeSummarise {
     private List<WCode> randomKillCodes;
     private List<WCode> wCodes;
+    private Map<String, List<WCode>> deletedCodesPair;
     private Integer pairCodes;
     private Integer nonPairCodes;
     private boolean isRandomKill;
@@ -35,6 +37,15 @@ public class WCodeSummarise {
 
     public WCodeSummarise setPairCodes(Integer pairCodes) {
         this.pairCodes = pairCodes;
+        return this;
+    }
+
+    public Map<String, List<WCode>> getDeletedCodesPair() {
+        return deletedCodesPair;
+    }
+
+    public WCodeSummarise setDeletedCodesPair(Map<String, List<WCode>> deletedCodesPair) {
+        this.deletedCodesPair = deletedCodesPair;
         return this;
     }
 

@@ -114,7 +114,7 @@ public class WCode implements Cloneable,Comparable,RandomKill{
 
     public String getString(Boolean withFreq){
 
-        if(!withFreq){
+        if(withFreq == null || !withFreq){
             return getString();
         }
 
