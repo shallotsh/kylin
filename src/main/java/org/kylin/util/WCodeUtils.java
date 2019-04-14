@@ -2,6 +2,7 @@ package org.kylin.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kylin.bean.W3DCode;
@@ -15,7 +16,36 @@ import org.kylin.constant.WelfareConfig;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class WCodeUtils {
+
+
+    public static WCode mock(int dim){
+        WCode wCode = new WCode();
+        if(dim <= 0) return wCode;
+
+        List<Integer> codes = new ArrayList<>();
+        for(int i=0; i<dim; i++){
+            codes.add(Math.floorMod((int)(Math.random()*10), 10));
+        }
+        wCode.setCodes(codes);
+        log.info("mock wcode: {}", wCode);
+        return wCode;
+    }
+
+
+    public static List<WCode> mockCodes(int dim, int count){
+        if(count <= 0 || dim <= 0){
+            return Collections.emptyList();
+        }
+
+        List<WCode> wCodes = new ArrayList<>();
+        for(int i=0; i<count; i++){
+            wCodes.add(mock(dim));
+        }
+
+        return wCodes;
+    }
 
     public static boolean validateCodes(List<WCode> wCodes){
         if(CollectionUtils.isEmpty(wCodes)){

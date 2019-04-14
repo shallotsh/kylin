@@ -10,7 +10,6 @@ import org.kylin.util.WCodeUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ContainFiveProcessor implements SequenceProcessor {
     private List<WCode> wCodes;

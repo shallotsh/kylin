@@ -30,6 +30,12 @@ public class Home {
         return "v1";
     }
 
+    @RequestMapping("/2d")
+    public String wyf2d(){
+        return "wyf_2d";
+    }
+
+
     @RequestMapping("/login")
     public String login(String origin, HttpServletRequest request){
 

@@ -4,12 +4,9 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.algorithm.RandomKill;
 import org.kylin.bean.W3DCode;
-import org.kylin.bean.WelfareCode;
-import org.kylin.bean.p5.WCode;
 import org.kylin.constant.CodeTypeEnum;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author huangyawu

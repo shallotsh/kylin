@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.kylin.bean.W3DCode;
 import org.kylin.bean.WelfareCode;
-import org.kylin.bean.p5.WCode;
 import org.kylin.constant.CodeTypeEnum;
 
 import java.util.*;
