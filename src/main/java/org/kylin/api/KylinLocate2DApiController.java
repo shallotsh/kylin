@@ -5,17 +5,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.kylin.bean.WyfDataResponse;
 import org.kylin.bean.WyfErrorResponse;
 import org.kylin.bean.WyfResponse;
+import org.kylin.bean.p2.XCodePair;
 import org.kylin.bean.p2.XCodeReq;
 import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.util.WCodeUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -25,7 +26,7 @@ public class KylinLocate2DApiController {
 
     @ResponseBody
     @RequestMapping("/shuffle")
-    public WyfResponse shuffle2d(XCodeReq req){
+    public WyfResponse shuffle2d(@RequestBody XCodeReq req){
 
         log.info("shuffle req:{}", req);
 
@@ -35,7 +36,7 @@ public class KylinLocate2DApiController {
 
     @ResponseBody
     @RequestMapping("/kill/code")
-    public WyfResponse killCode(XCodeReq req){
+    public WyfResponse killCode(@RequestBody XCodeReq req, HttpServletRequest request){
 
         log.info("kill req:{}", req);
 
@@ -44,7 +45,7 @@ public class KylinLocate2DApiController {
 
     @ResponseBody
     @RequestMapping("/comp/select")
-    public WyfResponse compSelect(XCodeReq req){
+    public WyfResponse compSelect(@RequestBody XCodeReq req){
         log.info("comp-select req:{}", req);
 
         return  new WyfDataResponse<>(new WCodeSummarise().setwCodes(Arrays.asList(WCodeUtils.mock(2))));

@@ -113,7 +113,7 @@
                 </div>
                 <div class=" form-inline col-sm-2">
                     <label for="invert_code" class="control-label">筛选</label>
-                    <input type="text" size="11" class="form-control fill_parent_50" v-model.trim="inverseCodeSeq" id="invert_code" placeholder="跨度">
+                    <input type="text" size="11" class="form-control fill_parent_50" v-model.trim="inverseCodeSeq" id="invert_code" placeholder="筛选码">
                 </div>
                 <div class=" form-inline col-sm-2">
                     <label for="gossip_code" class="control-label">二码</label>
@@ -131,9 +131,30 @@
 
             <!-- coperate for 5code -->
             <div class="row " >
-                <div class="col-sm-2 content_align_center">
+                <div class="col-sm-3 content_align_center">
+
                     <div class="row">
-                            <span style="line-height: 40px">预测队列展示区域</span>
+                        <div class="col-sm-6">
+                            <button type="button" @click="addQueue" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 加入队列 </button>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <button type="button" @click="compSelect" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 综合选码 </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                            <span style="line-height: 40px">预测队列展示区域(双击删除队列)</span>
+                        <div class="wyf-predict-queue" >
+                            <!--<div class="row">-->
+                            <!--<button v-for="(item, index) in cacheQueue" class="button white medium fill_parent_80"  @click="selectQueue(index)" @dbclick="delQueue(index)">队列{{ index }}</button>-->
+                            <!--</div>-->
+                            <div class="row">
+                                <select v-model="compItems" class="selectpicker fill_parent_80" multiple >
+                                    <option v-for="(item, index) in cacheQueue" @click="selectQueue(index)" @dbclick="delQueue(index)" :value='index'>队列{{ index }}</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row" >
@@ -143,22 +164,15 @@
                 </div>
 
                 <!-- for result show -->
-                <div class="col-sm-10 " >
+                <div class="col-sm-9 " >
                     <div class="row ">
                         <div class="col-sm-8 div-margin-bottom-clear">
-                            <span style="line-height: 40px">{{wyfMessage}}</span>
+                            <span style="line-height: 40px">{{ wyfMessage }}</span>
                         </div>
 
-                        <div class="col-sm-2">
-                            <button type="button" @click="addQueue" v-show="config.isP5" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 加入队列 </button>
-                        </div>
 
                         <div class="col-sm-2">
-                            <button type="button" @click="compSelect" v-show="config.isP5" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 综合选码 </button>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <button type="button" @click="exportCodes" v-show="config.isP5" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 导出 </button>
+                            <button type="button" @click="exportCodes" v-show="config.isPredict" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 导 出 </button>
                         </div>
                         <!--<div class="col-sm-2">-->
                             <!--<button type="button" @click="exportCodesHalfPage" v-show="config.isP5" class="btn btn-success fill_parent" style="margin-bottom: 10px"> 半页导出 </button>-->
@@ -206,7 +220,7 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="js/wyf_2d.js?v=1"></script>
+<script src="js/wyf_2d.js?v=4"></script>
 
 
 </body>

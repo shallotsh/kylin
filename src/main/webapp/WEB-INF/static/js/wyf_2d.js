@@ -18,6 +18,8 @@ var app = new Vue({
         wCodes: null,
         wyfMessage:'这一行是统计数据展示区域',
         config:global_config,
+        cacheQueue: new Array(),
+        compItems:[],
 
         sumValue:null,
         codesCount: 0,
@@ -30,7 +32,7 @@ var app = new Vue({
     methods:{
         doPermutate: function () {
 
-            alert("暂未开放该功能");
+            alert("暂未开放");
             return;
 
             var paramArray = [];
@@ -67,6 +69,7 @@ var app = new Vue({
         },
 
         resetInput: function () {
+            this.config.isPredict = false;
             this.sequence1 ='',
             this.sequence2 ='',
             this.sequence3 ='',
@@ -79,15 +82,69 @@ var app = new Vue({
 
         },
 
-        invertSelCode: function () {
+        addQueue: function () {
+            if(!this.config.isPredict){
+                this.handleException("请先完成预测");
+                return;
+            }
 
+            var obj =  deepCopy(this.wCodes);
+
+            this.cacheQueue.push(obj);
+
+            console.log('入队成功.');
         },
 
-        addQueue: function () {
 
+
+        delQueue: function(cursor){
+            this.cacheQueue.splice(cursor, 1);
+            console.log('delete item from queue, index='+cursor);
+        },
+
+        selectQueue: function(cursor){
+            this.wCodes = this.cacheQueue[cursor];
+            this.wyfMessage = '已选择队列' + this.compItems + '。';
+            console.log('Item(index='+this.compItems+' in the cache queue was selected.');
         },
 
         compSelect: function () {
+            if(this.cacheQueue.length < 1){
+                this.handleException("预测队列为空，请先添加预测码到队列");
+                return;
+            }
+
+            if(this.compItems.length < 1){
+                this.handleException("请先选择参加综合选码的预测队列");
+                return;
+            }
+
+            var selectedQueues = new Array();
+            for(idx in this.compItems){
+                selectedQueues.push({index: idx, wCodes: this.cacheQueue[idx]});
+            }
+
+            var args = {
+                "xCodePairs": selectedQueues
+                // "arrayIndexes": this.compItems
+            };
+            console.log("compArgs:" + JSON.stringify(args));
+            this.wyfMessage = "正在计算...";
+            axios({
+                method: 'post',
+                url: '/api/2d/comp/select',
+                data: JSON.stringify(args),
+                headers:{
+                    "Content-Type": "application/json; charset=UTF-8"
+                }
+            }).then(function(response) {
+                app.handle2DCodeResponse(response.data.data, '综合选码');
+            })
+                .catch(function(error){
+                    console.log(error)
+                });
+
+
 
         },
 
@@ -113,6 +170,8 @@ var app = new Vue({
                 "gossipCodeSeq": this.gossipCodeSeq
             };
 
+            console.log('args' + JSON.stringify(args));
+
             var count = this.wCodes.length;
 
             axios({
@@ -133,8 +192,8 @@ var app = new Vue({
         },
 
         exportCodes: function(){
-            if(!this.config.isP5){
-                this.handleException("请先完成排5");
+            if(!this.config.isPredict){
+                this.handleException("请至少先完成一次预测");
                 return;
             }
 
@@ -213,3 +272,20 @@ var app = new Vue({
     }
 });
 
+function deepCopy(source) {
+    if(source instanceof  Array){
+        return source.slice(0);
+    }
+    var result = {};
+    for (var key in source){
+
+        if(source[key] instanceof Array){
+            result[key] = source[key].slice(0);
+            continue;
+        }
+
+        result[key] = typeof source[key] === 'object' ? deepCopy(source[key]) : source[key];
+    }
+
+    return result;
+}
