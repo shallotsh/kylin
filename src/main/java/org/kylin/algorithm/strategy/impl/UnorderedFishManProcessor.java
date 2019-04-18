@@ -20,7 +20,7 @@ public class UnorderedFishManProcessor implements SequenceProcessor {
     public SequenceProcessor init(WCodeReq wCodeReq) {
         if(wCodeReq != null){
            wCodes = wCodeReq.getWCodes();
-           boldCodes = TransferUtil.parseList(wCodeReq.getBoldCodeFive());
+           boldCodes = TransferUtil.parseGossipList(wCodeReq.getBoldCodeFive());
         }
         return this;
     }

@@ -1,5 +1,7 @@
 package org.kylin.bean;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * @author huangyawu
  * @date 2017/6/25 下午3:24.
@@ -18,6 +20,11 @@ public class WyfErrorResponse extends WyfResponse{
     public void setError(Error error) {
         this.error = error;
     }
+
+    public static WyfResponse buildErrorResponse(){
+        return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "param invalid.");
+    }
+
 
     class Error {
         Integer code;

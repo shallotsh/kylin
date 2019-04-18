@@ -31,7 +31,7 @@ public class GossipFilter implements CodeFilter<WelfareCode>{
             return;
         }
 
-        List<Set<Integer>> gossips = TransferUtil.parseList(filterParam.getGossip());
+        List<Set<Integer>> gossips = TransferUtil.parseGossipList(filterParam.getGossip());
 
         if(CollectionUtils.isEmpty(gossips)){
             return;

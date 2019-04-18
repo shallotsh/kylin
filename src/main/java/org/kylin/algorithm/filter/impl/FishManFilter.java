@@ -30,7 +30,7 @@ public class FishManFilter implements CodeFilter<WelfareCode>{
             return;
         }
 
-        List<Set<Integer>> fishManList = TransferUtil.parseList(filterParam.getFishMan());
+        List<Set<Integer>> fishManList = TransferUtil.parseGossipList(filterParam.getFishMan());
 
         if(CollectionUtils.isEmpty(fishManList)){
             return;

@@ -1,7 +1,8 @@
 var global_config = {
     isPredict: false,
     canKill: false,
-    canExport: false
+    canExport: false,
+    queueIndex: 1
 }
 
 
@@ -101,7 +102,7 @@ var app = new Vue({
 
         selectQueue: function(cursor){
             this.wCodes = this.cacheQueue[cursor];
-            this.wyfMessage = '已选择队列' + this.compItems + '。';
+            this.wyfMessage = '已选择队列【' + this.compItems + '】';
             console.log('Item(index='+this.compItems+' in the cache queue was selected.');
         },
 
@@ -195,18 +196,13 @@ var app = new Vue({
             }
 
             var args = {
-                wCodes: this.welfareCode ,
-                randomCount: this.boldCodeFive,
-                randomKill: this.isRandomKill,
-                freqSeted : this.freqSeted,
-                exportFormat: this.export_format,
-                deletedCodesPair: this.deletedCodesPair
+                wCodes: this.wCodes
             };
 
             // console.log('canshu:' + JSON.stringify(args, null, 2));
             axios({
                 method:"POST",
-                url:"/api/p5/codes/export",
+                url:"/api/2d/codes/export",
                 data: JSON.stringify(args),
                 headers:{
                     "Content-Type": "application/json; charset=UTF-8"

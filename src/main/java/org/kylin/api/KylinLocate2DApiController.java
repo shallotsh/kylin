@@ -2,27 +2,33 @@ package org.kylin.api;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.WyfDataResponse;
 import org.kylin.bean.WyfErrorResponse;
 import org.kylin.bean.WyfResponse;
-import org.kylin.bean.p2.XCodePair;
 import org.kylin.bean.p2.XCodeReq;
+import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeSummarise;
+import org.kylin.service.xcode.XCodeService;
+import org.kylin.util.TransferUtil;
 import org.kylin.util.WCodeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/api/2d")
 @Slf4j
 public class KylinLocate2DApiController {
+
+    @Autowired
+    private XCodeService xCodeService;
+
+
 
     @ResponseBody
     @RequestMapping("/shuffle")
@@ -30,7 +36,18 @@ public class KylinLocate2DApiController {
 
         log.info("shuffle req:{}", req);
 
-        return new WyfDataResponse<>(new WCodeSummarise().setwCodes(WCodeUtils.mockCodes(2, 20)));
+        if(Objects.isNull(req) || CollectionUtils.isEmpty(req.getSequences())){
+            log.warn(" 参数错误");
+            return WyfErrorResponse.buildErrorResponse();
+        }
+
+        List<Set<Integer>> riddles = TransferUtil.toIntegerSets(req.getSequences());
+
+        List<WCode> ret = xCodeService.quibinaryEncode(riddles);
+
+        log.info("shuffle ret: {}", ret);
+
+        return new WyfDataResponse<>(new WCodeSummarise().setwCodes(ret));
     }
 
 
@@ -40,7 +57,16 @@ public class KylinLocate2DApiController {
 
         log.info("kill req:{}", req);
 
-       return  new WyfDataResponse<>(new WCodeSummarise().setwCodes(Arrays.asList(WCodeUtils.mock(2))));
+        if(Objects.isNull(req)){
+            log.warn(" 参数错误");
+            return WyfErrorResponse.buildErrorResponse();
+        }
+
+        List<WCode> ret = xCodeService.killCodes(req);
+
+        log.info("kill code ret: {}", ret);
+
+       return  new WyfDataResponse<>(new WCodeSummarise().setwCodes(ret));
     }
 
     @ResponseBody
@@ -48,7 +74,7 @@ public class KylinLocate2DApiController {
     public WyfResponse compSelect(@RequestBody XCodeReq req){
         log.info("comp-select req:{}", req);
 
-        return  new WyfDataResponse<>(new WCodeSummarise().setwCodes(Arrays.asList(WCodeUtils.mock(2))));
+        return  new WyfDataResponse<>(new WCodeSummarise().setwCodes(xCodeService.compSelectCodes(req)));
     }
 
 
@@ -59,7 +85,7 @@ public class KylinLocate2DApiController {
             return new WyfErrorResponse(HttpStatus.BAD_REQUEST.value(), "导出数据错误");
         }
 
-        Optional<String> optFile = Optional.empty();
+        Optional<String> optFile = xCodeService.exportWCodeToFile(req);
         if(optFile.isPresent()){
             return new WyfDataResponse<>(optFile.get());
         }else{

@@ -30,7 +30,7 @@ public class TernaryLocationFilter implements CodeFilter<WelfareCode>{
             return;
         }
 
-        List<Set<Integer>> ternaries = TransferUtil.parseList(filterParam.getTernaryLocation());
+        List<Set<Integer>> ternaries = TransferUtil.parseGossipList(filterParam.getTernaryLocation());
 
         if(CollectionUtils.isEmpty(ternaries)){
             return;

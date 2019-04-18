@@ -20,6 +20,10 @@ public enum FilterStrategyEnum {
     SUM_INCREASE_FREQ(17, "和增频"),
     HIGH_FREQ_FILTER(18, "高频杀码"),
     FREQ_KILL_FILTER(19, "频度杀"),
+
+    BOLD_FILTER_IN_2D(100, "2D杀码"),
+    INVERSE_SELECT_FILTER_IN_2D(101, "2D筛选"),
+    GOSSIP_FILTER_IN_2D(102, "2D二码"),
     ;
     private Integer id;
     private String key;

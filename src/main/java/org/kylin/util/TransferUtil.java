@@ -1,5 +1,6 @@
 package org.kylin.util;
 
+import javafx.util.Pair;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +37,7 @@ public class TransferUtil {
         return sets;
     }
 
-    public static List<Set<Integer>> parseList(String seq){
+    public static List<Set<Integer>> parseGossipList(String seq){
         if(StringUtils.isBlank(seq) || seq.length() < 2){
             return Collections.emptyList();
         }
@@ -48,6 +49,24 @@ public class TransferUtil {
 
             if(!CollectionUtils.isEmpty(set)){
                 gossips.add(set);
+            }
+        }
+
+        return gossips;
+    }
+
+    public static List<Pair<Integer,Integer>> parse2DGossipList(String seq){
+        if(StringUtils.isBlank(seq) || seq.length() < 2){
+            return Collections.emptyList();
+        }
+
+        List<Pair<Integer,Integer>> gossips = new ArrayList<>();
+        String[] gosArr = seq.split("#|$|@|,|/| ");
+        for(String gos : gosArr){
+            List<Integer> list = toIntegerList(gos);
+
+            if(!CollectionUtils.isEmpty(list) && list.size() == 2){
+                gossips.add(new Pair<>(list.get(0), list.get(1)));
             }
         }
 

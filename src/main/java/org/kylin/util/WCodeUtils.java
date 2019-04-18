@@ -440,5 +440,40 @@ public class WCodeUtils {
         return false;
     }
 
+    public static boolean isEqual(WCode w1, WCode w2){
+        if(w1 == w2) return true;
+        if(w1 == null || w2 == null) return false;
+        if(w1.getDim() != w2.getDim()) return false;
+        for(int i=0; i<w1.getDim(); i++){
+            if(!Objects.equals(w1.getCodes().get(i), w2.getCodes().get(i))){
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static List<WCode> merge(List<List<WCode>> wCodesArray){
+        if(CollectionUtils.isEmpty(wCodesArray)){
+            return Collections.emptyList();
+        }
+
+        List<WCode> retCodes = wCodesArray.get(0);
+        for(int i=1; i<wCodesArray.size(); i++){
+            List<WCode> wCodes =  wCodesArray.get(i);
+            for(WCode wCode : wCodes){
+                for(WCode ret : retCodes){
+                    if(ret.equals(wCode)) {
+                        ret.setFreq(ret.getFreq() + wCode.getFreq());
+                        continue;
+                    }
+                }
+                retCodes.add(wCode);
+            }
+        }
+
+        return retCodes;
+    }
+
 
 }

@@ -21,6 +21,7 @@ public abstract class AbstractDocumentExporter<T> {
     protected T data;
 
     public AbstractDocumentExporter(XWPFDocument doc, T data) {
+        Objects.requireNonNull(data);
         this.doc = doc;
         this.data = data;
     }

@@ -213,7 +213,7 @@
 //
 //        WelfareCode welfareCode = new WelfareCode();
 //        welfareCode.setW3DCodes(w3DCodes);
-//        welfareCode.filter(new GossipFilter(), filterParam);
+//        welfareCode.filter(new GossipSimpleFilterr(), filterParam);
 //
 //        LOGGER.info(JSON.toJSONString(welfareCode.getW3DCodes()));
 //
