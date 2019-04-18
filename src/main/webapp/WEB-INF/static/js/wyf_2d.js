@@ -32,9 +32,6 @@ var app = new Vue({
     methods:{
         doPermutate: function () {
 
-            alert("暂未开放");
-            return;
-
             var paramArray = [];
             paramArray.push(this.sequence1);
             paramArray.push(this.sequence2);

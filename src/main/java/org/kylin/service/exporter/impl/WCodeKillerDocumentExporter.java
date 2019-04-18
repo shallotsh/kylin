@@ -1,4 +1,4 @@
-package org.kylin.service.pfive.impl;
+package org.kylin.service.exporter.impl;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -8,7 +8,7 @@ import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeReq;
 import org.kylin.constant.ExportPatternEnum;
 import org.kylin.constant.FilterStrategyEnum;
-import org.kylin.service.pfive.AbstractDocumentExporter;
+import org.kylin.service.exporter.AbstractDocumentExporter;
 import org.kylin.util.CommonUtils;
 import org.kylin.util.DocUtils;
 import org.kylin.util.WCodeUtils;

@@ -52,6 +52,16 @@
     height: 100%;
 }
 
+.queue_container {
+    border-bottom-width: 0px;
+    border-top-width: 0px;
+}
+
+.queue_item {
+    border-width: 2px;
+    border-style: dot-dash;
+}
+
 .div-padding-left-none{
     padding-right: 0px;
 }

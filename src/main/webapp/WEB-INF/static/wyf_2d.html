@@ -150,8 +150,14 @@
                             <!--<button v-for="(item, index) in cacheQueue" class="button white medium fill_parent_80"  @click="selectQueue(index)" @dbclick="delQueue(index)">队列{{ index }}</button>-->
                             <!--</div>-->
                             <div class="row">
-                                <select v-model="compItems" class="selectpicker fill_parent_80" multiple >
-                                    <option v-for="(item, index) in cacheQueue" @click="selectQueue(index)" @dbclick="delQueue(index)" :value='index'>队列{{ index }}</option>
+                                <select v-model="compItems" class="selectpicker fill_parent_80 queue_container" multiple >
+                                    <option class="queue_item"
+                                            v-for="(item, index) in cacheQueue"
+                                            @click="selectQueue(index)"
+                                            @dblclick="delQueue(index)"
+                                            :value='index' >
+                                        队列{{ index }}
+                                    </option>
                                 </select>
                             </div>
                         </div>

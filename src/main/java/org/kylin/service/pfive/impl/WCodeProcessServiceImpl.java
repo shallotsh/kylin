@@ -10,6 +10,7 @@ import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.constant.ExportPatternEnum;
 import org.kylin.constant.FilterStrategyEnum;
 import org.kylin.factory.StrategyFactory;
+import org.kylin.service.exporter.impl.WCodeKillerDocumentExporter;
 import org.kylin.service.pfive.WCodeProcessService;
 import org.kylin.util.DocUtils;
 import org.kylin.util.WCodeUtils;
