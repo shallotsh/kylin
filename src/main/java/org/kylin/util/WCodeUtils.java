@@ -462,13 +462,17 @@ public class WCodeUtils {
         for(int i=1; i<wCodesArray.size(); i++){
             List<WCode> wCodes =  wCodesArray.get(i);
             for(WCode wCode : wCodes){
+                boolean tag = false;
                 for(WCode ret : retCodes){
                     if(ret.equals(wCode)) {
                         ret.setFreq(ret.getFreq() + wCode.getFreq());
-                        continue;
+                        tag = true;
+                        break;
                     }
                 }
-                retCodes.add(wCode);
+                if(!tag) {
+                    retCodes.add(wCode);
+                }
             }
         }
 
