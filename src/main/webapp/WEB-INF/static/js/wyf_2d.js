@@ -101,10 +101,16 @@ var app = new Vue({
         },
 
         selectQueue: function(cursor){
+            console.log('cursor=' + cursor);
             this.wCodes = this.cacheQueue[cursor];
             var count = 0;
+
             for(var idx in this.compItems){
-                count += this.cacheQueue[idx].length;
+                count += this.cacheQueue[this.compItems[idx]].length;
+                console.log('idx=' + idx + ',cpm[idx]='+this.compItems[idx] + ',cursor='+ cursor);
+                if(this.compItems[idx] != cursor){
+                    this.wCodes = this.wCodes.concat(this.cacheQueue[this.compItems[idx]]);
+                }
             }
             this.wyfMessage = '已选择队列【' + this.compItems + '】共计 ' + count + ' 注二码.';
             console.log('Item(index='+this.compItems+' in the cache queue was selected.');
