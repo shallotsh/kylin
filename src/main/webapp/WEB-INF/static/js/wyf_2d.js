@@ -210,7 +210,8 @@ var app = new Vue({
             }
 
             var args = {
-                wCodes: this.wCodes
+                wCodes: this.wCodes,
+                freqSeted: this.freqSeted
             };
 
             // console.log('canshu:' + JSON.stringify(args, null, 2));

@@ -38,24 +38,26 @@ public class XCode2DKillerDocExporter extends AbstractDocumentExporter<XCodeReq>
 
     @Override
     public void writeBody() {
+        boolean freqSeted = data.getFreqSeted();
+
 
         // ab*
-        exportWCodes(doc, data.getwCodes(), "ab*", null, false, "ab*");
+        exportWCodes(doc, data.getwCodes(), "ab*", null, freqSeted, "ab*");
 
         // ba*
-        exportWCodes(doc, data.getwCodes(), "ba*", null, false, "ba*");
+        exportWCodes(doc, data.getwCodes(), "ba*", null, freqSeted, "ba*");
 
         // *ab
-        exportWCodes(doc, data.getwCodes(), "*ab", null, false, "*ab");
+        exportWCodes(doc, data.getwCodes(), "*ab", null, freqSeted, "*ab");
 
         // *ba
-        exportWCodes(doc, data.getwCodes(), "*ba", null, false, "*ba");
+        exportWCodes(doc, data.getwCodes(), "*ba", null, freqSeted, "*ba");
 
         // a*b
-        exportWCodes(doc, data.getwCodes(), "a*b", null, false, "a*b");
+        exportWCodes(doc, data.getwCodes(), "a*b", null, freqSeted, "a*b");
 
         // b*a
-        exportWCodes(doc, data.getwCodes(), "b*a", null, false, "b*a");
+        exportWCodes(doc, data.getwCodes(), "b*a", null, freqSeted, "b*a");
 
 
 
@@ -88,19 +90,26 @@ public class XCode2DKillerDocExporter extends AbstractDocumentExporter<XCodeReq>
 
         for(WCode code : wCodes) {
 
+            String printCode = "";
             if("ab*".equals(pattern)) {
-                content.setText( ""+code.getCodes().get(0)+code.getCodes().get(1)+"*"+ "     ");
+                printCode =  ""+code.getCodes().get(0)+code.getCodes().get(1)+"*"+ "     ";
             }else if("ba*".equals(pattern)){
-                content.setText( ""+code.getCodes().get(1)+code.getCodes().get(0)+"*"+ "     ");
+                printCode = ""+code.getCodes().get(1)+code.getCodes().get(0)+"*"+ "     ";
             }else if("*ab".equals(pattern)){
-                content.setText( ""+"*"+code.getCodes().get(0)+code.getCodes().get(1)+ "     ");
+                printCode = ""+"*"+code.getCodes().get(0)+code.getCodes().get(1)+ "     ";
             }else if("*ba".equals(pattern)){
-                content.setText( ""+code.getCodes().get(1)+code.getCodes().get(0)+"*"+ "     ");
+                printCode = ""+code.getCodes().get(1)+code.getCodes().get(0)+"*"+ "     ";
             }else if("a*b".equals(pattern)){
-                content.setText( ""+code.getCodes().get(0)+"*"+code.getCodes().get(1)+ "     ");
+                printCode = ""+code.getCodes().get(0)+"*"+code.getCodes().get(1)+ "     ";
             }else if("b*a".equals(pattern)){
-                content.setText( ""+code.getCodes().get(1)+"*"+code.getCodes().get(0)+ "     ");
+                printCode = ""+code.getCodes().get(1)+"*"+code.getCodes().get(0)+ "     ";
             }
+
+            if(freqSeted != null && freqSeted){
+                printCode = "[" + code.getFreq() + "]" + printCode;
+            }
+
+            content.setText(printCode);
 
         }
 
