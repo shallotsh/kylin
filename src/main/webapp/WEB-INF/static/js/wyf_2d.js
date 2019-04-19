@@ -102,7 +102,11 @@ var app = new Vue({
 
         selectQueue: function(cursor){
             this.wCodes = this.cacheQueue[cursor];
-            this.wyfMessage = '已选择队列【' + this.compItems + '】';
+            var count = 0;
+            for(var idx in this.compItems){
+                count += this.cacheQueue[idx].length;
+            }
+            this.wyfMessage = '已选择队列【' + this.compItems + '】共计 ' + count + ' 注二码.';
             console.log('Item(index='+this.compItems+' in the cache queue was selected.');
         },
 
@@ -112,14 +116,18 @@ var app = new Vue({
                 return;
             }
 
-            if(this.compItems.length < 1){
-                this.handleException("请先选择参加综合选码的预测队列");
-                return;
-            }
-
             var selectedQueues = new Array();
-            for(idx in this.compItems){
-                selectedQueues.push({index: idx, wCodes: this.cacheQueue[idx]});
+
+            if(this.compItems.length < 1){
+
+                for(var idx=0; idx < this.cacheQueue.length; idx ++){
+                    selectedQueues.push({index: idx, wCodes: this.cacheQueue[idx]});
+                }
+
+            }else {
+                for (var idx in this.compItems) {
+                    selectedQueues.push({index: idx, wCodes: this.cacheQueue[idx]});
+                }
             }
 
             var args = {
@@ -252,9 +260,7 @@ var app = new Vue({
             for( idx in this.wCodes){
                 code = this.wCodes[idx];
                 // code.codes.reverse();
-                var codeString = code.codes.join("") + '-' + code.codes.reduce(function (preValue,curValue,index,array) {
-                    return preValue + curValue;
-                },0)%10;
+                var codeString = code.codes.join("");
                 if(this.freqSeted){
                     codeString = '[' + code.freq + ']' + codeString;
                 }

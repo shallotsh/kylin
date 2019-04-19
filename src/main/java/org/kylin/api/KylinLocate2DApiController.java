@@ -74,7 +74,7 @@ public class KylinLocate2DApiController {
     public WyfResponse compSelect(@RequestBody XCodeReq req){
         log.info("comp-select req:{}", req);
 
-        return  new WyfDataResponse<>(new WCodeSummarise().setwCodes(xCodeService.compSelectCodes(req)));
+        return  new WyfDataResponse<>(new WCodeSummarise().setwCodes(xCodeService.compSelectCodes(req)).setFreqSeted(true));
     }
 
 

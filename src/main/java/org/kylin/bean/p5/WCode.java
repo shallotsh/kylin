@@ -87,8 +87,9 @@ public class WCode implements Cloneable,Comparable,RandomKill{
         return freq;
     }
 
-    public void setFreq(int freq) {
+    public WCode setFreq(int freq) {
         this.freq = freq;
+        return this;
     }
 
     public int getSumTail() {

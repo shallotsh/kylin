@@ -40,7 +40,7 @@ public class XCodeServiceImpl implements XCodeService {
                         int min = Math.min(a, b);
                         int idx = min * 10 + max;
                         if(stat[idx] == 0){
-                            wCodes.add(new WCode(2, min, max));
+                            wCodes.add(new WCode(2, min, max).setFreq(1));
                             stat[idx] = 1;
                         }
                     }
