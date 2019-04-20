@@ -11,6 +11,7 @@ import org.kylin.bean.p5.WCode;
 import org.kylin.service.exporter.AbstractDocumentExporter;
 import org.kylin.util.CommonUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class XCode2DKillerDocExporter extends AbstractDocumentExporter<XCodeReq>
         XWPFParagraph header = doc.createParagraph();
         XWPFRun hr2 = header.createRun();
 
-        hr2.setText(" 时间：" + CommonUtils.getCurrentDateString());
+        hr2.setText("时间：" + CommonUtils.getCurrentDateString());
         hr2.setTextPosition(10);
         hr2.setFontSize(18);
 
@@ -38,26 +39,27 @@ public class XCode2DKillerDocExporter extends AbstractDocumentExporter<XCodeReq>
 
     @Override
     public void writeBody() {
-        boolean freqSeted = data.getFreqSeted();
+        Boolean freqSeted = data.getFreqSeted();
 
+        int count = (CollectionUtils.size(data.getwCodes()) * 3);
 
         // ab*
-        exportWCodes(doc, data.getwCodes(), "ab*", null, freqSeted, "ab*");
+        exportWCodes(doc, data.getwCodes(), "ab* : " + count + " 注", null, freqSeted, "ab*");
 
         // ba*
-        exportWCodes(doc, data.getwCodes(), "ba*", null, freqSeted, "ba*");
+        exportWCodes(doc, data.getwCodes(), "ba*: " + count + " 注" , null, freqSeted, "ba*");
 
         // *ab
-        exportWCodes(doc, data.getwCodes(), "*ab", null, freqSeted, "*ab");
+        exportWCodes(doc, data.getwCodes(), "*ab: " + count + " 注", null, freqSeted, "*ab");
 
         // *ba
-        exportWCodes(doc, data.getwCodes(), "*ba", null, freqSeted, "*ba");
+        exportWCodes(doc, data.getwCodes(), "*ba: "  + count + " 注", null, freqSeted, "*ba");
 
         // a*b
-        exportWCodes(doc, data.getwCodes(), "a*b", null, freqSeted, "a*b");
+        exportWCodes(doc, data.getwCodes(), "a*b: "  + count + " 注", null, freqSeted, "a*b");
 
         // b*a
-        exportWCodes(doc, data.getwCodes(), "b*a", null, freqSeted, "b*a");
+        exportWCodes(doc, data.getwCodes(), "b*a: "  + count + " 注", null, freqSeted, "b*a");
 
 
 
@@ -69,6 +71,8 @@ public class XCode2DKillerDocExporter extends AbstractDocumentExporter<XCodeReq>
         if(CollectionUtils.isEmpty(wCodes)){
             return;
         }
+
+        Collections.sort(wCodes);
 
         XWPFParagraph paragraph = doc.createParagraph();
         if(!StringUtils.isBlank(titleString)){

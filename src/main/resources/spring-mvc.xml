@@ -20,6 +20,7 @@
     <!-- 配置注解驱动 可以将request参数与绑定到controller参数上 -->
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
+    <bean class="org.kylin.config.SwaggerConfig" />
 
     <!--HandlerMapping 无需配置，springmvc可以默认启动-->
 
