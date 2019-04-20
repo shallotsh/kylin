@@ -41,7 +41,7 @@ public class XCode2DKillerDocExporter extends AbstractDocumentExporter<XCodeReq>
     public void writeBody() {
         Boolean freqSeted = data.getFreqSeted();
 
-        int count = (CollectionUtils.size(data.getwCodes()) * 3);
+        int count = (CollectionUtils.size(data.getwCodes()));
 
         // ab*
         exportWCodes(doc, data.getwCodes(), "ab* : " + count + " 注", null, freqSeted, "ab*");
