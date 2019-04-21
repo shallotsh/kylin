@@ -18,17 +18,33 @@ var app = new Vue({
         inverseCodeSeq: null,
         wCodes: null,
         wyfMessage:'这一行是统计数据展示区域',
-        config:global_config,
+        config: global_config,
         cacheQueue: new Array(),
-        compItems:[],
-
-        sumValue:null,
-        codesCount: 0,
-        welfareCode: null,
-        p3Code:null
+        compItems: [],
+        drawNotice: null,
+        drawNoticeOverview: ''
     },
     created: function(){
         this.export_format = 0;
+    },
+    mounted: function(){
+        axios.get("/api/3d/draw/notice?", {
+            params: {
+                name: '3d',
+                issueCount: 1
+            }
+        }).then(function (resp) {
+            this.drawNotice = resp.data.data;
+            var latestDrawRet = this.drawNotice.result[0];
+            var desc = "开奖期数: 【" + latestDrawRet.code
+                + " 】（" + latestDrawRet.date + "），中奖号码: 【"
+                + latestDrawRet.red + "】";
+
+            app.drawNoticeOverview = desc;
+
+        }).catch(function (reason) {
+            console.log("3d resp error:" + JSON.stringify(reason));
+        });
     },
     methods:{
         doPermutate: function () {
@@ -274,6 +290,23 @@ var app = new Vue({
                 printCodes.push(codeString);
             }
             return printCodes;
+        },
+        drawNoticeDesc: function(){
+
+            if(this.drawNotice == null
+                || this.drawNotice.state != 0
+                || this.drawNotice.result.length <= 0) {
+                console.log("参数问题");
+                return "";
+            }
+
+            var latestDrawRet = this.drawNotice.result[0];
+            var desc = "开奖期数: 【" + latestDrawRet.code
+                + " 】（" + latestDrawRet.date + "），中奖号码: 【"
+                + latestDrawRet.red + "】";
+
+            console.log("desc : " + desc);
+            return desc;
         }
     }
 });

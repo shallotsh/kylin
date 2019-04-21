@@ -11,7 +11,6 @@ import org.kylin.bean.p5.WCode;
 import org.kylin.bean.p5.WCodeSummarise;
 import org.kylin.service.xcode.XCodeService;
 import org.kylin.util.TransferUtil;
-import org.kylin.util.WCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -31,7 +30,7 @@ public class KylinLocate2DApiController {
 
 
     @ResponseBody
-    @RequestMapping("/shuffle")
+    @RequestMapping(value = "/shuffle", method = RequestMethod.POST)
     public WyfResponse shuffle2d(@RequestBody XCodeReq req){
 
         log.info("shuffle req:{}", req);
@@ -52,7 +51,7 @@ public class KylinLocate2DApiController {
 
 
     @ResponseBody
-    @RequestMapping("/kill/code")
+    @RequestMapping(value = "/kill/code", method = RequestMethod.POST)
     public WyfResponse killCode(@RequestBody XCodeReq req, HttpServletRequest request){
 
         log.info("kill req:{}", req);
@@ -70,7 +69,7 @@ public class KylinLocate2DApiController {
     }
 
     @ResponseBody
-    @RequestMapping("/comp/select")
+    @RequestMapping(value = "/comp/select", method = RequestMethod.POST)
     public WyfResponse compSelect(@RequestBody XCodeReq req){
         log.info("comp-select req:{}", req);
 
