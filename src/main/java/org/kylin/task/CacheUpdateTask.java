@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
+@Component("cacheUpdateTask")
 @Slf4j
 public class CacheUpdateTask {
 
     @Autowired
     private GuavaCacheWrapper cacheWrapper;
 
-    @Scheduled(cron = "0/10 0-50 11 * * ?")
+    @Scheduled(cron = "0 5,10,15 * * * ?")
     public void updateTask(){
 
         log.info("更新缓存");

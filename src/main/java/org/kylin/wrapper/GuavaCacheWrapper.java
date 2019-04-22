@@ -19,7 +19,7 @@ public class GuavaCacheWrapper {
     public void init(){
         cache = CacheBuilder.newBuilder()
                 .maximumSize(100)
-                .expireAfterWrite(30, TimeUnit.MINUTES)
+                .expireAfterWrite(60, TimeUnit.MINUTES)
                 .concurrencyLevel(Runtime.getRuntime().availableProcessors())
                 .recordStats()
                 .build();
