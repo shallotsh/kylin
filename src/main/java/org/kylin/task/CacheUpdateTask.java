@@ -17,10 +17,8 @@ public class CacheUpdateTask {
     @Autowired
     private GuavaCacheWrapper cacheWrapper;
 
-    @Scheduled(cron = "0 5,10,15 * * * ?")
+    @Scheduled(cron = "0 15,20,25,30,35 * * * ?")
     public void updateTask(){
-
-        log.info("更新缓存");
 
         Optional<SdDrawNoticeResult> retOpt = OkHttpUtils.getSdDrawNoticeResult("3d", 1);
         if(!retOpt.isPresent()){
