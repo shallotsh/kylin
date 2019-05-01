@@ -1,5 +1,6 @@
 package org.kylin.service.xcode.filters.impl;
 
+import javafx.util.Pair;
 import org.apache.commons.collections4.CollectionUtils;
 import org.kylin.bean.p5.WCode;
 import org.kylin.service.xcode.filters.SimpleFilter;
@@ -20,14 +21,13 @@ public class InverseSelectCodeFilter implements SimpleFilter{
             return Collections.emptyList();
         }
 
-        Set<Integer> inverseCodes = TransferUtil.toIntegerSet(filterStr);
-
-        if(CollectionUtils.isEmpty(inverseCodes)){
+        List<Pair<Integer,Integer>> pairs = TransferUtil.parsePairCodeList(filterStr);
+        if(CollectionUtils.isEmpty(pairs)){
             return target;
         }
 
         List<WCode> ret = target.stream().filter(
-                wCode -> WCodeUtils.containInSet(wCode, inverseCodes) == 0
+                wCode -> !WCodeUtils.isEqualAnyInPairCodeUnorder(wCode, pairs)
         ).collect(Collectors.toList());
 
         return ret;

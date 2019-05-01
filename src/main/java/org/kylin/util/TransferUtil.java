@@ -55,7 +55,7 @@ public class TransferUtil {
         return gossips;
     }
 
-    public static List<Pair<Integer,Integer>> parse2DGossipList(String seq){
+    public static List<Pair<Integer,Integer>> parsePairCodeList(String seq){
         if(StringUtils.isBlank(seq) || seq.length() < 2){
             return Collections.emptyList();
         }

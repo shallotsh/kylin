@@ -12,6 +12,7 @@ public class XCodeReq {
     private String boldCodeSeq;
     private String inverseCodeSeq;
     private String gossipCodeSeq;
+    private String kdSeq;
     private List<WCode> wCodes;
     private Boolean freqSeted;
 //    private List<WCode>[] wCodesArray;
@@ -55,6 +56,15 @@ public class XCodeReq {
 
     public XCodeReq setGossipCodeSeq(String gossipCodeSeq) {
         this.gossipCodeSeq = gossipCodeSeq;
+        return this;
+    }
+
+    public String getKdSeq() {
+        return kdSeq;
+    }
+
+    public XCodeReq setKdSeq(String kdSeq) {
+        this.kdSeq = kdSeq;
         return this;
     }
 

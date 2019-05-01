@@ -13,6 +13,7 @@ import org.kylin.service.xcode.XCodeService;
 import org.kylin.service.xcode.filters.impl.BoldCodeFilter;
 import org.kylin.service.xcode.filters.impl.GossipSimpleFilterr;
 import org.kylin.service.xcode.filters.impl.InverseSelectCodeFilter;
+import org.kylin.service.xcode.filters.impl.KdSimpleFilter;
 import org.kylin.util.WCodeUtils;
 import org.springframework.stereotype.Service;
 
@@ -72,15 +73,24 @@ public class XCodeServiceImpl implements XCodeService {
 
         if(CollectionUtils.isNotEmpty(target) && StringUtils.isNotBlank(req.getInverseCodeSeq())){
             target = new InverseSelectCodeFilter().filter(target, req.getInverseCodeSeq());
-            log.info("筛选 {} 注2D", (count - CollectionUtils.size(target)));
+            log.info("筛选杀 {} 注2D", (count - CollectionUtils.size(target)));
             count = CollectionUtils.size(target);
         }
 
         if(CollectionUtils.isNotEmpty(target) && StringUtils.isNotBlank(req.getGossipCodeSeq())){
             target = new GossipSimpleFilterr().filter(target, req.getGossipCodeSeq());
-            log.info("二码 {} 注2D", (count - CollectionUtils.size(target)));
+            log.info("二码杀 {} 注2D", (count - CollectionUtils.size(target)));
             count = CollectionUtils.size(target);
         }
+
+
+        if(CollectionUtils.isNotEmpty(target)
+                && StringUtils.isNotBlank(req.getKdSeq())){
+            target = new KdSimpleFilter().filter(target, req.getKdSeq());
+            log.info("跨度杀 {} 注2D", (count - CollectionUtils.size(target)));
+            count = CollectionUtils.size(target);
+        }
+
 
         log.info("杀码后 {} 注2D", count);
 

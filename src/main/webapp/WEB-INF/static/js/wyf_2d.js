@@ -16,6 +16,7 @@ var app = new Vue({
         boldCodeSeq: null,
         gossipCodeSeq: null,
         inverseCodeSeq: null,
+        kdSeq: null,
         wCodes: null,
         wyfMessage:'这一行是统计数据展示区域',
         config: global_config,
@@ -195,7 +196,8 @@ var app = new Vue({
                 "wCodes": this.wCodes,
                 "boldCodeSeq": this.boldCodeSeq,
                 "inverseCodeSeq": this.inverseCodeSeq,
-                "gossipCodeSeq": this.gossipCodeSeq
+                "gossipCodeSeq": this.gossipCodeSeq,
+                "kdSeq": this.kdSeq
             };
 
             console.log('args' + JSON.stringify(args));

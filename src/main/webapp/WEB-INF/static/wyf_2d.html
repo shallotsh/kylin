@@ -29,7 +29,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发v1.1.5 </strong></a>
+            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发v1.1.6 </strong></a>
 
             <div id="sideNav" href="">
                 <i class="fa fa-bars icon"></i>
@@ -118,12 +118,18 @@
                 </div>
                 <div class=" form-inline col-sm-2">
                     <label for="invert_code" class="control-label">筛选</label>
-                    <input type="text" size="11" class="form-control fill_parent_50" v-model.trim="inverseCodeSeq" id="invert_code" placeholder="筛选码">
+                    <input type="text" size="11" class="form-control fill_parent_50" v-model.trim="inverseCodeSeq" id="invert_code" placeholder="',#/| '分割">
                 </div>
                 <div class=" form-inline col-sm-2">
                     <label for="gossip_code" class="control-label">二码</label>
-                    <input type="text" size="11" class="form-control fill_parent_50" v-model.trim="gossipCodeSeq" id="gossip_code" placeholder="八卦二码">
+                    <input type="text" size="11" class="form-control fill_parent_50" v-model.trim="gossipCodeSeq" id="gossip_code" placeholder="',#/| '分割，八卦二码">
                 </div>
+
+                <div class=" form-inline col-sm-2">
+                <label for="kd_code" class="control-label">跨度</label>
+                <input type="text" size="11" class="form-control fill_parent_50" v-model="kdSeq" id="kd_code" placeholder="跨度">
+                </div>
+
                 <div class=" form-inline col-sm-4">
                     <div class="col-sm-4" style="padding-right: 0px">
                         <button type="button" @click="killCode" :disabled="config.isP5" class="btn btn-primary fill_parent"> 杀 码 </button>
@@ -231,7 +237,7 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="js/wyf_2d.js?v=4"></script>
+<script src="js/wyf_2d.js?v=5"></script>
 
 
 </body>

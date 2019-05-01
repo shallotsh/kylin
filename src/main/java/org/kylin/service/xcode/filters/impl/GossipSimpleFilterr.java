@@ -19,7 +19,7 @@ public class GossipSimpleFilterr implements SimpleFilter{
             return Collections.emptyList();
         }
 
-        List<Pair<Integer,Integer>> gossips = TransferUtil.parse2DGossipList(filterStr);
+        List<Pair<Integer,Integer>> gossips = TransferUtil.parsePairCodeList(filterStr);
         if(CollectionUtils.isEmpty(gossips)){
             return target;
         }

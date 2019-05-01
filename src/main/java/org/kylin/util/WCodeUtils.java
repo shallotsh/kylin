@@ -2,6 +2,7 @@ package org.kylin.util;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import javafx.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -137,6 +138,31 @@ public class WCodeUtils {
 
         List<Integer> codes = wCode.getCodes().stream().filter(e -> set.contains(e)).collect(Collectors.toList());
         return CollectionUtils.size(codes);
+    }
+
+
+    /**
+     * 是否与任意筛选码相等
+     *
+     * @param wCode     二码
+     * @param pairs     抽象二码，示例：筛选二码
+     * @return
+     */
+    public static boolean isEqualAnyInPairCodeUnorder(WCode wCode, List<Pair<Integer, Integer>> pairs){
+
+        if(wCode == null || CollectionUtils.isEmpty(pairs)){
+            return false;
+        }
+
+        for(Pair<Integer, Integer> pair : pairs){
+            if( (pair.getKey().equals(wCode.getCodes().get(0)) && pair.getValue().equals(wCode.getCodes().get(1)))
+                    || (pair.getKey().equals(wCode.getCodes().get(1)) && pair.getValue().equals(wCode.getCodes().get(0))) ){
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
 
