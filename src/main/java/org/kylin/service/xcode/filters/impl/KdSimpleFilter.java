@@ -42,7 +42,7 @@ public class KdSimpleFilter implements SimpleFilter{
         Objects.requireNonNull(wCode);
         Objects.requireNonNull(rangeSet);
 
-        return rangeSet.contains(Math.abs(wCode.getCodes().get(0)));
+        return rangeSet.contains(Math.abs(wCode.getCodes().get(0) - wCode.getCodes().get(1)));
 
     }
 }
