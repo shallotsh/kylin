@@ -315,6 +315,26 @@
                 <hr/>
                 <div class="row">
                     <div class="col-sm-3 col-md-3">
+                        <input type="text" class="form-control" ng-model="wyf_ab_filter" id="ab_filter"
+                               placeholder="AB">
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-primary" ng-click="bitsFilter()"> ab筛选</button>
+                    </div>
+
+                    <div class="col-sm-3 col-md-3">
+                        <input type="text" class="form-control" ng-model="wyf_bc_filter" id="bc_filter"
+                               placeholder="bc筛选">
+                    </div>
+                    <div class="col-sm-3 col-md-3">
+                        <button type="button" class="btn btn-primary" ng-click="bitsFilter()" >bc筛选</button>
+                    </div>
+                </div>
+
+
+                <hr/>
+                <div class="row">
+                    <div class="col-sm-3 col-md-3">
                             <input type="number" class="form-control" ng-model="wyf_random_kill_count" id="wyf_random_kill"
                                    placeholder="随机杀注数">
                     </div>

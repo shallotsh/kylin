@@ -113,6 +113,15 @@ public class ApiCodePredictor {
         return new WyfDataResponse<>(code);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/codes/bit/seq/filter",  method = RequestMethod.POST)
+    public WyfResponse bitsFilter(@RequestBody P3Param p3Param){
+        LOGGER.info("P3位序筛选 p3Param={}", p3Param);
+        WelfareCode code = welfareCodePredictor.bitsFilter(p3Param);
+
+        return new WyfDataResponse<>(code);
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "/codes/minus",  method = RequestMethod.POST)

@@ -203,14 +203,14 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.welfareCode = $rootScope.cacheQueue[index];
         $rootScope.wyfCodes =  $rootScope.cacheQueue[index].codes;
         $rootScope.codesCount = $rootScope.wyfCodes.length;
-    }
+    };
 
     $scope.delQueue = function (index) {
         console.log("删除队列:" + index);
         console.log(this);
 
         $rootScope.cacheQueue.splice(index, 1);
-    }
+    };
 
     $scope.doCache = function () {
         if(!$rootScope.isPredict){
@@ -231,7 +231,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             $rootScope.cache.welfareCode = deepCopy($rootScope.welfareCode);
         }
 
-    }
+    };
 
     $scope.add2Queue = function () {
         if(!$rootScope.isPredict){
@@ -243,7 +243,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
 
         $rootScope.cacheQueue.push(obj);
         console.log("push:" + JSON.stringify($rootScope.cacheQueue, null, 2));
-    }
+    };
 
     $scope.compSelect = function () {
         if($rootScope.cacheQueue.length == 0){
@@ -296,7 +296,7 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             alert("取余失败!");
         });
 
-    }
+    };
 
     $scope.highFreqFilter = function () {
         if(!$rootScope.isPredict){
@@ -349,15 +349,44 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
             console.log("resp:" + JSON.stringify(response.data, null, 2));
             alert("和增频 杀码失败!");
         });
-    }
+    };
 
+
+    $scope.bitsFilter = function() {
+        if(!$rootScope.isPredict){
+            handleException("请先完成预测");
+            return;
+        }
+
+        var data = {
+            welfareCode: deepCopy($rootScope.welfareCode),
+            abSeq: $scope.wyf_ab_filter,
+            bcSeq: $scope.wyf_bc_filter
+        };
+
+        console.log("param:" + JSON.stringify(data), null, 2);
+        $http({
+            method:"POST",
+            url:"/api/welfare/codes/bit/seq/filter",
+            data: JSON.stringify(data),
+            headers:{
+                "Content-Type": "application/json; charset=UTF-8"
+            }
+        }).then(function success(response) {
+            handleResponse(response);
+            $rootScope.wyfMessage = '位筛选';
+        }, function fail(response) {
+            console.log("resp:" + JSON.stringify(response.data, null, 2));
+            alert("位筛选 杀码失败!");
+        });
+
+    };
 
     $scope.increaseFreqByBoldCode = function () {
         if(!$rootScope.isPredict){
             handleException("请先完成预测");
             return;
         }
-
         var data = {
             condition: $scope.wyf_bold_increase_freq,
             welfareCode: deepCopy($rootScope.welfareCode)
@@ -495,6 +524,8 @@ app.controller('logicCtr', function ($scope, $rootScope, $http) {
         $rootScope.cache.welfareCode = {};
         $rootScope.wyf_statistics = false;
         $rootScope.wyf_random_kill_count = 0;
+        $rootScope.wyf_ab_filter = undefined;
+        $rootScope.wyf_bc_filter = undefined;
     }
 
     function deepCopy(source) {

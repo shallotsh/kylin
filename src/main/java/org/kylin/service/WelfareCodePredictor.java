@@ -68,4 +68,13 @@ public interface WelfareCodePredictor {
      * @return
      */
     WelfareCode increaseFreqByBoldCode(P3Param p3Param);
+
+
+    /**
+     * 位序筛选
+     *
+     * @param p3Param
+     * @return
+     */
+    WelfareCode bitsFilter(P3Param p3Param);
 }

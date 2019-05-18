@@ -1,11 +1,13 @@
 package org.kylin.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import javafx.util.Pair;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.kylin.algorithm.filter.CodeFilter;
 import org.kylin.bean.*;
+import org.kylin.constant.BitConstant;
 import org.kylin.constant.CodeTypeEnum;
 import org.kylin.constant.WelfareConfig;
 import org.kylin.service.WelfareCodePredictor;
@@ -19,10 +21,8 @@ import org.springframework.stereotype.Service;
 import org.kylin.service.encode.WyfEncodeService;
 
 import javax.annotation.Resource;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author huangyawu
@@ -213,4 +213,69 @@ public class WelfareCodePredictorImpl implements WelfareCodePredictor {
 
         return fCode;
     }
+
+    @Override
+    public WelfareCode bitsFilter(P3Param p3Param) {
+
+        if(Objects.isNull(p3Param)){
+            return null;
+        }
+
+        if(StringUtils.isBlank(p3Param.getAbSeq()) && StringUtils.isBlank(p3Param.getBcSeq())){
+            return p3Param.getWelfareCode();
+        }
+
+        WelfareCode fCode = p3Param.getWelfareCode();
+        if(fCode == null || CollectionUtils.isEmpty(fCode.getW3DCodes())){
+            return null;
+        }
+
+
+        List<W3DCode> ret = fCode.getW3DCodes();
+
+        if(!StringUtils.isBlank(p3Param.getAbSeq())){
+            List<Pair<Integer,Integer>> pairs = TransferUtil.parsePairCodeList(p3Param.getAbSeq());
+
+            if(!CollectionUtils.isEmpty(pairs)){
+                ret = ret.stream()
+                        .filter(w3DCode -> !bitSeq(w3DCode, pairs, BitConstant.HUNDRED, BitConstant.DECADE))
+                        .collect(Collectors.toList());
+            }
+        }
+
+
+        if(!StringUtils.isBlank(p3Param.getBcSeq())){
+            List<Pair<Integer,Integer>> pairs = TransferUtil.parsePairCodeList(p3Param.getBcSeq());
+
+            if(!CollectionUtils.isEmpty(pairs)){
+                ret = ret.stream()
+                        .filter(w3DCode -> !bitSeq(w3DCode, pairs, BitConstant.DECADE, BitConstant.UNIT))
+                        .collect(Collectors.toList());
+            }
+        }
+
+        fCode.setW3DCodes(ret);
+        fCode.sort(WelfareCode::bitSort).generate();
+
+        return fCode;
+    }
+
+    private boolean bitSeq(W3DCode w3DCode, List<Pair<Integer, Integer>> pairs, int bitLeftIdx, int bitRightIdx){
+
+        if(Objects.isNull(w3DCode) || CollectionUtils.isEmpty(pairs)){
+            return false;
+        }
+
+
+        for(Pair<Integer, Integer> pair : pairs){
+            if(w3DCode.getCodes()[bitLeftIdx] == pair.getKey()
+                    && w3DCode.getCodes()[bitRightIdx] == pair.getValue()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }
