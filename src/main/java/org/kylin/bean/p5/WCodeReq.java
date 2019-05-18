@@ -18,6 +18,10 @@ public class WCodeReq {
     private boolean randomKill;
     private List<Integer> bitsSeq;
     private Integer exportFormat;
+    private String bitAB;
+    private String bitBC;
+    private String bitCD;
+    private String bitDE;
 
     public Integer getFilterType() {
         return filterType;
@@ -130,6 +134,43 @@ public class WCodeReq {
         return this;
     }
 
+
+    public String getBitAB() {
+        return bitAB;
+    }
+
+    public WCodeReq setBitAB(String bitAB) {
+        this.bitAB = bitAB;
+        return this;
+    }
+
+    public String getBitBC() {
+        return bitBC;
+    }
+
+    public WCodeReq setBitBC(String bitBC) {
+        this.bitBC = bitBC;
+        return this;
+    }
+
+    public String getBitCD() {
+        return bitCD;
+    }
+
+    public WCodeReq setBitCD(String bitCD) {
+        this.bitCD = bitCD;
+        return this;
+    }
+
+    public String getBitDE() {
+        return bitDE;
+    }
+
+    public WCodeReq setBitDE(String bitDE) {
+        this.bitDE = bitDE;
+        return this;
+    }
+
     public String getConditions(){
         return "WCodeReq{" +
                 "filterType=" + filterType +
@@ -148,7 +189,14 @@ public class WCodeReq {
                 ", exportType=" + exportType +
                 ", p3Code='" + p3Code + '\'' +
                 ", randomCount='" + randomCount + '\'' +
+                ", freqSeted=" + freqSeted +
                 ", randomKill=" + randomKill +
+                ", bitsSeq=" + bitsSeq +
+                ", exportFormat=" + exportFormat +
+                ", bitAB='" + bitAB + '\'' +
+                ", bitBC='" + bitBC + '\'' +
+                ", bitCD='" + bitCD + '\'' +
+                ", bitDE='" + bitDE + '\'' +
                 '}';
     }
 }

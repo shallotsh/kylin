@@ -41,6 +41,10 @@ var app = new Vue({
         wyf_bca:null,
         wyf_cab:null,
         wyf_cba:null,
+        bitAB:null,
+        bitBC:null,
+        bitCD:null,
+        bitDE:null,
         export_format: null,
         drawNoticeOverview: ''
     },
@@ -352,7 +356,11 @@ var app = new Vue({
             var args = {
                 bits: bitsArray,
                 wCodes: this.welfareCode,
-                bitsSeq: bitsSeqs
+                bitsSeq: bitsSeqs,
+                bitAB: this.bitAB,
+                bitBC: this.bitBC,
+                bitCD: this.bitCD,
+                bitDE: this.bitDE
             };
 
             console.log('abc: ' + this.wyf_abc + ', acb: ' + this.wyf_acb);

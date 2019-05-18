@@ -29,7 +29,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发v1.1.6 </strong></a>
+            <a class="navbar-brand" href="/"><strong><i class="icon fa fa-diamond"></i> 我要发v1.1.7 </strong></a>
 
             <div id="sideNav" href="">
                 <i class="fa fa-bars icon"></i>
@@ -146,7 +146,7 @@
             <!--</div>-->
 
 
-            <!-- coperate for 5code -->
+            <!-- global operate for 5code -->
             <div class="row " >
                 <div class="col-sm-3 content_align_center">
                     <div class="row">
@@ -255,66 +255,7 @@
 
                     </div>
 
-                    <div class="row">
-                        <label class="checkbox-inline">保留: </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox10" value="1" v-model="wyf_abc"> abc
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox11" value="2" v-model="wyf_acb"> acb
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox12" value="3" v-model="wyf_bac"> bac
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox13" value="4" v-model="wyf_bca"> bca
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox14" value="5" v-model="wyf_cab"> cab
-                        </label>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" id="inlineCheckbox15" value="6" v-model="wyf_cba"> cba
-                        </label>
 
-                        <label> （ a < b < c，abcxx ） </label>
-                    </div>
-
-                    <div class="row">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label for="myriabit">万</label>
-                                <input type="text" size="11" v-model="myriabit" class="form-inline" id="myriabit" placeholder="万位">
-                            </div>
-
-                            <div class="col-sm-6">
-                                <label for="kilobit">千</label>
-                                <input type="text" size="11" v-model="kilobit" class="form-inline" id="kilobit" placeholder="千位">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label for="hundred">百</label>
-                                <input type="text" size="11" v-model="hundred"  class="form-inline" id="hundred" placeholder="百位">
-                            </div>
-
-                            <div class="col-sm-6">
-                                <label for="decade">十</label>
-                                <input type="text" size="11" v-model="decade"  class="form-inline" id="decade" placeholder="十位">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <label for="unit">个</label>
-                                <input type="text" v-model="unit"  class="form-inline" id="unit" placeholder="个位">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <button type="button" @click="bitsProcess" class="btn btn-primary fill_parent_50"> 位 杀 </button>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
 
@@ -354,6 +295,85 @@
                 </div>
             </div>
 
+
+            <div class="row">
+
+                <div class="row">
+                    <label class="checkbox-inline">位序保留: </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox10" value="1" v-model="wyf_abc"> abc
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox11" value="2" v-model="wyf_acb"> acb
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox12" value="3" v-model="wyf_bac"> bac
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox13" value="4" v-model="wyf_bca"> bca
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox14" value="5" v-model="wyf_cab"> cab
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox15" value="6" v-model="wyf_cba"> cba
+                    </label>
+
+                    <label> （ a < b < c，abcxx ） </label>
+                </div>
+
+                <div class="row">
+                    <div class=" form-inline col-sm-2">
+                        <label for="p5_ab" class="control-label">ab</label>
+                        <input type="text" size="11" class="form-control fill_parent_50" v-model="bitAB" id="p5_ab" placeholder="AB">
+                    </div>
+                    <div class=" form-inline col-sm-2">
+                        <label for="p5_bc" class="control-label">bc</label>
+                        <input type="text" size="11" class="form-control fill_parent_50" v-model="bitBC" id="p5_bc" placeholder="BC">
+                    </div>
+                    <div class=" form-inline col-sm-2">
+                        <label for="p5_cd" class="control-label">cd</label>
+                        <input type="text" size="11" class="form-control fill_parent_50" v-model="bitCD" id="p5_cd" placeholder="CD">
+                    </div>
+                    <div class=" form-inline col-sm-2">
+                        <label for="p5_de" class="control-label">de</label>
+                        <input type="text" size="11" class="form-control fill_parent_50" v-model="bitDE" id="p5_de" placeholder="DE">
+                    </div>
+                    <div class="form-inline col-sm-4">
+                        <label class="control-label">【筛选码（合则去，否则留）】</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-inline col-sm-2">
+                        <label for="myriabit" class="control-label">万</label>
+                        <input type="text" size="11" v-model="myriabit" class="form-control " id="myriabit" placeholder="万位">
+                    </div>
+
+                    <div class="form-inline col-sm-2">
+                        <label for="kilobit" class="control-label">千</label>
+                        <input type="text" size="11" v-model="kilobit" class="form-control" id="kilobit" placeholder="千位">
+                    </div>
+                    <div class="form-inline col-sm-2">
+                        <label for="hundred" class="control-label">百</label>
+                        <input type="text" size="11" v-model="hundred"  class="form-control" id="hundred" placeholder="百位">
+                    </div>
+
+                    <div class="form-inline col-sm-2">
+                        <label for="decade" class="control-label">十</label>
+                        <input type="text" size="11" v-model="decade"  class="form-control" id="decade" placeholder="十位">
+                    </div>
+                    <div class="form-inline col-sm-2">
+                        <label for="unit" class="control-label">个</label>
+                        <input type="text" size="11" v-model="unit"  class="form-control" id="unit" placeholder="个位">
+                    </div>
+                </div>
+                <div class="row content_align_center">
+                    <button type="button" @click="bitsProcess" class="btn btn-primary"> 位 杀 </button>
+                </div>
+
+            </div>
+
         </div>
 
         <div class="row">
@@ -364,7 +384,7 @@
 
             <!-- /. ROW  -->
 
-        </div>
+
         <!-- /. PAGE INNER  -->
     </div>
     <!-- /. PAGE WRAPPER  -->
@@ -384,7 +404,7 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script src="js/wyf.js?v=6"></script>
+<script src="js/wyf.js?v=7"></script>
 
 
 </body>
